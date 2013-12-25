@@ -42,9 +42,9 @@ public class FireballVelocityProperty extends VelocityProperty
 	public void apply(final Entity entity)
 	{
 		final Fireball fireball = (Fireball) entity;
-		final double pitch = getOff(this.pitch, pitchOff) / ANGLECONVERTER;
-		final double yaw = getOff(this.yaw, yawOff) / ANGLECONVERTER;
+		final double pitch = getOff(this.pitch, pitchOff);
+		final double yaw = getOff(this.yaw, yawOff);
 		final double velocity = getRandom(velocityMin, velocityMax);
-		fireball.setDirection(getVector(pitch, yaw, velocity));
+		fireball.setDirection(getVectorDeg(pitch, yaw, velocity));
 	}
 }
