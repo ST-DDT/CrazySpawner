@@ -45,6 +45,6 @@ public class FireballVelocityProperty extends VelocityProperty
 		final double velocity = getRandom(velocityMin, velocityMax);
 		final double yaw = getOff(this.yaw, yawOff);
 		final double pitch = getOff(this.pitch, pitchOff);
-		fireball.setDirection(getVectorDeg(pitch, yaw, velocity));
+		fireball.setDirection(getVectorDeg(velocity, yaw, pitch));
 	}
 }
