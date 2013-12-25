@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.TreeMap;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
@@ -17,14 +16,13 @@ import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Villager;
-import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 
@@ -35,7 +33,7 @@ import de.st_ddt.crazyutil.NamedEntitySpawner;
 public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedEntitySpawner>
 {
 
-	public final static Map<String, NamedEntitySpawner> ENTITY_TYPES = new TreeMap<String, NamedEntitySpawner>(String.CASE_INSENSITIVE_ORDER);
+	protected final static Map<String, NamedEntitySpawner> SPAWNERS = NamedEntitySpawner.SPAWNERS;
 
 	public static void registerNamedEntitySpawner(final NamedEntitySpawner entitySpawner, final String... aliases)
 	{
@@ -43,10 +41,10 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			throw new IllegalArgumentException("EntitySpawner cannot be null!");
 		if (entitySpawner.getName() == null)
 			throw new IllegalArgumentException("EntitySpawner's name cannot be null (" + entitySpawner + ")!");
-		ENTITY_TYPES.put(entitySpawner.getName().toUpperCase(), entitySpawner);
+		SPAWNERS.put(entitySpawner.getName().toUpperCase(), entitySpawner);
 		for (final String alias : aliases)
 			if (alias != null)
-				ENTITY_TYPES.put(alias.toUpperCase(), entitySpawner);
+				SPAWNERS.put(alias.toUpperCase(), entitySpawner);
 	}
 
 	public static NamedEntitySpawner getNamedEntitySpawner(final String name)
@@ -54,7 +52,7 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		if (name == null)
 			return null;
 		else
-			return ENTITY_TYPES.get(name.toUpperCase());
+			return SPAWNERS.get(name.toUpperCase());
 	}
 
 	public static List<NamedEntitySpawner> getNamedEntitySpawnerList(final Collection<String> names)
@@ -69,15 +67,14 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 
 	static
 	{
+		// register default + age spawners
 		for (final EntityType type : EntityType.values())
 			if (type.isAlive() && type.isSpawnable())
 			{
-				registerNamedEntitySpawner(new DefaultNamedEntitySpawner(type), type.toString());
+				registerNamedEntitySpawner(new DefaultNamedEntitySpawner(type), type.name());
 				if (Ageable.class.isAssignableFrom(type.getEntityClass()))
-					registerNamedEntitySpawner(new BabyNamedEntitySpawner(type));
+					registerNamedEntitySpawner(new BabySpawner(type));
 			}
-		for (final Profession profession : Profession.values())
-			registerNamedEntitySpawner(new VillagerNamedEntitySpawner(profession));
 		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.ZOMBIE)
 		{
 
@@ -101,23 +98,6 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			@Override
 			public String getName()
 			{
-				return "ZOMBIE_VILLAGER";
-			}
-
-			@Override
-			public Zombie spawn(final Location location)
-			{
-				final Zombie zombie = (Zombie) super.spawn(location);
-				zombie.setVillager(true);
-				return zombie;
-			}
-		});
-		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.ZOMBIE)
-		{
-
-			@Override
-			public String getName()
-			{
 				return "BABY_ZOMBIE_VILLAGER";
 			}
 
@@ -130,40 +110,7 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 				return zombie;
 			}
 		});
-		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.SKELETON)
-		{
-
-			@Override
-			public String getName()
-			{
-				return "NORMALSKELETON";
-			}
-
-			@Override
-			public Skeleton spawn(final Location location)
-			{
-				final Skeleton skeleton = (Skeleton) super.spawn(location);
-				skeleton.setSkeletonType(SkeletonType.NORMAL);
-				return skeleton;
-			}
-		});
-		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.SKELETON)
-		{
-
-			@Override
-			public String getName()
-			{
-				return "WITHERSKELETON";
-			}
-
-			@Override
-			public Skeleton spawn(final Location location)
-			{
-				final Skeleton skeleton = (Skeleton) super.spawn(location);
-				skeleton.setSkeletonType(SkeletonType.WITHER);
-				return skeleton;
-			}
-		});
+		// Creeper
 		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.CREEPER)
 		{
 
@@ -198,48 +145,12 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 				return creeper;
 			}
 		}, "POWEREDCREEPER", "CHARGEDCREEPER");
-		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.WOLF)
-		{
-
-			@Override
-			public String getName()
-			{
-				return "ANGRY_WOLF";
-			}
-
-			@Override
-			public Wolf spawn(final Location location)
-			{
-				final Wolf wolf = (Wolf) super.spawn(location);
-				wolf.setAngry(true);
-				return wolf;
-			}
-		}, "ANGRYWOLF");
-		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.PIG_ZOMBIE)
-		{
-
-			@Override
-			public String getName()
-			{
-				return "ANGRY_PIG_ZOMBIE";
-			}
-
-			@Override
-			public PigZombie spawn(final Location location)
-			{
-				final PigZombie pigzombie = (PigZombie) super.spawn(location);
-				pigzombie.setAngry(true);
-				return pigzombie;
-			}
-		}, "ANGRY_PIGMEN", "ANGRYPIG_ZOMBIE", "ANGRYPIGMEN");
-		for (int i = 1; i <= SlimeNamedEntitySpawner.SIZECOUNT; i++)
-		{
-			final String sizeText = SlimeNamedEntitySpawner.getSizeText(i);
-			final SlimeNamedEntitySpawner slimeType = new SlimeNamedEntitySpawner(EntityType.SLIME, i);
-			registerNamedEntitySpawner(slimeType, sizeText + "SLIME");
-			final SlimeNamedEntitySpawner magmaType = new SlimeNamedEntitySpawner(EntityType.MAGMA_CUBE, i);
-			registerNamedEntitySpawner(magmaType, sizeText + "LAVASLIME", sizeText + "MAGMACUBE", sizeText + "_MAGMACUBE");
-		}
+		// Horse
+		for (final Horse.Color color : Horse.Color.values())
+			registerNamedEntitySpawner(new HorseColorSpawner(color));
+		for (final Horse.Variant variant : Horse.Variant.values())
+			registerNamedEntitySpawner(new HorseVariantSpawner(variant));
+		// Ocelot
 		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.OCELOT)
 		{
 
@@ -257,8 +168,27 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 				return ocelot;
 			}
 		});
+		// Pig Zombie
+		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.PIG_ZOMBIE)
+		{
+
+			@Override
+			public String getName()
+			{
+				return "ANGRY_PIG_ZOMBIE";
+			}
+
+			@Override
+			public PigZombie spawn(final Location location)
+			{
+				final PigZombie pigzombie = (PigZombie) super.spawn(location);
+				pigzombie.setAngry(true);
+				return pigzombie;
+			}
+		}, "ANGRY_PIGMEN", "ANGRYPIG_ZOMBIE", "ANGRYPIGMEN");
+		// Sheep
 		for (final DyeColor color : DyeColor.values())
-			registerNamedEntitySpawner(new SheepNamedEntitySpawner(color));
+			registerNamedEntitySpawner(new SheepSpawner(color));
 		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.SHEEP)
 		{
 
@@ -269,7 +199,7 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			@Override
 			public String getName()
 			{
-				return "RANDOM_SHEEP";
+				return "RANDOM_COLORED_SHEEP";
 			}
 
 			@Override
@@ -278,6 +208,57 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 				final Sheep sheep = (Sheep) super.spawn(location);
 				sheep.setColor(colors[random.nextInt(max)]);
 				return sheep;
+			}
+		}, "RANDOM_SHEEP");
+		// Skeleton
+		for (final Skeleton.SkeletonType variant : Skeleton.SkeletonType.values())
+			registerNamedEntitySpawner(new SkeletonSpawner(variant), variant.name() + EntityType.SKELETON.name());
+		// Slime
+		for (int i = 1; i <= SlimeSpawner.SIZECOUNT; i++)
+		{
+			final String sizeText = SlimeSpawner.getSizeText(i);
+			final SlimeSpawner slimeType = new SlimeSpawner(EntityType.SLIME, i);
+			registerNamedEntitySpawner(slimeType, sizeText + "SLIME");
+			final SlimeSpawner magmaType = new SlimeSpawner(EntityType.MAGMA_CUBE, i);
+			registerNamedEntitySpawner(magmaType, sizeText + "LAVASLIME", sizeText + "MAGMACUBE", sizeText + "_MAGMACUBE");
+		}
+		// Villager
+		for (final Villager.Profession profession : Villager.Profession.values())
+			registerNamedEntitySpawner(new VillagerSpawner(profession));
+		// Wolf
+		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.WOLF)
+		{
+
+			@Override
+			public String getName()
+			{
+				return "ANGRY_WOLF";
+			}
+
+			@Override
+			public Wolf spawn(final Location location)
+			{
+				final Wolf wolf = (Wolf) super.spawn(location);
+				wolf.setAngry(true);
+				return wolf;
+			}
+		}, "ANGRYWOLF");
+		// Zombie
+		registerNamedEntitySpawner(new DefaultNamedEntitySpawner(EntityType.ZOMBIE)
+		{
+
+			@Override
+			public String getName()
+			{
+				return "ZOMBIE_VILLAGER";
+			}
+
+			@Override
+			public Zombie spawn(final Location location)
+			{
+				final Zombie zombie = (Zombie) super.spawn(location);
+				zombie.setVillager(true);
+				return zombie;
 			}
 		});
 	}
@@ -294,19 +275,18 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 
 	public NamedEntitySpawnerParamitrisable(final String defaultValue)
 	{
-		this(ENTITY_TYPES.get(defaultValue.toUpperCase()));
+		this(SPAWNERS.get(defaultValue.toUpperCase()));
 	}
 
-	@SuppressWarnings("deprecation")
 	public NamedEntitySpawnerParamitrisable(final EntityType defaultValue)
 	{
-		this(defaultValue.getName());
+		this(defaultValue.name());
 	}
 
 	@Override
 	public void setParameter(final String parameter) throws CrazyException
 	{
-		value = ENTITY_TYPES.get(parameter.toUpperCase());
+		value = SPAWNERS.get(parameter.toUpperCase());
 		if (value == null)
 			throw new CrazyCommandNoSuchException("EntityType", parameter, tabHelp(parameter));
 	}
@@ -322,11 +302,11 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		parameter = parameter.toUpperCase();
 		final List<String> res = new LinkedList<String>();
 		if (parameter.length() == 0)
-			res.addAll(ENTITY_TYPES.keySet());
+			res.addAll(SPAWNERS.keySet());
 		else
 		{
 			final List<String> more = new LinkedList<String>();
-			for (final Entry<String, NamedEntitySpawner> entry : ENTITY_TYPES.entrySet())
+			for (final Entry<String, NamedEntitySpawner> entry : SPAWNERS.entrySet())
 				if (entry.getValue().getName().startsWith(parameter))
 					res.add(entry.getKey());
 				else if (entry.getValue().getType().name().contains(parameter) || entry.getKey().contains(parameter))
@@ -388,10 +368,10 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		}
 	}
 
-	private static class BabyNamedEntitySpawner extends DefaultNamedEntitySpawner
+	private final static class BabySpawner extends DefaultNamedEntitySpawner
 	{
 
-		public BabyNamedEntitySpawner(final EntityType type)
+		public BabySpawner(final EntityType type)
 		{
 			super(type);
 		}
@@ -425,29 +405,29 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		}
 	}
 
-	private static class VillagerNamedEntitySpawner extends DefaultNamedEntitySpawner
+	private final static class HorseColorSpawner extends DefaultNamedEntitySpawner
 	{
 
-		private final Profession profession;
+		private final Horse.Color color;
 
-		public VillagerNamedEntitySpawner(final Profession profession)
+		public HorseColorSpawner(final Horse.Color color)
 		{
-			super(EntityType.VILLAGER);
-			this.profession = profession;
+			super(EntityType.HORSE);
+			this.color = color;
 		}
 
 		@Override
 		public String getName()
 		{
-			return profession.toString();
+			return color.name() + "_" + super.getName();
 		}
 
 		@Override
-		public Villager spawn(final Location location)
+		public Horse spawn(final Location location)
 		{
-			final Villager villager = (Villager) super.spawn(location);
-			villager.setProfession(profession);
-			return villager;
+			final Horse horse = (Horse) super.spawn(location);
+			horse.setColor(color);
+			return horse;
 		}
 
 		@Override
@@ -457,8 +437,8 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			final Iterator<? extends Entity> it = entities.iterator();
 			while (it.hasNext())
 			{
-				final Villager villager = (Villager) it.next();
-				if (villager.getProfession() != profession)
+				final Horse horse = (Horse) it.next();
+				if (horse.getColor() != color)
 					it.remove();
 			}
 			return entities;
@@ -467,16 +447,63 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; profession: " + profession.name() + "}";
+			return getClass().getSimpleName() + "{type: " + type.name() + "; color: " + color.name() + "}";
 		}
 	}
 
-	private static class SheepNamedEntitySpawner extends DefaultNamedEntitySpawner
+	private final static class HorseVariantSpawner extends DefaultNamedEntitySpawner
+	{
+
+		private final Horse.Variant variant;
+
+		public HorseVariantSpawner(final Horse.Variant variant)
+		{
+			super(EntityType.HORSE);
+			this.variant = variant;
+		}
+
+		@Override
+		public String getName()
+		{
+			return variant.name();
+		}
+
+		@Override
+		public Horse spawn(final Location location)
+		{
+			final Horse horse = (Horse) super.spawn(location);
+			horse.setVariant(variant);
+			return horse;
+		}
+
+		@Override
+		public Collection<? extends Entity> getEntities(final World world)
+		{
+			final Collection<? extends Entity> entities = super.getEntities(world);
+			final Iterator<? extends Entity> it = entities.iterator();
+			while (it.hasNext())
+			{
+				final Horse horse = (Horse) it.next();
+				if (horse.getVariant() != variant)
+					it.remove();
+			}
+			return entities;
+		}
+
+		@Override
+		public String toString()
+		{
+			return getClass().getSimpleName() + "{type: " + type.name() + "; variant: " + variant.name() + "}";
+		}
+	}
+
+	// Sheep
+	private final static class SheepSpawner extends DefaultNamedEntitySpawner
 	{
 
 		private final DyeColor color;
 
-		public SheepNamedEntitySpawner(final DyeColor color)
+		public SheepSpawner(final DyeColor color)
 		{
 			super(EntityType.SHEEP);
 			this.color = color;
@@ -517,7 +544,55 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		}
 	}
 
-	private static class SlimeNamedEntitySpawner extends DefaultNamedEntitySpawner
+	// Skeleton
+	private final static class SkeletonSpawner extends DefaultNamedEntitySpawner
+	{
+
+		private final Skeleton.SkeletonType variant;
+
+		public SkeletonSpawner(final Skeleton.SkeletonType variant)
+		{
+			super(EntityType.SKELETON);
+			this.variant = variant;
+		}
+
+		@Override
+		public String getName()
+		{
+			return variant.name() + "_" + super.getName();
+		}
+
+		@Override
+		public Skeleton spawn(final Location location)
+		{
+			final Skeleton skeleton = (Skeleton) super.spawn(location);
+			skeleton.setSkeletonType(variant);
+			return skeleton;
+		}
+
+		@Override
+		public Collection<? extends Entity> getEntities(final World world)
+		{
+			final Collection<? extends Entity> entities = super.getEntities(world);
+			final Iterator<? extends Entity> it = entities.iterator();
+			while (it.hasNext())
+			{
+				final Skeleton skeleton = (Skeleton) it.next();
+				if (skeleton.getSkeletonType() != variant)
+					it.remove();
+			}
+			return entities;
+		}
+
+		@Override
+		public String toString()
+		{
+			return getClass().getSimpleName() + "{type: " + type.name() + "; variant: " + variant.name() + "}";
+		}
+	}
+
+	// Slime
+	private static class SlimeSpawner extends DefaultNamedEntitySpawner
 	{
 
 		private final static String[] SIZES = new String[] { "TINY", "SMALL", "DEFAULT", "LARGE", "HUGE", "TINYGIANT", "SMALLGIANT", "GIANT", "LARGEGIANT", "HUGEGIANT" };
@@ -529,7 +604,7 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			return SIZES[size - 1];
 		}
 
-		public SlimeNamedEntitySpawner(final EntityType slimeType, final int size)
+		public SlimeSpawner(final EntityType slimeType, final int size)
 		{
 			super(slimeType);
 			this.size = size;
@@ -572,6 +647,53 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		public String toString()
 		{
 			return getClass().getSimpleName() + "{type: " + type.name() + "; size: " + size + "}";
+		}
+	}
+
+	// Villager
+	private final static class VillagerSpawner extends DefaultNamedEntitySpawner
+	{
+
+		private final Villager.Profession variant;
+
+		public VillagerSpawner(final Villager.Profession variant)
+		{
+			super(EntityType.VILLAGER);
+			this.variant = variant;
+		}
+
+		@Override
+		public String getName()
+		{
+			return variant.toString();
+		}
+
+		@Override
+		public Villager spawn(final Location location)
+		{
+			final Villager villager = (Villager) super.spawn(location);
+			villager.setProfession(variant);
+			return villager;
+		}
+
+		@Override
+		public Collection<? extends Entity> getEntities(final World world)
+		{
+			final Collection<? extends Entity> entities = super.getEntities(world);
+			final Iterator<? extends Entity> it = entities.iterator();
+			while (it.hasNext())
+			{
+				final Villager villager = (Villager) it.next();
+				if (villager.getProfession() != variant)
+					it.remove();
+			}
+			return entities;
+		}
+
+		@Override
+		public String toString()
+		{
+			return getClass().getSimpleName() + "{type: " + type.name() + "; profession: " + variant.name() + "}";
 		}
 	}
 }
