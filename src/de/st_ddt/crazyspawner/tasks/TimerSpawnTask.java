@@ -31,9 +31,10 @@ import de.st_ddt.crazyspawner.tasks.options.Thunder;
 import de.st_ddt.crazyutil.ChatConverter;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
-import de.st_ddt.crazyutil.NamedEntitySpawner;
 import de.st_ddt.crazyutil.ObjectSaveLoadHelper;
 import de.st_ddt.crazyutil.VersionComparator;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.locales.CrazyLocale;
 
 public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparable<TimerSpawnTask>, ParameterData
@@ -194,7 +195,7 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 	{
 		super();
 		this.plugin = plugin;
-		this.type = NamedEntitySpawner.SPAWNERS.get(config.getString("type").toUpperCase());
+		this.type = NamedEntitySpawner.NAMEDENTITYSPAWNERS.get(config.getString("type").toUpperCase());
 		this.location = ObjectSaveLoadHelper.loadLocation(config.getConfigurationSection("location"), null);
 		Validate.notNull(this.type, "Type cannot be null!");
 		Validate.notNull(this.location, "Location cannot be null!");
@@ -414,10 +415,7 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 	{
 		if (creatureMaxCount == 0)
 			return amount;
-		int count = creatureMaxCount;
-		for (final Entity entity : type.getEntities(location.getWorld()))
-			if (location.distance(entity.getLocation()) < creatureRange)
-				count--;
+		final int count = creatureMaxCount - EntitySpawnerHelper.getMatchingEntites(location, creatureRange, type).size();
 		return Math.min(count, amount);
 	}
 

@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
-import de.st_ddt.crazyspawner.entities.CustomEntitySpawner.FallingBlockSpawner;
+import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper.FallingBlockSpawner;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.MaterialParamitriable;

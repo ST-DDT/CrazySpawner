@@ -55,6 +55,7 @@ import de.st_ddt.crazyspawner.commands.CommandSpawnRemove;
 import de.st_ddt.crazyspawner.commands.CommandTheEndAutoRespawn;
 import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
 import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
+import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EquipmentProperties;
 import de.st_ddt.crazyspawner.entities.properties.PotionProterty;
 import de.st_ddt.crazyspawner.listener.EntityListener;
@@ -66,8 +67,11 @@ import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.CrazyPipe;
 import de.st_ddt.crazyutil.Drop;
-import de.st_ddt.crazyutil.NamedEntitySpawner;
 import de.st_ddt.crazyutil.VersionComparator;
+import de.st_ddt.crazyutil.entities.EntityMatcherHelper;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.metrics.Metrics;
 import de.st_ddt.crazyutil.metrics.Metrics.Graph;
 import de.st_ddt.crazyutil.metrics.Metrics.Plotter;
@@ -240,7 +244,7 @@ public class CrazySpawner extends CrazyPlugin
 				}
 			});
 			final Graph customEntityCount = metrics.createGraph("Custom Entities");
-			for (final EntityType type : CustomEntitySpawner.getSpawnableEntityTypes())
+			for (final EntityType type : EntitySpawnerHelper.getSpawnableEntityTypes())
 				customEntityCount.addPlotter(new Plotter(type.name())
 				{
 
@@ -268,9 +272,11 @@ public class CrazySpawner extends CrazyPlugin
 		plugin = this;
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
 		// Static code initialization.
-		CustomEntitySpawner.class.getName();
-		NamedEntitySpawner.class.getName();
+		EntityMatcherHelper.class.getName();
+		EntitySpawnerHelper.class.getName();
+		NamedEntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerParamitrisable.class.getName();
+		CustomEntitySpawner.class.getName();
 		super.onLoad();
 	}
 
@@ -290,27 +296,27 @@ public class CrazySpawner extends CrazyPlugin
 				// - Spider_Skeleton
 				final CustomEntitySpawner spiderSkeleton = new CustomEntitySpawner("Spider_Skeleton", EntityType.SPIDER, console, "passenger:SKELETON");
 				customEntities.put(spiderSkeleton.getName(), spiderSkeleton);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(spiderSkeleton);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderSkeleton);
 				// - Zombie_Skeleton
 				final CustomEntitySpawner spiderZombie = new CustomEntitySpawner("Spider_Zombie", EntityType.SPIDER, console, "passenger:ZOMBIE");
 				customEntities.put(spiderZombie.getName(), spiderZombie);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(spiderZombie);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderZombie);
 				// - Diamond_Zombie
 				final CustomEntitySpawner diamondZombie = new CustomEntitySpawner("Diamond_Zombie", EntityType.ZOMBIE, console, "boots:DIAMOND_BOOTS", "bootsdropchance:0.01", "leggings:DIAMOND_LEGGINGS", "leggingsdropchance:0.01", "chestplate:DIAMOND_CHESTPLATE", "chestplatedropchance:0.01", "helmet:DIAMOND_HELMET", "helmetdropchance:0.01", "iteminhand:DIAMOND_SWORD", "iteminhanddropchance:0.01");
 				customEntities.put(diamondZombie.getName(), diamondZombie);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(diamondZombie);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(diamondZombie);
 				// - Giant
 				final CustomEntitySpawner giant = new CustomEntitySpawner("Giant", EntityType.GIANT);
 				customEntities.put(giant.getName(), giant);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(giant);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(giant);
 				// - Healthy_Giant
 				final CustomEntitySpawner healthyGiant = new CustomEntitySpawner("Healthy_Giant", EntityType.GIANT, console, "maxhealth:200");
 				customEntities.put(healthyGiant.getName(), healthyGiant);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(healthyGiant);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(healthyGiant);
 				// - Spider_Diamond_Zombie
 				final CustomEntitySpawner spiderDiamondZombie = new CustomEntitySpawner("Spider_Diamond_Zombie", EntityType.SPIDER, console, "passenger:Diamond_Zombie");
 				customEntities.put(spiderDiamondZombie.getName(), spiderDiamondZombie);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(spiderDiamondZombie);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderDiamondZombie);
 				saveConfiguration();
 			}
 			if (VersionComparator.compareVersions(previousVersion, "3.11") == -1)
@@ -325,7 +331,7 @@ public class CrazySpawner extends CrazyPlugin
 				speedyZombie.addEntityProperty(new EquipmentProperties(boots, 0.5F, null, 0, null, 0, null, 0, null, 0, null, null));
 				speedyZombie.addEntityProperty(new PotionProterty(new PotionEffectType[] { PotionEffectType.SPEED }, new int[] { 5 }));
 				customEntities.put(speedyZombie.getName(), speedyZombie);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(speedyZombie);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(speedyZombie);
 				saveConfiguration();
 			}
 			if (VersionComparator.compareVersions(previousVersion, "3.11.1") == -1)
@@ -367,7 +373,7 @@ public class CrazySpawner extends CrazyPlugin
 				final CustomEntitySpawner healthyDiamondZombie = new CustomEntitySpawner("Healthy_Diamond_Zombie", EntityType.ZOMBIE, console, "customName:&3Diamond_Zombie", "showNameAboveHead:true", "showHealth:true", "maxHealth:100", "minDamage:3", "maxDamage:7", "minXP:10", "maxXP:20");
 				healthyDiamondZombie.addEntityProperty(new EquipmentProperties(boots, 1F, leggings, 1F, chestplate, 1F, helmet, 1F, sword, 1F, drops, false));
 				customEntities.put(healthyDiamondZombie.getName(), healthyDiamondZombie);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(healthyDiamondZombie);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(healthyDiamondZombie);
 				saveConfiguration();
 			}
 		}
@@ -409,8 +415,8 @@ public class CrazySpawner extends CrazyPlugin
 				return PermissionModule.hasPermission(sender, "crazyspawner.reload.spawntasks") || PermissionModule.hasPermission(sender, "crazyspawner.reload.*");
 			}
 		}, "t", "st", "spawntasks");
-		sendLocaleMessage("SPAWNABLEENTITIES.OPTIONS", Bukkit.getConsoleSender(), CustomEntitySpawner.getTotalSpawnableEntityTypeCount(), CustomEntitySpawner.getTotalPropertiesCount(), CustomEntitySpawner.getTotalCommandParamsCount());
-		sendLocaleMessage("SPAWNABLEENTITIES.AVAILABLE", Bukkit.getConsoleSender(), NamedEntitySpawner.SPAWNERS.size());
+		sendLocaleMessage("SPAWNABLEENTITIES.OPTIONS", Bukkit.getConsoleSender(), EntitySpawnerHelper.getTotalSpawnableEntityTypeCount(), EntityPropertyHelper.getTotalPropertiesCount(), EntityPropertyHelper.getTotalCommandParamsCount());
+		sendLocaleMessage("SPAWNABLEENTITIES.AVAILABLE", Bukkit.getConsoleSender(), NamedEntitySpawner.NAMEDENTITYSPAWNERS.size());
 		registerCommands();
 		registerMetrics();
 	}
@@ -422,7 +428,7 @@ public class CrazySpawner extends CrazyPlugin
 		// Example - Entities (Properties)
 		final YamlConfiguration allCustomEntityProperties = new YamlConfiguration();
 		allCustomEntityProperties.options().header("CrazySpawner example EntityALL.yml\n" + "For more information visit\n" + "https://github.com/ST-DDT/Crazy/blob/master/CrazySpawner/docs/example/Entity.yml\n" + "Custom entities have to be defined inside config.yml");
-		for (final EntityType type : CustomEntitySpawner.getSpawnableEntityTypes())
+		for (final EntityType type : EntitySpawnerHelper.getSpawnableEntityTypes())
 		{
 			final YamlConfiguration customEntityProperties = new YamlConfiguration();
 			customEntityProperties.options().header("CrazySpawner example Entity" + type.name() + ".yml\n" + "For more information visit\n" + "https://github.com/ST-DDT/Crazy/blob/master/CrazySpawner/docs/example/Entity.yml\n" + "Custom entities have to be defined inside config.yml");
@@ -435,11 +441,11 @@ public class CrazySpawner extends CrazyPlugin
 		saveExampleFile(exampleFolder, "EntityALL", allCustomEntityProperties);
 		// Example - EntityType (supported only)
 		final YamlConfiguration entityTypes = new YamlConfiguration();
-		entityTypes.set("exampleEntityType", EnumParamitrisable.getEnumNames(CustomEntitySpawner.getSpawnableEntityTypes()));
+		entityTypes.set("exampleEntityType", EnumParamitrisable.getEnumNames(EntitySpawnerHelper.getSpawnableEntityTypes()));
 		saveExampleFile(exampleFolder, "EntityType", entityTypes);
 		// Example - CustomEntityNames
 		final YamlConfiguration customTypes = new YamlConfiguration();
-		customTypes.set("exampleCustomEntityNames", new ArrayList<String>(NamedEntitySpawner.SPAWNERS.keySet()));
+		customTypes.set("exampleCustomEntityNames", new ArrayList<String>(NamedEntitySpawner.NAMEDENTITYSPAWNERS.keySet()));
 		saveExampleFile(exampleFolder, "CustomEntityNames", customTypes);
 		// Example - Item
 		final YamlConfiguration item = new YamlConfiguration();
@@ -558,7 +564,7 @@ public class CrazySpawner extends CrazyPlugin
 				{
 					final CustomEntitySpawner customEntity = new CustomEntitySpawner(customEntityConfig.getConfigurationSection(key));
 					customEntities.put(customEntity.getName(), customEntity);
-					NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(customEntity);
+					NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity);
 				}
 				catch (final IllegalArgumentException e)
 				{
@@ -587,7 +593,7 @@ public class CrazySpawner extends CrazyPlugin
 		for (final EntityType type : EntityType.values())
 			if (type.getEntityClass() != null && LivingEntity.class.isAssignableFrom(type.getEntityClass()))
 			{
-				final NamedEntitySpawner spawner = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(config.getString("overwriteEntities." + type.name(), null));
+				final NamedEntitySpawner spawner = NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("overwriteEntities." + type.name(), null));
 				if (spawner == null)
 					overwriteEntities[type.ordinal()] = null;
 				else if (spawner.getType() == type)
@@ -630,7 +636,7 @@ public class CrazySpawner extends CrazyPlugin
 			{
 				final CustomEntitySpawner customEntity = new CustomEntitySpawner(customEntitiesConfig.getConfigurationSection(key));
 				customEntities.put(customEntity.getName(), customEntity);
-				NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(customEntity);
+				NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity);
 			}
 			catch (final Exception e)
 			{
@@ -742,7 +748,7 @@ public class CrazySpawner extends CrazyPlugin
 	public void addCustomEntity(final CustomEntitySpawner customEntity, final String... aliases)
 	{
 		customEntities.put(customEntity.getName(), customEntity);
-		NamedEntitySpawnerParamitrisable.registerNamedEntitySpawner(customEntity, aliases);
+		NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity, aliases);
 		saveCustomEntities();
 	}
 
