@@ -11,6 +11,7 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -51,7 +52,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 		{
 			final String arg = args[0].toUpperCase();
 			final List<String> res = new ArrayList<String>();
-			for (final String type : EnumParamitrisable.getEnumNames(CustomEntitySpawner.getSpawnableEntityTypes()))
+			for (final String type : EnumParamitrisable.getEnumNames(EntitySpawnerHelper.getSpawnableEntityTypes()))
 				if (type.startsWith(arg))
 					res.add(type);
 			return res;

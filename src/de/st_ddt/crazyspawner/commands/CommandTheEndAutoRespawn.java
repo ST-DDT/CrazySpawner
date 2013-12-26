@@ -19,11 +19,12 @@ import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.tasks.TimerSpawnTask;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.Tabbed;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.DurationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
-import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.WorldParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -41,10 +42,10 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 	public CommandTheEndAutoRespawn(final CrazySpawner plugin)
 	{
 		super(plugin);
-		DRAGONTYPE = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(EntityType.ENDER_DRAGON.name());
+		DRAGONTYPE = NamedEntitySpawnerHelper.getNamedEntitySpawner(EntityType.ENDER_DRAGON.name());
 		if (DRAGONTYPE == null)
 			throw new IllegalStateException("Critical Bug detected! Could not find ENDER_DRAGON spawner");
-		CRYSTALTYPE = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(EntityType.ENDER_CRYSTAL.name());
+		CRYSTALTYPE = NamedEntitySpawnerHelper.getNamedEntitySpawner(EntityType.ENDER_CRYSTAL.name());
 		if (CRYSTALTYPE == null)
 			throw new IllegalStateException("Critical Bug detected! Could not find ENDER_CRYSTAL spawner!");
 	}
@@ -89,16 +90,16 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 			throw new CrazyCommandNoSuchException("World", "(none)");
 		if (world.getEnvironment() != Environment.THE_END)
 			throw new CrazyCommandCircumstanceException("the world must be a The_End world!");
-		final TimerSpawnTask dragon = new TimerSpawnTask(plugin, DRAGONTYPE, new Location(world, 0, 0, 0), interval.getValue() / 50, 5, COUNTDOWNTIMES, plugin.getLocale().getDefaultLocaleMessage("THEENDAUTORESPAWN.COUNTDOWNMESSAGE", world.getName(), "$0$"), DRAGONRANGE);
+		final TimerSpawnTask dragon = new TimerSpawnTask(plugin, DRAGONTYPE, new Location(world, 0, 0, 0), interval.getTicks(), 5, COUNTDOWNTIMES, plugin.getLocale().getDefaultLocaleMessage("THEENDAUTORESPAWN.COUNTDOWNMESSAGE", world.getName(), "$0$"), DRAGONRANGE);
 		plugin.addSpawnTask(dragon);
 		dragon.start();
 		final int range = chunkloadrange.getValue();
 		for (int x = -range; x <= range; x++)
 			for (int z = -range; z <= range; z++)
 				world.loadChunk(x, z, false);
-		for (final Entity entity : CRYSTALTYPE.getEntities(world))
+		for (final Entity entity : EntitySpawnerHelper.getMatchingEntites(world, CRYSTALTYPE))
 		{
-			final TimerSpawnTask crystal = new TimerSpawnTask(plugin, CRYSTALTYPE, entity.getLocation().add(0, -1, 0), interval.getValue() / 50, 1, null, null, CRYSTALERANGE);
+			final TimerSpawnTask crystal = new TimerSpawnTask(plugin, CRYSTALTYPE, entity.getLocation().add(0, -1, 0), interval.getTicks(), 1, null, null, CRYSTALERANGE);
 			plugin.addSpawnTask(crystal);
 			crystal.start();
 		}

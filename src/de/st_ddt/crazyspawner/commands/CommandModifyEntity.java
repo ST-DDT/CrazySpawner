@@ -15,11 +15,13 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
+import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyutil.ChatHelperExtended;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
-import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.StringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -44,13 +46,13 @@ public class CommandModifyEntity extends CommandExecutor
 		final EntityType type;
 		final StringParamitrisable nameParam;
 		final Map<String, TabbedParamitrisable> params = new TreeMap<String, TabbedParamitrisable>();
-		final NamedEntitySpawner spawner = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(inheritance);
+		final NamedEntitySpawner spawner = NamedEntitySpawnerHelper.getNamedEntitySpawner(inheritance);
 		if (spawner == null || !(spawner instanceof CustomEntitySpawner))
 		{
 			type = EntityType.valueOf(inheritance.toUpperCase());
 			if (type == null)
-				throw new CrazyCommandNoSuchException("Inheritance/EntityType", inheritance, EnumParamitrisable.getEnumNames(CustomEntitySpawner.getSpawnableEntityTypes()));
-			nameParam = CustomEntitySpawner.getCommandParams(type, params, sender);
+				throw new CrazyCommandNoSuchException("Inheritance/EntityType", inheritance, EnumParamitrisable.getEnumNames(EntitySpawnerHelper.getSpawnableEntityTypes()));
+			nameParam = EntityPropertyHelper.getCommandParams(type, params, sender);
 		}
 		else
 		{
@@ -71,7 +73,7 @@ public class CommandModifyEntity extends CommandExecutor
 		if (args.length == 1)
 		{
 			final List<String> res = new ArrayList<String>();
-			res.addAll(EnumParamitrisable.getEnumNames(CustomEntitySpawner.getSpawnableEntityTypes()));
+			res.addAll(EnumParamitrisable.getEnumNames(EntitySpawnerHelper.getSpawnableEntityTypes()));
 			for (final CustomEntitySpawner spawner : plugin.getCustomEntities().values())
 				res.add(spawner.getName().toUpperCase());
 			final String inheritance = args[0].toUpperCase();
@@ -87,13 +89,13 @@ public class CommandModifyEntity extends CommandExecutor
 			final EntityType type;
 			final StringParamitrisable nameParam;
 			final Map<String, TabbedParamitrisable> params = new TreeMap<String, TabbedParamitrisable>();
-			final NamedEntitySpawner spawner = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(inheritance);
+			final NamedEntitySpawner spawner = NamedEntitySpawnerHelper.getNamedEntitySpawner(inheritance);
 			if (spawner == null || !(spawner instanceof CustomEntitySpawner))
 			{
 				type = EntityType.valueOf(inheritance.toUpperCase());
 				if (type == null)
 					return new ArrayList<String>(0);
-				nameParam = CustomEntitySpawner.getCommandParams(type, params, sender);
+				nameParam = EntityPropertyHelper.getCommandParams(type, params, sender);
 			}
 			else
 			{

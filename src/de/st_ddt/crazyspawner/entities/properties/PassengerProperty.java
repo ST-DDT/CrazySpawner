@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
@@ -27,7 +28,7 @@ public final class PassengerProperty extends BasicProperty
 	public PassengerProperty(final ConfigurationSection config)
 	{
 		super(config);
-		this.passenger = NamedEntitySpawnerParamitrisable.getNamedEntitySpawner(config.getString("passenger", null));
+		this.passenger = NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("passenger", null));
 	}
 
 	public PassengerProperty(final Map<String, ? extends Paramitrisable> params)

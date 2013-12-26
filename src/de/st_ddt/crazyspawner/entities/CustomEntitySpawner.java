@@ -1,13 +1,10 @@
 package de.st_ddt.crazyspawner.entities;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -110,7 +107,7 @@ public class CustomEntitySpawner implements NamedEntitySpawner, MetadataValue, C
 			throw new IllegalArgumentException("Type cannot be null!");
 		this.type = type;
 		final Map<String, Paramitrisable> params = new HashMap<String, Paramitrisable>();
-		getCommandParams(type, params, sender);
+		EntityPropertyHelper.getCommandParams(type, params, sender);
 		for (final String arg : args)
 		{
 			final String[] split = arg.split(":", 2);
@@ -125,7 +122,7 @@ public class CustomEntitySpawner implements NamedEntitySpawner, MetadataValue, C
 					e.printStackTrace();
 				}
 		}
-		this.properties = getEntityPropertiesFromParams(type, params);
+		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(type, params);
 	}
 
 	@Override
@@ -154,7 +151,7 @@ public class CustomEntitySpawner implements NamedEntitySpawner, MetadataValue, C
 			if (property instanceof EntitySpawner)
 				return (EntitySpawner) property;
 		}
-		return ENTITYSPAWNER[type.ordinal()];
+		return EntitySpawner.ENTITYSPAWNERS[type.ordinal()];
 	}
 
 	public final boolean isSpawnable()
@@ -199,23 +196,12 @@ public class CustomEntitySpawner implements NamedEntitySpawner, MetadataValue, C
 	}
 
 	@Override
-	public Collection<? extends Entity> getEntities(final World world)
+	public boolean matches(final Entity entity)
 	{
-		final Collection<? extends Entity> res = world.getEntitiesByClass(type.getEntityClass());
-		final Iterator<? extends Entity> it = res.iterator();
-		while (it.hasNext())
-		{
-			boolean valid = false;
-			for (final MetadataValue meta : it.next().getMetadata(METAHEADER))
-				if (equals(meta))
-				{
-					valid = true;
-					break;
-				}
-			if (!valid)
-				it.remove();
-		}
-		return res;
+		for (final MetadataValue meta : entity.getMetadata(METAHEADER))
+			if (equals(meta))
+				return true;
+		return false;
 	}
 
 	public final StringParamitrisable getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
@@ -364,12 +350,5 @@ public class CustomEntitySpawner implements NamedEntitySpawner, MetadataValue, C
 	{
 		entity.setMetadata(METAHEADER, this);
 		manager.watch(entity, PERSISTENCEKEY, this);
-	}
-
-	@Override
-	public boolean matches(final Entity entity)
-	{
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
