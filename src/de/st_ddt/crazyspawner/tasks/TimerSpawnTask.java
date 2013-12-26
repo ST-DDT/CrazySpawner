@@ -35,7 +35,6 @@ import de.st_ddt.crazyutil.NamedEntitySpawner;
 import de.st_ddt.crazyutil.ObjectSaveLoadHelper;
 import de.st_ddt.crazyutil.VersionComparator;
 import de.st_ddt.crazyutil.locales.CrazyLocale;
-import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 
 public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparable<TimerSpawnTask>, ParameterData
 {
@@ -195,7 +194,7 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 	{
 		super();
 		this.plugin = plugin;
-		this.type = NamedEntitySpawnerParamitrisable.ENTITY_TYPES.get(config.getString("type").toUpperCase());
+		this.type = NamedEntitySpawner.SPAWNERS.get(config.getString("type").toUpperCase());
 		this.location = ObjectSaveLoadHelper.loadLocation(config.getConfigurationSection("location"), null);
 		Validate.notNull(this.type, "Type cannot be null!");
 		Validate.notNull(this.location, "Location cannot be null!");

@@ -267,6 +267,10 @@ public class CrazySpawner extends CrazyPlugin
 	{
 		plugin = this;
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
+		// Static code initialization.
+		CustomEntitySpawner.class.getName();
+		NamedEntitySpawner.class.getName();
+		NamedEntitySpawnerParamitrisable.class.getName();
 		super.onLoad();
 	}
 
@@ -406,7 +410,7 @@ public class CrazySpawner extends CrazyPlugin
 			}
 		}, "t", "st", "spawntasks");
 		sendLocaleMessage("SPAWNABLEENTITIES.OPTIONS", Bukkit.getConsoleSender(), CustomEntitySpawner.getTotalSpawnableEntityTypeCount(), CustomEntitySpawner.getTotalPropertiesCount(), CustomEntitySpawner.getTotalCommandParamsCount());
-		sendLocaleMessage("SPAWNABLEENTITIES.AVAILABLE", Bukkit.getConsoleSender(), NamedEntitySpawnerParamitrisable.ENTITY_TYPES.size());
+		sendLocaleMessage("SPAWNABLEENTITIES.AVAILABLE", Bukkit.getConsoleSender(), NamedEntitySpawner.SPAWNERS.size());
 		registerCommands();
 		registerMetrics();
 	}
@@ -435,7 +439,7 @@ public class CrazySpawner extends CrazyPlugin
 		saveExampleFile(exampleFolder, "EntityType", entityTypes);
 		// Example - CustomEntityNames
 		final YamlConfiguration customTypes = new YamlConfiguration();
-		customTypes.set("exampleCustomEntityNames", new ArrayList<String>(NamedEntitySpawnerParamitrisable.ENTITY_TYPES.keySet()));
+		customTypes.set("exampleCustomEntityNames", new ArrayList<String>(NamedEntitySpawner.SPAWNERS.keySet()));
 		saveExampleFile(exampleFolder, "CustomEntityNames", customTypes);
 		// Example - Item
 		final YamlConfiguration item = new YamlConfiguration();
