@@ -34,37 +34,6 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 {
 
 	protected final static Map<String, NamedEntitySpawner> SPAWNERS = NamedEntitySpawner.SPAWNERS;
-
-	public static void registerNamedEntitySpawner(final NamedEntitySpawner entitySpawner, final String... aliases)
-	{
-		if (entitySpawner == null)
-			throw new IllegalArgumentException("EntitySpawner cannot be null!");
-		if (entitySpawner.getName() == null)
-			throw new IllegalArgumentException("EntitySpawner's name cannot be null (" + entitySpawner + ")!");
-		SPAWNERS.put(entitySpawner.getName().toUpperCase(), entitySpawner);
-		for (final String alias : aliases)
-			if (alias != null)
-				SPAWNERS.put(alias.toUpperCase(), entitySpawner);
-	}
-
-	public static NamedEntitySpawner getNamedEntitySpawner(final String name)
-	{
-		if (name == null)
-			return null;
-		else
-			return SPAWNERS.get(name.toUpperCase());
-	}
-
-	public static List<NamedEntitySpawner> getNamedEntitySpawnerList(final Collection<String> names)
-	{
-		if (names == null)
-			return new ArrayList<NamedEntitySpawner>(0);
-		final List<NamedEntitySpawner> res = new ArrayList<NamedEntitySpawner>(names.size());
-		for (final String name : names)
-			res.add(getNamedEntitySpawner(name));
-		return res;
-	}
-
 	static
 	{
 		// register default + age spawners
@@ -261,6 +230,36 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 				return zombie;
 			}
 		});
+	}
+
+	public static void registerNamedEntitySpawner(final NamedEntitySpawner entitySpawner, final String... aliases)
+	{
+		if (entitySpawner == null)
+			throw new IllegalArgumentException("EntitySpawner cannot be null!");
+		if (entitySpawner.getName() == null)
+			throw new IllegalArgumentException("EntitySpawner's name cannot be null (" + entitySpawner + ")!");
+		SPAWNERS.put(entitySpawner.getName().toUpperCase(), entitySpawner);
+		for (final String alias : aliases)
+			if (alias != null)
+				SPAWNERS.put(alias.toUpperCase(), entitySpawner);
+	}
+
+	public static NamedEntitySpawner getNamedEntitySpawner(final String name)
+	{
+		if (name == null)
+			return null;
+		else
+			return SPAWNERS.get(name.toUpperCase());
+	}
+
+	public static List<NamedEntitySpawner> getNamedEntitySpawnerList(final Collection<String> names)
+	{
+		if (names == null)
+			return new ArrayList<NamedEntitySpawner>(0);
+		final List<NamedEntitySpawner> res = new ArrayList<NamedEntitySpawner>(names.size());
+		for (final String name : names)
+			res.add(getNamedEntitySpawner(name));
+		return res;
 	}
 
 	public NamedEntitySpawnerParamitrisable()
