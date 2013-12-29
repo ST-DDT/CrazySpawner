@@ -5,6 +5,7 @@ import java.util.Map;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LightningStrike;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper.LightningSpawner;
@@ -34,7 +35,7 @@ public class LightningProperty extends LightningSpawner implements EntityPropert
 	@Override
 	public boolean isApplicable(final Class<? extends Entity> clazz)
 	{
-		return LightningProperty.class.isAssignableFrom(clazz);
+		return LightningStrike.class.isAssignableFrom(clazz);
 	}
 
 	@Override
