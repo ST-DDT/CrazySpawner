@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.DyeColor;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.PigZombie;
@@ -21,6 +26,7 @@ import org.bukkit.entity.Slime;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 @SuppressWarnings("deprecation")
 public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
@@ -112,6 +118,50 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 				return creeper;
 			}
 		}, "POWEREDCREEPER", "CHARGEDCREEPER");
+		// Firework
+		registerNamedEntitySpawner(new ClassSpawner(EntityType.FIREWORK)
+		{
+
+			private final Random RANDOM = new Random();
+			private final int typeSize = FireworkEffect.Type.values().length;
+
+			@Override
+			public Firework spawn(final Location location)
+			{
+				final Firework firework = (Firework) super.spawn(location);
+				final FireworkMeta meta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
+				meta.setPower(RANDOM.nextInt(4) + 1);
+				do
+					meta.addEffect(getRandomEffect());
+				while (RANDOM.nextBoolean());
+				firework.setFireworkMeta(meta);
+				return firework;
+			}
+
+			public FireworkEffect getRandomEffect()
+			{
+				final FireworkEffect.Builder effect = FireworkEffect.builder();
+				effect.flicker(RANDOM.nextBoolean());
+				effect.trail(RANDOM.nextBoolean());
+				effect.with(getRandomType());
+				do
+					effect.withColor(getRandomColor());
+				while (RANDOM.nextBoolean());
+				while (RANDOM.nextBoolean())
+					effect.withFade(getRandomColor());
+				return effect.build();
+			}
+
+			public FireworkEffect.Type getRandomType()
+			{
+				return FireworkEffect.Type.values()[RANDOM.nextInt(typeSize)];
+			}
+
+			public Color getRandomColor()
+			{
+				return Color.fromRGB(RANDOM.nextInt(0xFFFFFF));
+			}
+		}, "RANDOM_FIREWORK");
 		// Horse
 		for (final Horse.Color color : Horse.Color.values())
 			registerNamedEntitySpawner(new HorseColorSpawner(color));
