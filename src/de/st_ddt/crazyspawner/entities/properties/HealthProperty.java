@@ -66,10 +66,10 @@ public class HealthProperty extends BasicProperty
 	{
 		final DoubleParamitrisable minHealth = new DoubleParamitrisable(this.minHealth);
 		params.put("minh", minHealth);
-		params.put("minHealth", minHealth);
+		params.put("minhealth", minHealth);
 		final DoubleParamitrisable maxHealth = new DoubleParamitrisable(this.maxHealth);
 		params.put("maxh", maxHealth);
-		params.put("maxHealth", maxHealth);
+		params.put("maxhealth", maxHealth);
 		final DoubleParamitrisable health = new DoubleParamitrisable(null)
 		{
 
