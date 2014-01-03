@@ -20,7 +20,6 @@ import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.StringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
@@ -110,6 +109,6 @@ public class CommandModifyEntity extends CommandExecutor
 	@Permission("crazyspawner.modifyentity")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.modifyentity");
+		return sender.hasPermission("crazyspawner.modifyentity");
 	}
 }

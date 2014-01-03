@@ -12,7 +12,6 @@ import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.Permission;
@@ -76,6 +75,6 @@ public class CommandOverwriteEntity extends CommandExecutor
 	@Permission("crazyspawner.overwriteentity")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.overwriteentity");
+		return sender.hasPermission("crazyspawner.overwriteentity");
 	}
 }

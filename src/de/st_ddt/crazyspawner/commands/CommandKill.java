@@ -22,7 +22,6 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.ChatHelperExtended;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.CreatureParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.DoubleParamitrisable;
@@ -130,7 +129,7 @@ public class CommandKill extends CommandExecutor
 	@Permission("crazyspawner.kill")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.kill");
+		return sender.hasPermission("crazyspawner.kill");
 	}
 
 	public int killEntities(final Collection<Entity> entities, final Location location, final double range)

@@ -22,7 +22,6 @@ import de.st_ddt.crazyutil.Tabbed;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.DurationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
@@ -130,6 +129,6 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 	@Permission("crazyspawner.theendautorespawn")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.theendautorespawn");
+		return sender.hasPermission("crazyspawner.theendautorespawn");
 	}
 }

@@ -77,7 +77,6 @@ import de.st_ddt.crazyutil.metrics.Metrics.Graph;
 import de.st_ddt.crazyutil.metrics.Metrics.Plotter;
 import de.st_ddt.crazyutil.modes.BooleanFalseMode;
 import de.st_ddt.crazyutil.modes.DoubleMode;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.LocationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
@@ -393,7 +392,7 @@ public class CrazySpawner extends CrazyPlugin
 			@Permission("crazyspawner.reload.entities")
 			public boolean hasAccessPermission(final CommandSender sender)
 			{
-				return PermissionModule.hasPermission(sender, "crazyspawner.reload.entities") || PermissionModule.hasPermission(sender, "crazyspawner.reload.*");
+				return sender.hasPermission("crazyspawner.reload.entities") || sender.hasPermission("crazyspawner.reload.*");
 			}
 		}, "e", "ce", "entities", "customentities");
 		mainCommand.getReloadCommand().addReloadable(new Reloadable()
@@ -412,7 +411,7 @@ public class CrazySpawner extends CrazyPlugin
 			@Permission("crazyspawner.reload.spawntasks")
 			public boolean hasAccessPermission(final CommandSender sender)
 			{
-				return PermissionModule.hasPermission(sender, "crazyspawner.reload.spawntasks") || PermissionModule.hasPermission(sender, "crazyspawner.reload.*");
+				return sender.hasPermission("crazyspawner.reload.spawntasks") || sender.hasPermission("crazyspawner.reload.*");
 			}
 		}, "t", "st", "spawntasks");
 		sendLocaleMessage("SPAWNABLEENTITIES.OPTIONS", Bukkit.getConsoleSender(), EntitySpawnerHelper.getTotalSpawnableEntityTypeCount(), EntityPropertyHelper.getTotalPropertiesCount(), EntityPropertyHelper.getTotalCommandParamsCount());

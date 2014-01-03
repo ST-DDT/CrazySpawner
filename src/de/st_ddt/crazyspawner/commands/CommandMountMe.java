@@ -14,7 +14,6 @@ import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.PlayerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
@@ -51,9 +50,9 @@ public class CommandMountMe extends CommandExecutor
 		final Player player = playerParam.getValue();
 		if (player == null)
 			throw new CrazyCommandUsageException("<entity:NamedEntityType> <player:Player>");
-		if (!PermissionModule.hasPermission(sender, "crazyspawner.mountme." + (player == sender ? "self" : "others")))
+		if (!sender.hasPermission("crazyspawner.mountme." + (player == sender ? "self" : "others")))
 			throw new CrazyCommandPermissionException();
-		if (!(PermissionModule.hasPermission(sender, "crazyspawner.mountme.*") || PermissionModule.hasPermission(sender, "crazyspawner.mountme." + spawner.getType().name() + ".*") || PermissionModule.hasPermission(sender, "crazyspawner.mountme." + spawner.getName())))
+		if (!(sender.hasPermission("crazyspawner.mountme.*") || sender.hasPermission("crazyspawner.mountme." + spawner.getType().name() + ".*") || sender.hasPermission("crazyspawner.mountme." + spawner.getName())))
 			throw new CrazyCommandPermissionException();
 		Entity entity = spawner.spawn(player.getLocation());
 		while (entity.getPassenger() != null)
@@ -88,6 +87,6 @@ public class CommandMountMe extends CommandExecutor
 	@Permission("crazyspawner.mountme")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.mountme");
+		return sender.hasPermission("crazyspawner.mountme");
 	}
 }

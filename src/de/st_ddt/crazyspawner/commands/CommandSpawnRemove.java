@@ -19,7 +19,6 @@ import de.st_ddt.crazyspawner.tasks.options.SpawnTaskListOptionsModder;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.ListFormat;
 import de.st_ddt.crazyutil.Tabbed;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.Permission;
 
@@ -96,6 +95,6 @@ public class CommandSpawnRemove extends CommandExecutor
 	@Permission("crazyspawner.remove")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.remove");
+		return sender.hasPermission("crazyspawner.remove");
 	}
 }

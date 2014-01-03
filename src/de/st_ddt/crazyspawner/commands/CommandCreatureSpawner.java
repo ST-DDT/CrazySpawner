@@ -15,7 +15,6 @@ import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.Tabbed;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.CreatureParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -48,7 +47,7 @@ public class CommandCreatureSpawner extends CommandExecutor
 		final EntityType type = typeParam.getValue();
 		if (type == null)
 			throw new CrazyCommandUsageException("<Creature>");
-		if (!(PermissionModule.hasPermission(player, "crazyspawner.creaturespawner.*") || PermissionModule.hasPermission(player, "crazyspawner.creaturespawner." + type.name())))
+		if (!(player.hasPermission("crazyspawner.creaturespawner.*") || player.hasPermission("crazyspawner.creaturespawner." + type.name())))
 			throw new CrazyCommandPermissionException();
 		creatureSelection.put(player, type);
 		plugin.sendLocaleMessage("COMMAND.CREATURESPAWNER.SELECTED", player, type);
@@ -68,7 +67,7 @@ public class CommandCreatureSpawner extends CommandExecutor
 	@Permission("crazyspawner.creaturespawner")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.creaturespawner");
+		return sender.hasPermission("crazyspawner.creaturespawner");
 	}
 
 	@Override

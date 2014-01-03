@@ -16,7 +16,6 @@ import de.st_ddt.crazyspawner.tasks.TimerSpawnTask;
 import de.st_ddt.crazyspawner.tasks.options.Thunder;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
-import de.st_ddt.crazyutil.modules.permissions.PermissionModule;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.ColoredStringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.DoubleParamitrisable;
@@ -273,7 +272,7 @@ public class CommandSpawn extends CommandExecutor
 		final Location location = locationParam.getValue();
 		if (location.getWorld() == null)
 			throw new CrazyCommandNoSuchException("World", "(none)");
-		if (!(PermissionModule.hasPermission(sender, "crazyspawner.spawn.*") || PermissionModule.hasPermission(sender, "crazyspawner.spawn." + spawner.getType().name() + ".*") || PermissionModule.hasPermission(sender, "crazyspawner.spawn." + spawner.getName())))
+		if (!(sender.hasPermission("crazyspawner.spawn.*") || sender.hasPermission("crazyspawner.spawn." + spawner.getType().name() + ".*") || sender.hasPermission("crazyspawner.spawn." + spawner.getName())))
 			throw new CrazyCommandPermissionException();
 		final TimerSpawnTask task = new TimerSpawnTask(plugin, spawner, location, spawnRange.getValue(), amount.getValue(), interval.getValue() / 50, repeat.getValue(), synced.getValue(), chunkLoadRange.getValue(), creatureMaxCount.getValue(), creatureRange.getValue(), playerCount.getValue(), playerRange.getValue(), blockingRange.getValue(), countDownTimes.getValue(), countDownMessage.getValue(), countDownBroadcast.getValue(), allowDespawn.getValue(), peaceful.getValue(), alarmRange.getValue(), health.getValue(), showHealth.getValue(), fire.getValue(), thunder.getValue());
 		plugin.addSpawnTask(task);
@@ -387,6 +386,6 @@ public class CommandSpawn extends CommandExecutor
 	@Permission("crazyspawner.spawn")
 	public boolean hasAccessPermission(final CommandSender sender)
 	{
-		return PermissionModule.hasPermission(sender, "crazyspawner.spawn");
+		return sender.hasPermission("crazyspawner.spawn");
 	}
 }
