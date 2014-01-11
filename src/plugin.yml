@@ -1,9 +1,9 @@
 name: CrazySpawner
 main: de.st_ddt.crazyspawner.CrazySpawner
 author: ST-DDT
-version: 4.3.3
+version: 4.4
 website: http://dev.bukkit.org/bukkit-plugins/crazyspawner/
-# requires CrazyCore v10.7.7 or later
+# requires CrazyCore v10.8 or later
 depend: [CrazyCore]
 description: >
             CrazySpawner spawn and remove mobs where ever you like.

@@ -89,8 +89,8 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 			throw new CrazyCommandNoSuchException("World", "(none)");
 		if (world.getEnvironment() != Environment.THE_END)
 			throw new CrazyCommandCircumstanceException("the world must be a The_End world!");
-		final TimerSpawnTask dragon = new TimerSpawnTask(plugin, DRAGONTYPE, new Location(world, 0, 0, 0), interval.getTicks(), 5, COUNTDOWNTIMES, plugin.getLocale().getDefaultLocaleMessage("THEENDAUTORESPAWN.COUNTDOWNMESSAGE", world.getName(), "$0$"), DRAGONRANGE);
-		plugin.addSpawnTask(dragon);
+		final TimerSpawnTask dragon = new TimerSpawnTask(owner, DRAGONTYPE, new Location(world, 0, 0, 0), interval.getTicks(), 5, COUNTDOWNTIMES, owner.getLocale().getDefaultLocaleMessage("THEENDAUTORESPAWN.COUNTDOWNMESSAGE", world.getName(), "$0$"), DRAGONRANGE);
+		owner.addSpawnTask(dragon);
 		dragon.start();
 		final int range = chunkloadrange.getValue();
 		for (int x = -range; x <= range; x++)
@@ -98,15 +98,15 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 				world.loadChunk(x, z, false);
 		for (final Entity entity : EntitySpawnerHelper.getMatchingEntites(world, CRYSTALTYPE))
 		{
-			final TimerSpawnTask crystal = new TimerSpawnTask(plugin, CRYSTALTYPE, entity.getLocation().add(0, -1, 0), interval.getTicks(), 1, null, null, CRYSTALERANGE);
-			plugin.addSpawnTask(crystal);
+			final TimerSpawnTask crystal = new TimerSpawnTask(owner, CRYSTALTYPE, entity.getLocation().add(0, -1, 0), interval.getTicks(), 1, null, null, CRYSTALERANGE);
+			owner.addSpawnTask(crystal);
 			crystal.start();
 		}
 		for (int x = -range; x <= range; x++)
 			for (int z = -range; z <= range; z++)
 				world.unloadChunkRequest(x, z, true);
-		plugin.sendLocaleMessage("COMMAND.THEENDAUTORESPAWN.DONE", sender, world.getName());
-		plugin.saveConfiguration();
+		owner.sendLocaleMessage("COMMAND.THEENDAUTORESPAWN.DONE", sender, world.getName());
+		owner.saveConfiguration();
 	}
 
 	@Override

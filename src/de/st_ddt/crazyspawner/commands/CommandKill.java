@@ -76,18 +76,18 @@ public class CommandKill extends CommandExecutor
 		if (world == null)
 			throw new CrazyCommandNoSuchException("World", "(none)");
 		if (monster.getValue())
-			plugin.sendLocaleMessage("COMMAND.KILLED.MONSTERS", sender, killEntities(world.getEntitiesByClasses(Monster.class, Slime.class), location.getValue(), range.getValue()));
+			owner.sendLocaleMessage("COMMAND.KILLED.MONSTERS", sender, killEntities(world.getEntitiesByClasses(Monster.class, Slime.class), location.getValue(), range.getValue()));
 		if (animals.getValue())
-			plugin.sendLocaleMessage("COMMAND.KILLED.ANIMALS", sender, killEntities(world.getEntitiesByClasses(Animals.class, Squid.class), location.getValue(), range.getValue()));
+			owner.sendLocaleMessage("COMMAND.KILLED.ANIMALS", sender, killEntities(world.getEntitiesByClasses(Animals.class, Squid.class), location.getValue(), range.getValue()));
 		if (golems.getValue())
-			plugin.sendLocaleMessage("COMMAND.KILLED.GOLEMS", sender, killEntities(world.getEntitiesByClasses(Golem.class), location.getValue(), range.getValue()));
+			owner.sendLocaleMessage("COMMAND.KILLED.GOLEMS", sender, killEntities(world.getEntitiesByClasses(Golem.class), location.getValue(), range.getValue()));
 		if (villager.getValue())
-			plugin.sendLocaleMessage("COMMAND.KILLED.VILLAGER", sender, killEntities(world.getEntitiesByClasses(Villager.class), location.getValue(), range.getValue()));
+			owner.sendLocaleMessage("COMMAND.KILLED.VILLAGER", sender, killEntities(world.getEntitiesByClasses(Villager.class), location.getValue(), range.getValue()));
 		if (bosses.getValue())
-			plugin.sendLocaleMessage("COMMAND.KILLED.BOSSES", sender, killEntities(world.getEntitiesByClasses(EnderDragon.class, Wither.class), location.getValue(), range.getValue()));
+			owner.sendLocaleMessage("COMMAND.KILLED.BOSSES", sender, killEntities(world.getEntitiesByClasses(EnderDragon.class, Wither.class), location.getValue(), range.getValue()));
 		for (int i = 0; i < length; i++)
 			if (creatures[i].getValue())
-				plugin.sendLocaleMessage("COMMAND.KILLED.TYPE", sender, killEntities(world.getEntitiesByClasses(CreatureParamitrisable.CREATURE_TYPES[i].getEntityClass()), location.getValue(), range.getValue()), CreatureParamitrisable.CREATURE_NAMES[i]);
+				owner.sendLocaleMessage("COMMAND.KILLED.TYPE", sender, killEntities(world.getEntitiesByClasses(CreatureParamitrisable.CREATURE_TYPES[i].getEntityClass()), location.getValue(), range.getValue()), CreatureParamitrisable.CREATURE_NAMES[i]);
 	}
 
 	@Override

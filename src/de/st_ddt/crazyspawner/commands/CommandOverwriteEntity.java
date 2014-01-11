@@ -37,11 +37,11 @@ public class CommandOverwriteEntity extends CommandExecutor
 		if (args[1].equalsIgnoreCase("DEFAULT"))
 			spawner = null;
 		else
-			spawner = plugin.getCustomEntities().get(args[1].toUpperCase());
+			spawner = owner.getCustomEntities().get(args[1].toUpperCase());
 		if (spawner == null || spawner.getType() != type)
 			throw new CrazyCommandNoSuchException("CustomEntity", args[0], tab(sender, args));
-		plugin.getOverwriteEntities()[type.ordinal()] = spawner;
-		plugin.sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, type.name(), args[1].toUpperCase());
+		owner.getOverwriteEntities()[type.ordinal()] = spawner;
+		owner.sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, type.name(), args[1].toUpperCase());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 		{
 			final String arg = args[1].toUpperCase();
 			final List<String> res = new ArrayList<String>();
-			for (final String spawner : plugin.getCustomEntities().keySet())
+			for (final String spawner : owner.getCustomEntities().keySet())
 				if (spawner.startsWith(arg))
 					res.add(spawner);
 			if ("DEFAULT".startsWith(arg))

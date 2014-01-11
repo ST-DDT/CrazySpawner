@@ -59,11 +59,11 @@ public class CommandMountMe extends CommandExecutor
 			entity = entity.getPassenger();
 		entity.setPassenger(player);
 		if (player == sender)
-			plugin.sendLocaleMessage("COMMAND.MOUNTME.SELF", sender, spawnerParam.getValue().getType().name());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.SELF", sender, spawnerParam.getValue().getType().name());
 		else
 		{
-			plugin.sendLocaleMessage("COMMAND.MOUNTME.OTHER", sender, spawnerParam.getValue().getType().name(), player.getName());
-			plugin.sendLocaleMessage("COMMAND.MOUNTME.MOUNTED", player, spawnerParam.getValue().getType().name(), sender.getName());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.OTHER", sender, spawnerParam.getValue().getType().name(), player.getName());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.MOUNTED", player, spawnerParam.getValue().getType().name(), sender.getName());
 		}
 	}
 

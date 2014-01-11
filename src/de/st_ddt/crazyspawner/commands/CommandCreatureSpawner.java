@@ -50,7 +50,7 @@ public class CommandCreatureSpawner extends CommandExecutor
 		if (!(player.hasPermission("crazyspawner.creaturespawner.*") || player.hasPermission("crazyspawner.creaturespawner." + type.name())))
 			throw new CrazyCommandPermissionException();
 		creatureSelection.put(player, type);
-		plugin.sendLocaleMessage("COMMAND.CREATURESPAWNER.SELECTED", player, type);
+		owner.sendLocaleMessage("COMMAND.CREATURESPAWNER.SELECTED", player, type);
 	}
 
 	@Override

@@ -33,21 +33,21 @@ public class CommandSpawnList extends CommandExecutor
 		@Localized("CRAZYSPAWNER.COMMAND.LIST.LISTFORMAT $Index$ $Entry$ $ChatHeader$")
 		public String listFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.LIST.LISTFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.LISTFORMAT");
 		}
 
 		@Override
 		@Localized("CRAZYSPAWNER.COMMAND.LIST.HEADFORMAT $CurrentPage$ $MaxPage$ $ChatHeader$ $DateTime$")
 		public String headFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.LIST.HEADFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.HEADFORMAT");
 		}
 
 		@Override
 		@Localized("CRAZYSPAWNER.COMMAND.LIST.ENTRYFORMAT $Type$ $World$ $X$ $Y$ $Z$ $Distance$ $IntervalTicks$ $IntervalText$ $Repeat$ $Amount$")
 		public String entryFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.LIST.ENTRYFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.ENTRYFORMAT");
 		}
 	};
 
@@ -70,7 +70,7 @@ public class CommandSpawnList extends CommandExecutor
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		final SpawnTaskListOptionsModder modder = new SpawnTaskListOptionsModder(rangeSort, sender instanceof Player ? 100D : null, sender);
-		ChatHelperExtended.processFullListCommand(sender, args, plugin.getChatHeader(), listFormat, modder.getFilters(), sorters, rangeSort, modder, new ArrayList<TimerSpawnTask>(plugin.getTasks()));
+		ChatHelperExtended.processFullListCommand(sender, args, owner.getChatHeader(), listFormat, modder.getFilters(), sorters, rangeSort, modder, new ArrayList<TimerSpawnTask>(owner.getTasks()));
 	}
 
 	@Override

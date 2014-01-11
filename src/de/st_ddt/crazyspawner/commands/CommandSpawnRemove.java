@@ -34,21 +34,21 @@ public class CommandSpawnRemove extends CommandExecutor
 		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.LISTFORMAT $Index$ $Entry$ $ChatHeader$")
 		public String listFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.LISTFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.LISTFORMAT");
 		}
 
 		@Override
 		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.HEADFORMAT $CurrentPage$ $MaxPage$ $ChatHeader$ $DateTime$")
 		public String headFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.HEADFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.HEADFORMAT");
 		}
 
 		@Override
 		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.ENTRYFORMAT $Type$ $World$ $X$ $Y$ $Z$ $Distance$ $IntervalTicks$ $IntervalText$ $Repeat$ $Amount$")
 		public String entryFormat(final CommandSender target)
 		{
-			return plugin.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.ENTRYFORMAT");
+			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.ENTRYFORMAT");
 		}
 	};
 
@@ -74,9 +74,9 @@ public class CommandSpawnRemove extends CommandExecutor
 			if (args.length == 0)
 				throw new CrazyCommandUsageException("[creature:EntityType] [type:ExtendedCreatureType] [location:Location [range:Double]]");
 		final SpawnTaskListOptionsModder modder = new SpawnTaskListOptionsModder(rangeSort, 2D, sender);
-		final List<TimerSpawnTask> list = new ArrayList<TimerSpawnTask>(plugin.getTasks());
-		ChatHelperExtended.processListCommand(sender, args, plugin.getChatHeader(), listFormat, modder.getFilters(), sorters, rangeSort, modder, list);
-		plugin.getTasks().removeAll(list);
+		final List<TimerSpawnTask> list = new ArrayList<TimerSpawnTask>(owner.getTasks());
+		ChatHelperExtended.processListCommand(sender, args, owner.getChatHeader(), listFormat, modder.getFilters(), sorters, rangeSort, modder, list);
+		owner.getTasks().removeAll(list);
 		for (final TimerSpawnTask task : list)
 			task.cancel();
 	}

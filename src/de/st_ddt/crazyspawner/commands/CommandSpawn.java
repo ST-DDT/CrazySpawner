@@ -274,13 +274,13 @@ public class CommandSpawn extends CommandExecutor
 			throw new CrazyCommandNoSuchException("World", "(none)");
 		if (!(sender.hasPermission("crazyspawner.spawn.*") || sender.hasPermission("crazyspawner.spawn." + spawner.getType().name() + ".*") || sender.hasPermission("crazyspawner.spawn." + spawner.getName())))
 			throw new CrazyCommandPermissionException();
-		final TimerSpawnTask task = new TimerSpawnTask(plugin, spawner, location, spawnRange.getValue(), amount.getValue(), interval.getValue() / 50, repeat.getValue(), synced.getValue(), chunkLoadRange.getValue(), creatureMaxCount.getValue(), creatureRange.getValue(), playerCount.getValue(), playerRange.getValue(), blockingRange.getValue(), countDownTimes.getValue(), countDownMessage.getValue(), countDownBroadcast.getValue(), allowDespawn.getValue(), peaceful.getValue(), alarmRange.getValue(), health.getValue(), showHealth.getValue(), fire.getValue(), thunder.getValue());
-		plugin.addSpawnTask(task);
+		final TimerSpawnTask task = new TimerSpawnTask(owner, spawner, location, spawnRange.getValue(), amount.getValue(), interval.getValue() / 50, repeat.getValue(), synced.getValue(), chunkLoadRange.getValue(), creatureMaxCount.getValue(), creatureRange.getValue(), playerCount.getValue(), playerRange.getValue(), blockingRange.getValue(), countDownTimes.getValue(), countDownMessage.getValue(), countDownBroadcast.getValue(), allowDespawn.getValue(), peaceful.getValue(), alarmRange.getValue(), health.getValue(), showHealth.getValue(), fire.getValue(), thunder.getValue());
+		owner.addSpawnTask(task);
 		if (synced.getValue())
 			task.start();
 		else
 			task.start(delay.getValue() / 50);
-		plugin.sendLocaleMessage("COMMAND.SPAWNED", sender, spawnerParam.getValue().getName(), amount);
+		owner.sendLocaleMessage("COMMAND.SPAWNED", sender, spawnerParam.getValue().getName(), amount);
 	}
 
 	@Override

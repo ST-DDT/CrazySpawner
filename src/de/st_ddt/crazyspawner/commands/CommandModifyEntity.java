@@ -62,8 +62,8 @@ public class CommandModifyEntity extends CommandExecutor
 		if (nameParam.getValue() == null)
 			throw new CrazyCommandUsageException("<Inheritance/EntityType> <name:String> [Params...]");
 		final CustomEntitySpawner entitySpawner = new CustomEntitySpawner(type, params);
-		plugin.addCustomEntity(entitySpawner);
-		plugin.sendLocaleMessage("COMMAND.MODIFYENTITY", sender, type.getName() == null ? type.name() : type.getName(), nameParam.getValue());
+		owner.addCustomEntity(entitySpawner);
+		owner.sendLocaleMessage("COMMAND.MODIFYENTITY", sender, type.getName() == null ? type.name() : type.getName(), nameParam.getValue());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class CommandModifyEntity extends CommandExecutor
 		{
 			final List<String> res = new ArrayList<String>();
 			res.addAll(EnumParamitrisable.getEnumNames(EntitySpawnerHelper.getSpawnableEntityTypes()));
-			for (final CustomEntitySpawner spawner : plugin.getCustomEntities().values())
+			for (final CustomEntitySpawner spawner : owner.getCustomEntities().values())
 				res.add(spawner.getName().toUpperCase());
 			final String inheritance = args[0].toUpperCase();
 			final Iterator<String> it = res.iterator();
