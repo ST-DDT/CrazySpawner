@@ -39,7 +39,7 @@ public final class BurningProperty extends BasicProperty
 	@Override
 	public boolean isApplicable(final Class<? extends Entity> clazz)
 	{
-		return Entity.class.isAssignableFrom(clazz);
+		return true;
 	}
 
 	@Override
