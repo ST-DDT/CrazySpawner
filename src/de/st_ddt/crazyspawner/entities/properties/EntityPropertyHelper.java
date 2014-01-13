@@ -40,6 +40,7 @@ public class EntityPropertyHelper
 		registerEntityProperty(EndermanProperty.class);
 		registerEntityProperty(DespawnProperty.class);
 		registerEntityProperty(BurningProperty.class);
+		registerEntityProperty(LocationProperty.class);
 		registerEntityProperty(InvulnerableProperty.class);
 		registerEntityProperty(VelocityProperty.class);
 		registerEntityProperty(PassengerProperty.class);
