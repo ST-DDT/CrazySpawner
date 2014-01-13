@@ -39,7 +39,7 @@ public class PersistanceManager
 	{
 		if (entity == null)
 			return;
-		if (entity.isDead())
+		else if (entity.isDead())
 		{
 			delete(entity);
 			return;
@@ -54,7 +54,7 @@ public class PersistanceManager
 	{
 		if (entity == null)
 			return;
-		if (entity.isDead())
+		else if (entity.isDead())
 		{
 			delete(entity);
 			return;
@@ -121,7 +121,6 @@ public class PersistanceManager
 			return;
 		if (entity.isDead())
 		{
-			entities.remove(entity.getUniqueId());
 			delete(entity);
 			return;
 		}
@@ -167,6 +166,7 @@ public class PersistanceManager
 	{
 		if (entity == null)
 			return;
+		entities.remove(entity.getUniqueId());
 		final File file = getEntityDataFile(entity);
 		if (!file.exists())
 			return;
