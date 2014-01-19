@@ -3,12 +3,11 @@ package de.st_ddt.crazyspawner.entities.persistance;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.UUID;
+import java.util.WeakHashMap;
 
 import org.bukkit.Chunk;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,7 +24,7 @@ public class PersistanceManager
 		ConfigurationSerialization.registerClass(stateClass);
 	}
 
-	private final Map<UUID, Map<String, PersistantState>> entities = new HashMap<UUID, Map<String, PersistantState>>();
+	private final Map<Entity, Map<String, PersistantState>> entities = new WeakHashMap<>();
 	protected final File dataDir;
 
 	public PersistanceManager(final File dataDir)
@@ -44,9 +43,9 @@ public class PersistanceManager
 			delete(entity);
 			return;
 		}
-		if (!entities.containsKey(entity.getUniqueId()))
-			entities.put(entity.getUniqueId(), new TreeMap<String, PersistantState>(String.CASE_INSENSITIVE_ORDER));
-		final Map<String, PersistantState> map = entities.get(entity.getUniqueId());
+		if (!entities.containsKey(entity))
+			entities.put(entity, new TreeMap<String, PersistantState>(String.CASE_INSENSITIVE_ORDER));
+		final Map<String, PersistantState> map = entities.get(entity);
 		map.put(key, state);
 	}
 
@@ -59,9 +58,9 @@ public class PersistanceManager
 			delete(entity);
 			return;
 		}
-		if (!entities.containsKey(entity.getUniqueId()))
+		if (!entities.containsKey(entity))
 			return;
-		final Map<String, PersistantState> map = entities.get(entity.getUniqueId());
+		final Map<String, PersistantState> map = entities.get(entity);
 		map.remove(key);
 	}
 
@@ -70,6 +69,8 @@ public class PersistanceManager
 		final Entity[] list = chunk.getEntities();
 		for (final Entity entity : list)
 			load(entity);
+		// Clean WeakHashMap
+		entities.size();
 	}
 
 	public void unloadChunk(final Chunk chunk)
@@ -78,8 +79,10 @@ public class PersistanceManager
 		for (final Entity entity : list)
 		{
 			persist(entity);
-			entities.remove(entity.getUniqueId());
+			entities.remove(entity);
 		}
+		// Clean WeakHashMap
+		entities.size();
 	}
 
 	public void load(final Entity entity)
@@ -124,7 +127,7 @@ public class PersistanceManager
 			delete(entity);
 			return;
 		}
-		final Map<String, PersistantState> map = entities.get(entity.getUniqueId());
+		final Map<String, PersistantState> map = entities.get(entity);
 		if (map == null)
 		{
 			delete(entity);
@@ -166,7 +169,7 @@ public class PersistanceManager
 	{
 		if (entity == null)
 			return;
-		entities.remove(entity.getUniqueId());
+		entities.remove(entity);
 		final File file = getEntityDataFile(entity);
 		if (!file.exists())
 			return;
