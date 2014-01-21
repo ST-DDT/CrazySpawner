@@ -97,7 +97,7 @@ public class HorseProperty extends BasicProperty
 			}
 			this.style = style;
 		}
-		final String variantName = config.getString("style");
+		final String variantName = config.getString("variant");
 		if (variantName == null)
 			this.variant = null;
 		else
