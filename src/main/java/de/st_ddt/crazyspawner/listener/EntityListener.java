@@ -25,7 +25,7 @@ import org.bukkit.metadata.MetadataValue;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.CompatibilityHelper;
-import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
+import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.meta.AlarmMeta;
 import de.st_ddt.crazyspawner.entities.meta.CustomDamage;
 import de.st_ddt.crazyspawner.entities.meta.CustomDrops;
@@ -36,15 +36,16 @@ import de.st_ddt.crazyspawner.entities.meta.NameMeta;
 import de.st_ddt.crazyspawner.entities.meta.PeacefulMeta;
 import de.st_ddt.crazyspawner.entities.properties.InvulnerableProperty;
 import de.st_ddt.crazyspawner.tasks.HealthTask;
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 
 public class EntityListener implements Listener
 {
 
 	private final CrazySpawner plugin;
 	private final HealthTask health;
-	private final CustomEntitySpawner[] overwriteEntities;
+	private final ApplyableEntitySpawner[] overwriteEntities;
 
-	public EntityListener(final CrazySpawner plugin, final CustomEntitySpawner[] overwriteEntities)
+	public EntityListener(final CrazySpawner plugin, final ApplyableEntitySpawner[] overwriteEntities)
 	{
 		super();
 		this.plugin = plugin;
@@ -56,7 +57,7 @@ public class EntityListener implements Listener
 	public void CreatureSpawn(final CreatureSpawnEvent event)
 	{
 		final LivingEntity living = event.getEntity();
-		final CustomEntitySpawner spawner = overwriteEntities[living.getType().ordinal()];
+		final ApplyableEntitySpawner spawner = overwriteEntities[living.getType().ordinal()];
 		if (spawner == null)
 			return;
 		else
@@ -68,7 +69,7 @@ public class EntityListener implements Listener
 				{
 					if (!living.isValid())
 						return;
-					else if (living.hasMetadata(CustomEntitySpawner.METAHEADER))
+					else if (living.hasMetadata(NamedParentedSpawner.METAHEADER))
 						return;
 					else
 						spawner.apply(living);

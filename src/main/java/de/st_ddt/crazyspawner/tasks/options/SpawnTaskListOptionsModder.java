@@ -66,7 +66,7 @@ public class SpawnTaskListOptionsModder implements ListOptionsModder<TimerSpawnT
 			@Override
 			public boolean filter(final TimerSpawnTask data)
 			{
-				return creature.getValue() == data.getType().getType();
+				return creature.getValue() == data.getType().getEntityType();
 			}
 		});
 		res.add(new Filter.DeafFilterInstance<TimerSpawnTask>()

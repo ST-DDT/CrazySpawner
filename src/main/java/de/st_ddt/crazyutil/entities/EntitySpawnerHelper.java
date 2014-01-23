@@ -1,7 +1,10 @@
 package de.st_ddt.crazyutil.entities;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -9,11 +12,23 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.inventory.ItemStack;
+
+import de.st_ddt.crazyspawner.entities.CustomizedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
+import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
+import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
+import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
+import de.st_ddt.crazyutil.paramitrisable.MaterialParamitriable;
+import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
+import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 
 public class EntitySpawnerHelper extends EntityMatcherHelper
 {
@@ -103,7 +118,12 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 
 	public static void registerEntitySpawner(final EntitySpawner spawner)
 	{
-		ENTITYSPAWNERS[spawner.getType().ordinal()] = spawner;
+		ENTITYSPAWNERS[spawner.getEntityType().ordinal()] = spawner;
+	}
+
+	public static EntitySpawner getSpawner(final EntityType type)
+	{
+		return ENTITYSPAWNERS[type.ordinal()];
 	}
 
 	public static Set<EntityType> getSpawnableEntityTypes()
@@ -130,19 +150,131 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 
 	public static Collection<? extends Entity> getMatchingEntites(final World world, final EntitySpawner spawner)
 	{
-		return getMatchingEntites(world, spawner.getType(), spawner);
+		return getMatchingEntites(world, spawner.getEntityType(), spawner);
 	}
 
 	public static Collection<? extends Entity> getMatchingEntites(final Location location, final double distance, final EntitySpawner spawner)
 	{
-		return getMatchingEntites(location, distance, spawner.getType(), spawner);
+		return getMatchingEntites(location, distance, spawner.getEntityType(), spawner);
+	}
+
+	@SuppressWarnings("deprecation")
+	public static String getEntityTypeName(final EntityType type)
+	{
+		if (type.getName() == null)
+			return type.name();
+		else
+			return type.getName();
+	}
+
+	public static EntitySpawner loadParent(final ConfigurationSection config)
+	{
+		if (config == null)
+			return null;
+		final String spawnerType = config.getString("spawnerType", null);
+		if (spawnerType == null)
+			return loadLegacySpawner(config);
+		final EntitySpawnerType type = EntitySpawnerType.valueOf(spawnerType);
+		switch (type)
+		{
+			case RAW:
+				return getRawSpawner(config);
+			case SPECIAL:
+				return getSpecialSpawner(config);
+			case CONFIGURABLE:
+				return new CustomizedParentedSpawner(config);
+			case NAMED:
+				return NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("name", null));
+			default:
+				return null;
+		}
+	}
+
+	public static void saveParentSpawner(final EntitySpawner spawner, final ConfigurationSection config, final String path)
+	{
+		final EntitySpawnerType spawnerType = spawner.getSpawnerType();
+		config.set(path + "spawnerType", spawnerType.name());
+		switch (spawnerType)
+		{
+			case RAW:
+				config.set(path + "entityType", spawner.getEntityType().name());
+				return;
+			case SPECIAL:
+				if (spawner instanceof ConfigurableEntitySpawner)
+				{
+					config.set(path + "entityType", spawner.getEntityType().name());
+					((ConfigurableEntitySpawner) spawner).save(config, path);
+					return;
+				}
+				else
+					break;
+			case NAMED:
+				if (spawner instanceof NamedEntitySpawner)
+				{
+					config.set(path + "name", ((NamedEntitySpawner) spawner).getName());
+					return;
+				}
+				else
+					break;
+			case CONFIGURABLE:
+				if (spawner instanceof ConfigurableEntitySpawner)
+				{
+					((ConfigurableEntitySpawner) spawner).save(config, path);
+					return;
+				}
+				else
+					break;
+			default:
+				break;
+		}
+		throw new IllegalArgumentException("Corrupt Spawner {type: " + spawnerType.name() + "; class: " + spawner.getClass().getName() + "; info: " + spawner.toString() + "}");
+	}
+
+	private static EntitySpawner loadLegacySpawner(final ConfigurationSection config)
+	{
+		return new LegacyEntitySpawner(config).convert();
+	}
+
+	private static EntitySpawner getRawSpawner(final ConfigurationSection config)
+	{
+		final String entityTypeName = config.getString("entityType", null);
+		if (entityTypeName == null)
+			return null;
+		final EntityType type = EntityType.valueOf(entityTypeName);
+		if (type == null)
+			return null;
+		else
+			return getSpawner(type);
+	}
+
+	private static EntitySpawner getSpecialSpawner(final ConfigurationSection config)
+	{
+		final EntitySpawner spawner = getRawSpawner(config);
+		if (spawner instanceof ConfigurableEntitySpawner)
+		{
+			final Class<? extends EntitySpawner> spawnerClass = spawner.getClass();
+			try
+			{
+				final Constructor<? extends EntitySpawner> spawnerConstructor = spawnerClass.getConstructor(ConfigurationSection.class);
+				return spawnerConstructor.newInstance(config);
+			}
+			catch (final Exception e)
+			{
+				System.err.println("[CrazySpawner] WARNING: Serious Bug detected, please report this!");
+				System.err.println("EntitySpawnerClass: " + spawnerClass.getName());
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else
+			return spawner;
 	}
 
 	protected EntitySpawnerHelper()
 	{
 	}
 
-	abstract static class BasicSpawner implements NamedEntitySpawner
+	private abstract static class BasicSpawner implements NamedEntitySpawner
 	{
 
 		protected final EntityType type;
@@ -155,19 +287,15 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 
 		@Override
-		public final EntityType getType()
+		public final EntityType getEntityType()
 		{
 			return type;
 		}
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public String getName()
 		{
-			if (type.getName() == null)
-				return type.name();
-			else
-				return type.getName();
+			return "RAW_" + getEntityTypeName(type);
 		}
 
 		@Override
@@ -186,13 +314,19 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 
 		@Override
+		public EntitySpawnerType getSpawnerType()
+		{
+			return EntitySpawnerType.RAW;
+		}
+
+		@Override
 		public String toString()
 		{
 			return getClass().getSimpleName() + "{type: " + type.name() + "}";
 		}
 	}
 
-	static class DefaultSpawner extends BasicSpawner
+	private static class DefaultSpawner extends BasicSpawner
 	{
 
 		public DefaultSpawner(final EntityType type)
@@ -207,7 +341,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 	}
 
-	static class CenteredSpawner extends DefaultSpawner
+	private static class CenteredSpawner extends DefaultSpawner
 	{
 
 		public CenteredSpawner(final EntityType type)
@@ -227,7 +361,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 	}
 
-	static class ClassSpawner extends DefaultSpawner
+	private static class ClassSpawner extends DefaultSpawner
 	{
 
 		public ClassSpawner(final EntityType type)
@@ -250,7 +384,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 	}
 
-	public static class FallingBlockSpawner extends DefaultSpawner
+	public final static class FallingBlockSpawner extends BasicSpawner implements ConfigurableEntitySpawner
 	{
 
 		protected final Material material;
@@ -270,6 +404,28 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 				throw new IllegalArgumentException("Material cannot be null!");
 			this.material = material;
 			this.data = data;
+		}
+
+		public FallingBlockSpawner(final ConfigurationSection config)
+		{
+			super(EntityType.FALLING_BLOCK);
+			this.material = Material.valueOf(config.getString("material", "STONE"));
+			if (material == null)
+				throw new IllegalArgumentException("Material cannot be null!");
+			this.data = (byte) config.getInt("data", 0);
+		}
+
+		public FallingBlockSpawner(final Map<String, ? extends Paramitrisable> params)
+		{
+			super(EntityType.FALLING_BLOCK);
+			this.material = ((MaterialParamitriable) params.get("material")).getValue();
+			this.data = ((IntegerParamitrisable) params.get("data")).getValue().byteValue();
+		}
+
+		@Override
+		public EntitySpawnerType getSpawnerType()
+		{
+			return EntitySpawnerType.SPECIAL;
 		}
 
 		@Override
@@ -297,9 +453,29 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			else
 				return false;
 		}
+
+		@Override
+		public void getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
+		{
+			final MaterialParamitriable materialParam = new MaterialParamitriable(material);
+			params.put("m", materialParam);
+			params.put("mat", materialParam);
+			params.put("material", materialParam);
+			final IntegerParamitrisable dataParamitrisable = new IntegerParamitrisable(data);
+			params.put("data", dataParamitrisable);
+		}
+
+		@Override
+		public void save(final ConfigurationSection config, final String path)
+		{
+			config.set(path + "spawnerType", "SPECIAL");
+			config.set(path + "spawner", getName());
+			config.set(path + "material", material.name());
+			config.set(path + "data", data);
+		}
 	}
 
-	public static class LightningSpawner extends DefaultSpawner
+	public final static class LightningSpawner extends BasicSpawner implements ConfigurableEntitySpawner
 	{
 
 		protected final boolean effect;
@@ -308,6 +484,18 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		{
 			super(EntityType.LIGHTNING);
 			this.effect = false;
+		}
+
+		public LightningSpawner(final ConfigurationSection config)
+		{
+			super(EntityType.LIGHTNING);
+			this.effect = config.getBoolean("effect", false);
+		}
+
+		public LightningSpawner(final Map<String, ? extends Paramitrisable> params)
+		{
+			super(EntityType.LIGHTNING);
+			this.effect = ((BooleanParamitrisable) params.get("effect")).getValue();
 		}
 
 		public LightningSpawner(final boolean effect)
@@ -341,6 +529,52 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			}
 			else
 				return false;
+		}
+
+		@Override
+		public void getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
+		{
+			final BooleanParamitrisable effectParam = new BooleanParamitrisable(effect);
+			params.put("e", effectParam);
+			params.put("effect", effectParam);
+			params.put("lightningeffect", effectParam);
+		}
+
+		@Override
+		public void save(final ConfigurationSection config, final String path)
+		{
+			config.set(path + "spawnerType", EntitySpawnerType.SPECIAL.name());
+			config.set(path + "spawner", getName());
+			config.set(path + "effect", effect);
+		}
+	}
+
+	private final static class LegacyEntitySpawner
+	{
+
+		protected final String name;
+		protected final EntityType type;
+		protected final List<EntityPropertyInterface> properties;
+
+		public LegacyEntitySpawner(final ConfigurationSection config)
+		{
+			super();
+			if (config == null)
+				throw new IllegalArgumentException("Config cannot be null!");
+			this.name = config.getString("name", "UNNAMED").toUpperCase();
+			final String typeName = config.getString("type", null);
+			if (typeName == null)
+				throw new IllegalArgumentException("Type cannot be null!");
+			this.type = EntityType.valueOf(typeName.toUpperCase());
+			if (type == null)
+				throw new IllegalArgumentException("Type cannot be null!");
+			this.properties = EntityPropertyHelper.getEntityPropertiesFromConfig(type, config);
+		}
+
+		public NamedEntitySpawner convert()
+		{
+			final CustomizedParentedSpawner spawner = new CustomizedParentedSpawner(EntitySpawnerHelper.getSpawner(type), properties);
+			return new NamedParentedSpawner(spawner, name);
 		}
 	}
 }

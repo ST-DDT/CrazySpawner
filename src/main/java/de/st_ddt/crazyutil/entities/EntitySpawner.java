@@ -9,9 +9,11 @@ public interface EntitySpawner extends EntityMatcher
 
 	public final static EntitySpawner[] ENTITYSPAWNERS = new EntitySpawner[EntityType.values().length];
 
-	public EntityType getType();
+	public EntityType getEntityType();
 
 	public Class<? extends Entity> getEntityClass();
+
+	public EntitySpawnerType getSpawnerType();
 
 	public Entity spawn(Location location);
 

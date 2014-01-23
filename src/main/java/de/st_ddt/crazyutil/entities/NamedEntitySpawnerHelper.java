@@ -28,6 +28,8 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import de.st_ddt.crazyspawner.entities.BasicParentedSpawner;
+
 @SuppressWarnings("deprecation")
 public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 {
@@ -39,15 +41,12 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		for (final EntitySpawner spawner : EntitySpawnerHelper.ENTITYSPAWNERS)
 			if (spawner != null)
 				if (spawner instanceof NamedEntitySpawner)
-					registerNamedEntitySpawner((NamedEntitySpawner) spawner, spawner.getType().name(), spawner.getType().getName());
-		// register default + age spawners
+					registerNamedEntitySpawner((NamedEntitySpawner) spawner, spawner.getEntityType().name(), spawner.getEntityType().getName());
+		// register age spawners
 		for (final EntityType type : EntityType.values())
 			if (type.isAlive() && type.isSpawnable())
-			{
-				registerNamedEntitySpawner(new DefaultSpawner(type), type.name());
 				if (Ageable.class.isAssignableFrom(type.getEntityClass()))
 					registerNamedEntitySpawner(new BabySpawner(type));
-			}
 		registerNamedEntitySpawner(new DefaultSpawner(EntityType.ZOMBIE)
 		{
 
@@ -117,13 +116,19 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 				creeper.setPowered(true);
 				return creeper;
 			}
-		}, "POWEREDCREEPER", "CHARGEDCREEPER");
+		}, "CHARGEDCREEPER");
 		// Firework
-		registerNamedEntitySpawner(new ClassSpawner(EntityType.FIREWORK)
+		registerNamedEntitySpawner(new DefaultSpawner(EntityType.FIREWORK)
 		{
 
 			private final Random RANDOM = new Random();
 			private final int typeSize = FireworkEffect.Type.values().length;
+
+			@Override
+			public String getName()
+			{
+				return "RANDOM_FIREWORK";
+			}
 
 			@Override
 			public Firework spawn(final Location location)
@@ -161,7 +166,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			{
 				return Color.fromRGB(RANDOM.nextInt(0xFFFFFF));
 			}
-		}, "RANDOM_FIREWORK");
+		});
 		// Horse
 		for (final Horse.Color color : Horse.Color.values())
 			registerNamedEntitySpawner(new HorseColorSpawner(color));
@@ -314,6 +319,26 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 	{
 	}
 
+	private static abstract class DefaultSpawner extends BasicParentedSpawner implements NamedEntitySpawner
+	{
+
+		public DefaultSpawner(final EntityType type)
+		{
+			super(type);
+		}
+
+		public final String getParentName()
+		{
+			return getEntityTypeName(getEntityType());
+		}
+
+		@Override
+		public final EntitySpawnerType getSpawnerType()
+		{
+			return EntitySpawnerType.NAMED;
+		}
+	}
+
 	private final static class BabySpawner extends DefaultSpawner
 	{
 
@@ -325,7 +350,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String getName()
 		{
-			return "BABY_" + super.getName();
+			return "BABY_" + getParentName();
 		}
 
 		@Override
@@ -363,7 +388,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String getName()
 		{
-			return color.name() + "_" + super.getName();
+			return color.name() + "_" + getParentName();
 		}
 
 		@Override
@@ -389,7 +414,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; color: " + color.name() + "}";
+			return getClass().getSimpleName() + "{type: HORSE; color: " + color.name() + "}";
 		}
 	}
 
@@ -433,7 +458,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; variant: " + variant.name() + "}";
+			return getClass().getSimpleName() + "{type: HORSE; variant: " + variant.name() + "}";
 		}
 	}
 
@@ -478,7 +503,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; color: " + color.name() + "}";
+			return getClass().getSimpleName() + "{type: SHEEP; color: " + color.name() + "}";
 		}
 	}
 
@@ -497,7 +522,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String getName()
 		{
-			return variant.name() + "_" + super.getName();
+			return variant.name() + "_" + getParentName();
 		}
 
 		@Override
@@ -523,7 +548,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; variant: " + variant.name() + "}";
+			return getClass().getSimpleName() + "{type: SKELETON; variant: " + variant.name() + "}";
 		}
 	}
 
@@ -549,7 +574,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String getName()
 		{
-			return getSizeText() + "_" + super.getName();
+			return getSizeText() + "_" + getParentName();
 		}
 
 		public final String getSizeText()
@@ -580,7 +605,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; size: " + size + "}";
+			return getClass().getSimpleName() + "{type: SLIME; size: " + size + "}";
 		}
 	}
 
@@ -625,7 +650,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		@Override
 		public String toString()
 		{
-			return getClass().getSimpleName() + "{type: " + type.name() + "; profession: " + variant.name() + "}";
+			return getClass().getSimpleName() + "{type: VILLAGER; profession: " + variant.name() + "}";
 		}
 	}
 }

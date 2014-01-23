@@ -28,9 +28,6 @@ public class EntityPropertyHelper
 		// Properties
 		for (final EntityType type : EntityType.values())
 			ENTITYPROPERTIES[type.ordinal()] = new LinkedHashSet<Class<? extends EntityPropertyInterface>>();
-		// Properties - VIP required to be first!
-		registerEntityProperty(FallingBlockProperty.class);
-		registerEntityProperty(LightningProperty.class);
 		// Properties - Sorted by EntityInterfaces
 		registerEntityProperty(AgeProperty.class);
 		registerEntityProperty(BoatProperty.class);

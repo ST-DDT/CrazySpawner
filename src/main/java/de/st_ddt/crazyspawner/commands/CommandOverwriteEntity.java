@@ -10,7 +10,6 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
-import de.st_ddt.crazyspawner.entities.CustomEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -33,7 +32,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 		final EntityType type = EntityType.valueOf(args[0].toUpperCase());
 		if (type == null)
 			throw new CrazyCommandNoSuchException("EntityType", args[0], tab(sender, args));
-		final CustomEntitySpawner spawner;
+		final LegacyEntitySpawner spawner;
 		if (args[1].equalsIgnoreCase("DEFAULT"))
 			spawner = null;
 		else

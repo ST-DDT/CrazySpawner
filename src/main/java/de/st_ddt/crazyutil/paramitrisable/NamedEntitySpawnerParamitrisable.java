@@ -62,7 +62,7 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 			for (final Entry<String, NamedEntitySpawner> entry : NAMEDENTITYSPAWNERS.entrySet())
 				if (entry.getValue().getName().startsWith(parameter))
 					res.add(entry.getKey());
-				else if (entry.getValue().getType().name().contains(parameter) || entry.getKey().contains(parameter))
+				else if (entry.getValue().getEntityType().name().contains(parameter) || entry.getKey().contains(parameter))
 					more.add(entry.getKey());
 			res.addAll(more);
 		}
