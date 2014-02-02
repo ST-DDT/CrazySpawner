@@ -14,6 +14,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 
+import de.st_ddt.crazyutil.ChatHelper;
+import de.st_ddt.crazyutil.comparators.VersionComparator;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.StringParamitrisable;
@@ -25,11 +27,14 @@ public class EntityPropertyHelper
 	protected final static Set<Class<? extends EntityPropertyInterface>>[] ENTITYPROPERTIES = EntityPropertyInterface.ENTITYPROPERTIES;
 	static
 	{
+		final String version = ChatHelper.getExtendedMinecraftVersion();
 		// Properties
 		for (final EntityType type : EntityType.values())
 			ENTITYPROPERTIES[type.ordinal()] = new LinkedHashSet<Class<? extends EntityPropertyInterface>>();
 		// Properties - Sorted by EntityInterfaces
 		registerEntityProperty(AgeProperty.class);
+		if (VersionComparator.compareVersions(version, "1.7.2.0.3") == -1)
+			registerEntityProperty(ArrowProperty.class);
 		registerEntityProperty(BoatProperty.class);
 		registerEntityProperty(ColorableProperty.class);
 		registerEntityProperty(AlarmProperty.class);
@@ -76,6 +81,8 @@ public class EntityPropertyHelper
 		registerEntityProperty(ThrownPotionProperty.class);
 		registerEntityProperty(TNTPrimedProperty.class);
 		registerEntityProperty(VillagerProperty.class);
+		if (VersionComparator.compareVersions(version, "1.7.2.0.3") == -1)
+			registerEntityProperty(WitherSkullProperty.class);
 		registerEntityProperty(WolfProperty.class);
 		registerEntityProperty(ZombieProperty.class);
 	}
