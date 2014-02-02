@@ -61,6 +61,7 @@ public class CreeperProperty extends BasicProperty
 	{
 		final BooleanParamitrisable poweredParam = new BooleanParamitrisable(powered);
 		params.put("powered", poweredParam);
+		params.put("charged", poweredParam);
 	}
 
 	@Override
@@ -76,10 +77,10 @@ public class CreeperProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.POWERED $Powered$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.CREEPER.POWERED {Powered}")
 	public void show(final CommandSender target)
 	{
-		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.POWERED", target, powered == null ? "Default" : powered);
+		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.CREEPER.POWERED", target, powered == null ? "Default" : powered);
 	}
 
 	@Override
