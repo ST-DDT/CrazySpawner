@@ -6,8 +6,7 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import de.st_ddt.crazyutil.ChatHelper;
-import de.st_ddt.crazyutil.comparators.VersionComparator;
+import de.st_ddt.crazyutil.VersionHelper;
 
 public class CompatibilityHelper
 {
@@ -17,9 +16,9 @@ public class CompatibilityHelper
 
 	private static Healther getHealther()
 	{
-		if (VersionComparator.compareVersions(ChatHelper.getMinecraftVersion(), "1.6.1") >= 0)
+		if (VersionHelper.hasRequiredVersion("1.6.1"))
 			return new Healther_161();
-		else if (VersionComparator.compareVersions(ChatHelper.getMinecraftVersion(), "1.4.6") >= 0)
+		else if (VersionHelper.hasRequiredVersion("1.4.6"))
 			try
 			{
 				return new Healther_146();
@@ -35,7 +34,7 @@ public class CompatibilityHelper
 
 	private static Damager getDamager()
 	{
-		if (VersionComparator.compareVersions(ChatHelper.getMinecraftVersion(), "1.6.1") >= 0)
+		if (VersionHelper.hasRequiredVersion("1.6.1"))
 			return new Damager_161();
 		else
 			try
