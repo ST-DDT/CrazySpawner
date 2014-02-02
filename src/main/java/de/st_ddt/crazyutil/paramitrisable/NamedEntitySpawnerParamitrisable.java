@@ -50,22 +50,39 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 		return tabHelp(parameter);
 	}
 
-	public static List<String> tabHelp(String parameter)
+	public static List<String> tabHelp(final String parameter)
+	{
+		return tabHelp(NAMEDENTITYSPAWNERS, parameter);
+	}
+
+	public static List<String> tabHelp(final Map<String, ? extends NamedEntitySpawner> spawners, String parameter)
 	{
 		parameter = parameter.toUpperCase();
 		final List<String> res = new LinkedList<String>();
 		if (parameter.length() == 0)
-			res.addAll(NAMEDENTITYSPAWNERS.keySet());
+			res.addAll(spawners.keySet());
 		else
 		{
 			final List<String> more = new LinkedList<String>();
-			for (final Entry<String, NamedEntitySpawner> entry : NAMEDENTITYSPAWNERS.entrySet())
-				if (entry.getValue().getName().startsWith(parameter))
+			for (final Entry<String, ? extends NamedEntitySpawner> entry : spawners.entrySet())
+				if (entry.getValue().getName().toUpperCase().startsWith(parameter))
 					res.add(entry.getKey());
-				else if (entry.getValue().getEntityType().name().contains(parameter) || entry.getKey().contains(parameter))
+				else if (typedSpawnerName(entry.getValue()).startsWith(parameter))
+					res.add(typedSpawnerName(entry.getValue()));
+				else if (entry.getKey().contains(parameter))
 					more.add(entry.getKey());
 			res.addAll(more);
 		}
 		return res.subList(0, Math.min(res.size(), 10));
+	}
+
+	private static String typedSpawnerName(final NamedEntitySpawner spawner)
+	{
+		return typedName(spawner.getEntityType(), spawner.getName());
+	}
+
+	private static String typedName(final EntityType type, final String name)
+	{
+		return (type == null ? "MULTI" : type.name()) + ":" + name;
 	}
 }
