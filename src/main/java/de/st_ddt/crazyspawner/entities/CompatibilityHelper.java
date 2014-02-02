@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import de.st_ddt.crazyutil.ChatHelper;
-import de.st_ddt.crazyutil.VersionComparator;
+import de.st_ddt.crazyutil.comparators.VersionComparator;
 
 public class CompatibilityHelper
 {

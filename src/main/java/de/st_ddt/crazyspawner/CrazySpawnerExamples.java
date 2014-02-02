@@ -36,7 +36,7 @@ import de.st_ddt.crazyspawner.entities.properties.PotionProterty;
 import de.st_ddt.crazyspawner.tasks.options.Thunder;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.Drop;
-import de.st_ddt.crazyutil.VersionComparator;
+import de.st_ddt.crazyutil.comparators.VersionComparator;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
