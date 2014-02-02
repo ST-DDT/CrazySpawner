@@ -18,8 +18,8 @@ import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ConfigurableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
-import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
@@ -64,8 +64,6 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	 * Creates a CustomEntitySpawner from args.<br>
 	 * This is a helper method for default custom entities.
 	 * 
-	 * @param name
-	 *            The name of the custom entity.
 	 * @param type
 	 *            The entity type of this spawner.
 	 * @param sender
@@ -73,7 +71,23 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	 * @param args
 	 *            The params to create this object.
 	 */
-	public CustomizedParentedSpawner(final NamedEntitySpawner spawner, final CommandSender sender, final String... args)
+	public CustomizedParentedSpawner(final EntityType type, final CommandSender sender, final String... args)
+	{
+		this(EntitySpawnerHelper.getSpawner(type), sender, args);
+	}
+
+	/**
+	 * Creates a CustomEntitySpawner from args.<br>
+	 * This is a helper method for default custom entities.
+	 * 
+	 * @param spawner
+	 *            The entity type of this spawner.
+	 * @param sender
+	 *            The CommandSender how creates this object.
+	 * @param args
+	 *            The params to create this object.
+	 */
+	public CustomizedParentedSpawner(final EntitySpawner spawner, final CommandSender sender, final String... args)
 	{
 		super(spawner);
 		final Map<String, Paramitrisable> params = new HashMap<String, Paramitrisable>();
@@ -160,5 +174,12 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		super.save(config, path);
 		for (final EntityPropertyInterface property : properties)
 			property.save(config, path);
+	}
+
+	public void dummySave(final ConfigurationSection config, final String path)
+	{
+		super.save(config, path);
+		for (final EntityPropertyInterface property : properties)
+			property.dummySave(config, path);
 	}
 }
