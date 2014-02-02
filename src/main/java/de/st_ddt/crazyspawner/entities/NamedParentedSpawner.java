@@ -155,4 +155,9 @@ public class NamedParentedSpawner extends BasicParentedSpawner implements NamedE
 		entity.setMetadata(METAHEADER, this);
 		manager.watch(entity, PERSISTENCEKEY, this);
 	}
+
+	public NamedParentedSpawner clone(final String newName)
+	{
+		return new NamedParentedSpawner(spawner, newName);
+	}
 }
