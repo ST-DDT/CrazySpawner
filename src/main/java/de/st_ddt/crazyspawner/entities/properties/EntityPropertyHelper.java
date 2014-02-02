@@ -36,7 +36,7 @@ public class EntityPropertyHelper
 		registerEntityProperty(LightningProperty.class);
 		// Properties - Sorted by EntityInterfaces
 		registerEntityProperty(AgeProperty.class);
-		if (VersionComparator.compareVersions(version, "1.7.2.0.3") == -1)
+		if (VersionComparator.compareVersions(version, "1.7.2.0.3") >= 0)
 			registerEntityProperty(ArrowProperty.class);
 		registerEntityProperty(BoatProperty.class);
 		registerEntityProperty(ColorableProperty.class);
@@ -84,7 +84,7 @@ public class EntityPropertyHelper
 		registerEntityProperty(ThrownPotionProperty.class);
 		registerEntityProperty(TNTPrimedProperty.class);
 		registerEntityProperty(VillagerProperty.class);
-		if (VersionComparator.compareVersions(version, "1.7.2.0.3") == -1)
+		if (VersionComparator.compareVersions(version, "1.7.2.0.3") >= 0)
 			registerEntityProperty(WitherSkullProperty.class);
 		registerEntityProperty(WolfProperty.class);
 		registerEntityProperty(ZombieProperty.class);
