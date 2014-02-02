@@ -32,7 +32,7 @@ import de.st_ddt.crazyutil.ChatConverter;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.ObjectSaveLoadHelper;
-import de.st_ddt.crazyutil.comparators.VersionComparator;
+import de.st_ddt.crazyutil.VersionHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.locales.CrazyLocale;
@@ -40,8 +40,8 @@ import de.st_ddt.crazyutil.locales.CrazyLocale;
 public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparable<TimerSpawnTask>, ParameterData
 {
 
-	protected final static boolean v146OrLater = VersionComparator.compareVersions(ChatHelper.getMinecraftVersion(), "1.4.6") >= 0;
-	protected final static boolean v15OrLater = VersionComparator.compareVersions(ChatHelper.getMinecraftVersion(), "1.5") >= 0;
+	protected final static boolean v146OrLater = VersionHelper.hasRequiredVersion("1.4.6");
+	protected final static boolean v15OrLater = VersionHelper.hasRequiredVersion("1.5");
 	protected final static Random RANDOM = new Random();
 	protected final List<BukkitTask> tasks = new LinkedList<BukkitTask>();
 	protected final CrazySpawner plugin;
