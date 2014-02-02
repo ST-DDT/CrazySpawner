@@ -287,15 +287,15 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 
 		@Override
-		public final EntityType getEntityType()
-		{
-			return type;
-		}
-
-		@Override
 		public String getName()
 		{
 			return "RAW_" + getEntityTypeName(type);
+		}
+
+		@Override
+		public final EntityType getEntityType()
+		{
+			return type;
 		}
 
 		@Override
