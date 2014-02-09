@@ -280,7 +280,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		throw new IllegalArgumentException("Corrupt Spawner {type: " + spawnerType.name() + "; class: " + spawner.getClass().getName() + "; info: " + spawner.toString() + "}");
 	}
 
-	private static EntitySpawner loadLegacySpawner(final ConfigurationSection config)
+	public static EntitySpawner loadLegacySpawner(final ConfigurationSection config)
 	{
 		return new LegacyEntitySpawner(config).convert();
 	}

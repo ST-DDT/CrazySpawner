@@ -35,7 +35,11 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 	protected BasicParentedSpawner(final ConfigurationSection config)
 	{
 		super();
-		this.spawner = EntitySpawnerHelper.loadParent(config.getConfigurationSection("parent"));
+		final ConfigurationSection parentConfig = config.getConfigurationSection("parent");
+		if (parentConfig == null)
+			this.spawner = EntitySpawnerHelper.loadLegacySpawner(config);
+		else
+			this.spawner = EntitySpawnerHelper.loadParent(parentConfig);
 		if (spawner == null)
 			throw new IllegalArgumentException("Spawner cannot be Null!");
 	}
