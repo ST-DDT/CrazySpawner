@@ -44,6 +44,7 @@ import de.st_ddt.crazyspawner.tasks.TimerSpawnTask;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.CrazyPipe;
+import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntityMatcherHelper;
@@ -60,6 +61,7 @@ import de.st_ddt.crazyutil.modes.DoubleMode;
 import de.st_ddt.crazyutil.paramitrisable.LocationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.reloadable.Reloadable;
+import de.st_ddt.crazyutil.resources.ResourceHelper;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.LocalizedVariable;
 import de.st_ddt.crazyutil.source.Permission;
@@ -270,6 +272,10 @@ public class CrazySpawner extends CrazyPlugin
 			CrazySpawnerExamples.saveExampleFiles(getDataFolder());
 			CrazySpawnerExamples.saveExampleEntities(customEntities, previousVersion);
 		}
+		final File namesFile = new File(getDataFolder(), "Names.txt");
+		if (!namesFile.exists())
+			ResourceHelper.saveResource(plugin, "/Names.txt", namesFile);
+		NamesHelper.loadNames(namesFile);
 		final Reloadable customEntityReloadable = new Reloadable()
 		{
 
