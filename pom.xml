@@ -8,7 +8,7 @@
 
 	<groupId>de.st_ddt.crazy</groupId>
 	<artifactId>CrazySpawner</artifactId>
-	<version>4.4-SNAPSHOT</version>
+	<version>4.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>CrazySpawner</name>
