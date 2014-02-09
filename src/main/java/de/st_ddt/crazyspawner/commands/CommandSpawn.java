@@ -272,7 +272,7 @@ public class CommandSpawn extends CommandExecutor
 		final Location location = locationParam.getValue();
 		if (location.getWorld() == null)
 			throw new CrazyCommandNoSuchException("World", "(none)");
-		if (!(sender.hasPermission("crazyspawner.spawn.*") || sender.hasPermission("crazyspawner.spawn." + spawner.getType().name() + ".*") || sender.hasPermission("crazyspawner.spawn." + spawner.getName())))
+		if (!(sender.hasPermission("crazyspawner.spawn.*") || sender.hasPermission("crazyspawner.spawn." + spawner.getEntityType().name() + ".*") || sender.hasPermission("crazyspawner.spawn." + spawner.getName())))
 			throw new CrazyCommandPermissionException();
 		final TimerSpawnTask task = new TimerSpawnTask(owner, spawner, location, spawnRange.getValue(), amount.getValue(), interval.getValue() / 50, repeat.getValue(), synced.getValue(), chunkLoadRange.getValue(), creatureMaxCount.getValue(), creatureRange.getValue(), playerCount.getValue(), playerRange.getValue(), blockingRange.getValue(), countDownTimes.getValue(), countDownMessage.getValue(), countDownBroadcast.getValue(), allowDespawn.getValue(), peaceful.getValue(), alarmRange.getValue(), health.getValue(), showHealth.getValue(), fire.getValue(), thunder.getValue());
 		owner.addSpawnTask(task);
