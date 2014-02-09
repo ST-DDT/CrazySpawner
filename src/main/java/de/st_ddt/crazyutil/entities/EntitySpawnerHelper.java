@@ -34,6 +34,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 {
 
 	protected final static EntitySpawner[] ENTITYSPAWNERS = EntitySpawner.ENTITYSPAWNERS;
+	protected final static String[] NICEENTITYNAMES = new String[ENTITYSPAWNERS.length];
 	static
 	{
 		// Spawner - Default
@@ -114,6 +115,9 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			}
 		});
 		registerEntitySpawner(new ClassSpawner(EntityType.SPLASH_POTION));
+		// Nice EntityNamed
+		for (final EntityType type : EntityType.values())
+			NICEENTITYNAMES[type.ordinal()] = convertToNiceName(type);
 	}
 
 	public static void registerEntitySpawner(final EntitySpawner spawner)
@@ -158,13 +162,57 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		return getMatchingEntites(location, distance, spawner.getEntityType(), spawner);
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getEntityTypeName(final EntityType type)
 	{
-		if (type.getName() == null)
-			return type.name();
+		if (type == null)
+			return "MULTI";
 		else
-			return type.getName();
+			return type.name();
+	}
+
+	public static String getNiceEntityTypeName(final EntityType type)
+	{
+		if (type == null)
+			return "Multi";
+		else
+			return NICEENTITYNAMES[type.ordinal()];
+	}
+
+	/**
+	 * Converts the UpperCase {@link EntityType#name()} to a nicer version.
+	 * 
+	 * @param type
+	 *            The {@link EntityType} to convert.<br>
+	 *            Must not be Null.
+	 * @return The nice version of the {@link EntityType#name()}.
+	 */
+	private static String convertToNiceName(final EntityType type)
+	{
+		switch (type)
+		{
+			case PRIMED_TNT:
+				return "Primed TNT";
+			case MINECART_TNT:
+				return "Minecart TNT";
+			default:
+				final char[] chars = type.name().toCharArray();
+				boolean start = true;
+				for (int i = 0; i < chars.length; i++)
+					if (start)
+						start = false;
+					else
+					{
+						final char cha = chars[i];
+						if (cha == '_')
+						{
+							chars[i] = ' ';
+							start = true;
+						}
+						else
+							chars[i] = Character.toLowerCase(cha);
+					}
+				return new String(chars);
+		}
 	}
 
 	public static EntitySpawner loadParent(final ConfigurationSection config)

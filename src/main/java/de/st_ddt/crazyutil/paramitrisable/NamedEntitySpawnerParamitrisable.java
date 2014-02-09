@@ -9,6 +9,7 @@ import org.bukkit.entity.EntityType;
 
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
 public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedEntitySpawner>
@@ -83,6 +84,6 @@ public class NamedEntitySpawnerParamitrisable extends TypedParamitrisable<NamedE
 
 	private static String typedName(final EntityType type, final String name)
 	{
-		return (type == null ? "MULTI" : type.name()) + ":" + name;
+		return EntitySpawnerHelper.getEntityTypeName(type) + ":" + name;
 	}
 }
