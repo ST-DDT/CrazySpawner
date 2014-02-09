@@ -33,7 +33,6 @@ import de.st_ddt.crazyspawner.commands.CommandSpawn;
 import de.st_ddt.crazyspawner.commands.CommandSpawnList;
 import de.st_ddt.crazyspawner.commands.CommandSpawnRemove;
 import de.st_ddt.crazyspawner.commands.CommandTheEndAutoRespawn;
-import de.st_ddt.crazyspawner.entities.NamedApplyableSpawner;
 import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
@@ -47,12 +46,11 @@ import de.st_ddt.crazyutil.CrazyPipe;
 import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntityMatcherHelper;
-import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
-import de.st_ddt.crazyutil.entities.ParentedEntitySpawner;
 import de.st_ddt.crazyutil.metrics.Metrics;
 import de.st_ddt.crazyutil.metrics.Metrics.Graph;
 import de.st_ddt.crazyutil.metrics.Metrics.Plotter;
@@ -374,18 +372,16 @@ public class CrazySpawner extends CrazyPlugin
 				if (spawner == null)
 					overwriteEntities[type.ordinal()] = null;
 				else if (spawner.getEntityType() == type)
-					if (spawner instanceof ApplyableEntitySpawner)
-						overwriteEntities[type.ordinal()] = (ApplyableEntitySpawner) spawner;
-					else if (spawner instanceof ParentedEntitySpawner && ((ParentedEntitySpawner) spawner).getParentSpawner() instanceof ApplyableEntitySpawner)
-					{
-						final EntitySpawner parent = ((ParentedEntitySpawner) spawner).getParentSpawner();
-						overwriteEntities[type.ordinal()] = new NamedApplyableSpawner((ApplyableEntitySpawner) parent);
-					}
-					else
+				{
+					final ApplyableEntitySpawner applyableSpawner = ApplyableEntitySpawnerHelper.wrapSpawner(spawner);
+					if (applyableSpawner == null)
 					{
 						System.err.println("Could not use " + spawner.getName() + " to overwrite default " + type.name() + " entities (Spawner is not applicable to existing entities)!");
 						overwriteEntities[type.ordinal()] = null;
 					}
+					else
+						overwriteEntities[type.ordinal()] = applyableSpawner;
+				}
 				else
 				{
 					System.err.println("Could not use " + spawner.getName() + " to overwrite default " + type.name() + " entities (Wrong EntityType)!");

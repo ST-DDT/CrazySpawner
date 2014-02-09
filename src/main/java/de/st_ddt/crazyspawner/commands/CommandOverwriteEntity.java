@@ -10,6 +10,8 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -32,13 +34,15 @@ public class CommandOverwriteEntity extends CommandExecutor
 		final EntityType type = EntityType.valueOf(args[0].toUpperCase());
 		if (type == null)
 			throw new CrazyCommandNoSuchException("EntityType", args[0], tab(sender, args));
-		final LegacyEntitySpawner spawner;
+		final ApplyableEntitySpawner spawner;
 		if (args[1].equalsIgnoreCase("DEFAULT"))
 			spawner = null;
 		else
-			spawner = owner.getCustomEntities().get(args[1].toUpperCase());
-		if (spawner == null || spawner.getType() != type)
-			throw new CrazyCommandNoSuchException("CustomEntity", args[0], tab(sender, args));
+		{
+			spawner = ApplyableEntitySpawnerHelper.wrapSpawner(owner.getCustomEntities().get(args[1].toUpperCase()));
+			if (spawner == null || spawner.getEntityType() != type)
+				throw new CrazyCommandNoSuchException("CustomEntity", args[0], tab(sender, args));
+		}
 		owner.getOverwriteEntities()[type.ordinal()] = spawner;
 		owner.sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, type.name(), args[1].toUpperCase());
 	}
