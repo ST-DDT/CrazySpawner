@@ -20,6 +20,8 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.common.collect.ImmutableSet;
+
 import de.st_ddt.crazyspawner.entities.CustomizedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
@@ -326,12 +328,14 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 	{
 
 		protected final EntityType type;
+		protected final Set<Class<?>> classes;
 
 		public BasicSpawner(final EntityType type)
 		{
 			if (type == null)
 				throw new IllegalArgumentException("Type cannot be Null!");
 			this.type = type;
+			this.classes = ImmutableSet.copyOf(type.getEntityClass().getClasses());
 		}
 
 		@Override
@@ -350,6 +354,12 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		public final Class<? extends Entity> getEntityClass()
 		{
 			return type.getEntityClass();
+		}
+
+		@Override
+		public Set<Class<?>> getEntityClasses()
+		{
+			return classes;
 		}
 
 		@Override

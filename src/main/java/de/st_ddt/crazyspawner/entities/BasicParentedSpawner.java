@@ -1,5 +1,7 @@
 package de.st_ddt.crazyspawner.entities;
 
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -50,6 +52,11 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 		return spawner.getEntityClass();
 	}
 
+	@Override
+	public final Set<Class<?>> getEntityClasses()
+	{
+		return spawner.getEntityClasses();
+	}
 
 	@Override
 	public Entity spawn(final Location location)

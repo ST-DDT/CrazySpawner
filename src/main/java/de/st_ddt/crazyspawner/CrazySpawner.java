@@ -25,7 +25,7 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.commands.CommandCreatureSpawner;
 import de.st_ddt.crazyspawner.commands.CommandKill;
-import de.st_ddt.crazyspawner.commands.CommandModifyEntity;
+import de.st_ddt.crazyspawner.commands.CommandCustomEntityModify;
 import de.st_ddt.crazyspawner.commands.CommandMountMe;
 import de.st_ddt.crazyspawner.commands.CommandOverwriteEntity;
 import de.st_ddt.crazyspawner.commands.CommandShowEntity;
@@ -186,7 +186,7 @@ public class CrazySpawner extends CrazyPlugin
 		getCommand("crazycreaturespawner").setExecutor(new CommandCreatureSpawner(this, creatureSelection));
 		getCommand("crazytheendautorespawn").setExecutor(new CommandTheEndAutoRespawn(this));
 		getCommand("mountme").setExecutor(new CommandMountMe(this));
-		mainCommand.addSubCommand(new CommandModifyEntity(this), "me", "modentity", "modifyentity");
+		mainCommand.addSubCommand(new CommandCustomEntityModify(this), "me", "modentity", "modifyentity");
 		mainCommand.addSubCommand(new CommandShowEntity(this), "se", "showentity", "entityinfo");
 		mainCommand.addSubCommand(new CommandOverwriteEntity(this), "oe", "overwriteentity");
 		mainCommand.addSubCommand(new CommandSpawnList(this), "l", "list");
@@ -521,10 +521,10 @@ public class CrazySpawner extends CrazyPlugin
 		}
 	}
 
-	public void addCustomEntity(final NamedParentedSpawner customEntity, final String... aliases)
+	public void addCustomEntity(final NamedParentedSpawner customEntity)
 	{
 		customEntities.put(customEntity.getName(), customEntity);
-		NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity, aliases);
+		NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity);
 		saveCustomEntities();
 	}
 

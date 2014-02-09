@@ -1,5 +1,7 @@
 package de.st_ddt.crazyutil.entities;
 
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -23,6 +25,11 @@ public interface EntitySpawner extends EntityMatcher
 	 *         If this Spawns only one {@link EntityType} this method returns {@link EntityType#getEntityClass()}.
 	 */
 	public Class<? extends Entity> getEntityClass();
+
+	/**
+	 * @return An immutable set containing all Classes that are supported by all possible spawned entities.
+	 */
+	public Set<Class<?>> getEntityClasses();
 
 	public EntitySpawnerType getSpawnerType();
 
