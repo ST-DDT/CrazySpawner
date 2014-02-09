@@ -52,18 +52,18 @@ public class CommandMountMe extends CommandExecutor
 			throw new CrazyCommandUsageException("<entity:NamedEntityType> <player:Player>");
 		if (!sender.hasPermission("crazyspawner.mountme." + (player == sender ? "self" : "others")))
 			throw new CrazyCommandPermissionException();
-		if (!(sender.hasPermission("crazyspawner.mountme.*") || sender.hasPermission("crazyspawner.mountme." + spawner.getType().name() + ".*") || sender.hasPermission("crazyspawner.mountme." + spawner.getName())))
+		if (!(sender.hasPermission("crazyspawner.mountme.*") || sender.hasPermission("crazyspawner.mountme." + spawner.getEntityType().name() + ".*") || sender.hasPermission("crazyspawner.mountme." + spawner.getName())))
 			throw new CrazyCommandPermissionException();
 		Entity entity = spawner.spawn(player.getLocation());
 		while (entity.getPassenger() != null)
 			entity = entity.getPassenger();
 		entity.setPassenger(player);
 		if (player == sender)
-			owner.sendLocaleMessage("COMMAND.MOUNTME.SELF", sender, spawnerParam.getValue().getType().name());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.SELF", sender, spawnerParam.getValue().getEntityType().name());
 		else
 		{
-			owner.sendLocaleMessage("COMMAND.MOUNTME.OTHER", sender, spawnerParam.getValue().getType().name(), player.getName());
-			owner.sendLocaleMessage("COMMAND.MOUNTME.MOUNTED", player, spawnerParam.getValue().getType().name(), sender.getName());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.OTHER", sender, spawnerParam.getValue().getEntityType().name(), player.getName());
+			owner.sendLocaleMessage("COMMAND.MOUNTME.MOUNTED", player, spawnerParam.getValue().getEntityType().name(), sender.getName());
 		}
 	}
 
