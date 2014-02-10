@@ -84,6 +84,6 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 	public void save(final ConfigurationSection config, final String path)
 	{
 		super.save(config, path);
-		EntitySpawnerHelper.saveParentSpawner(spawner, config, path + "parent");
+		EntitySpawnerHelper.saveParentSpawner(spawner, config, path + "parent.");
 	}
 }
