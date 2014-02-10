@@ -11,6 +11,6 @@ public abstract class BasicSpawner implements EntitySpawner, ConfigurationSaveab
 	@Override
 	public void save(final ConfigurationSection config, final String path)
 	{
-		config.set("spawnerType", getSpawnerType().name());
+		config.set(path + "spawnerType", getSpawnerType().name());
 	}
 }
