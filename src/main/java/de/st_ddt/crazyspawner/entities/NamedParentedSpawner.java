@@ -3,6 +3,7 @@ package de.st_ddt.crazyspawner.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.metadata.MetadataValue;
@@ -12,9 +13,13 @@ import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
 import de.st_ddt.crazyspawner.entities.persistance.PersistantState;
 import de.st_ddt.crazyutil.entities.ChangeableNamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
+import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.ShowableEntitySpawner;
+import de.st_ddt.crazyutil.source.Localized;
 
-public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, MetadataValue, PersistantState
+public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, ShowableEntitySpawner, MetadataValue, PersistantState
 {
 
 	public final static String METAHEADER = "CustomEntityMeta";
@@ -63,6 +68,21 @@ public class NamedParentedSpawner extends BasicParentedSpawner implements Change
 	public EntitySpawnerType getSpawnerType()
 	{
 		return EntitySpawnerType.NAMED;
+	}
+
+	@Override
+	@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.NAMEDPARENTED {Name} {EntityType}", "CRAZYSPAWNER.ENTITY.SHOW.PARENT", "CRAZYSPAWNER.ENTITY.SHOW.PARENT.NAMED {ParentName}", "CRAZYSPAWNER.ENTITY.SHOW.PARENT.UNKNOWN {ToString}" })
+	public void show(final CommandSender target)
+	{
+		final CrazySpawner plugin = CrazySpawner.getPlugin();
+		plugin.sendLocaleMessage("ENTITY.SHOW.NAMEDPARENTED", target, name, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+		plugin.sendLocaleMessage("ENTITY.SHOW.PARENT", target);
+		if (spawner instanceof ShowableEntitySpawner)
+			((ShowableEntitySpawner) spawner).show(target);
+		else if (spawner instanceof NamedEntitySpawner)
+			plugin.sendLocaleMessage("ENTITY.SHOW.PARENT.NAMED", target, ((NamedEntitySpawner) spawner).getName());
+		else
+			plugin.sendLocaleMessage("ENTITY.SHOW.PARENT.UNKNOWN", target, spawner.toString());
 	}
 
 	@Override

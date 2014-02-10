@@ -10,13 +10,14 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
+import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.Permission;
 
-public class CommandShowEntity extends CommandExecutor
+public class CommandCustomEntityShow extends CommandExecutor
 {
 
-	public CommandShowEntity(final CrazySpawner plugin)
+	public CommandCustomEntityShow(final CrazySpawner plugin)
 	{
 		super(plugin);
 	}
@@ -28,7 +29,7 @@ public class CommandShowEntity extends CommandExecutor
 		if (args.length != 1)
 			throw new CrazyCommandUsageException("<CustomEntityType>");
 		final String name = args[0].toUpperCase();
-		final LegacyEntitySpawner spawner = owner.getCustomEntities().get(name.toUpperCase());
+		final NamedParentedSpawner spawner = owner.getCustomEntities().get(name.toUpperCase());
 		if (spawner == null)
 			throw new CrazyCommandNoSuchException("CustomEntityType", name, tab(sender, args));
 		owner.sendLocaleMessage("COMMAND.SHOWENTITY", sender);
@@ -42,7 +43,7 @@ public class CommandShowEntity extends CommandExecutor
 			return new ArrayList<String>(0);
 		final String name = args[0].toUpperCase();
 		final List<String> res = new LinkedList<String>();
-		for (final LegacyEntitySpawner spawner : owner.getCustomEntities().values())
+		for (final NamedParentedSpawner spawner : owner.getCustomEntities().values())
 			if (spawner.getName().startsWith(name))
 				res.add(name);
 		return res;

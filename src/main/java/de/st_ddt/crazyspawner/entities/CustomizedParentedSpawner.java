@@ -12,6 +12,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
+import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
@@ -21,12 +22,15 @@ import de.st_ddt.crazyutil.entities.ConfigurableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.ShowableEntitySpawner;
 import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
+import de.st_ddt.crazyutil.source.Localized;
 
 @SerializableAs("CrazySpawner_CustomEntitySpawner")
-public class CustomizedParentedSpawner extends BasicParentedSpawner implements ChangeableConfigurableEntitySpawner, ConfigurationSaveable, ApplyableEntitySpawner
+public class CustomizedParentedSpawner extends BasicParentedSpawner implements ChangeableConfigurableEntitySpawner, ShowableEntitySpawner, ConfigurationSaveable, ApplyableEntitySpawner
 {
 
 	protected final List<EntityPropertyInterface> properties;
@@ -191,5 +195,20 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		return new CustomizedParentedSpawner(getEntityType(), params);
 	}
 
-	
+	@Override
+	@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.CUSTOMIZEDPARENTED {EntityType}", "CRAZYSPAWNER.ENTITY.SHOW.PARENT", "CRAZYSPAWNER.ENTITY.SHOW.PARENT.NAMED {ParentName}", "CRAZYSPAWNER.ENTITY.SHOW.PARENT.UNKNOWN {ToString}" })
+	public void show(final CommandSender target)
+	{
+		final CrazySpawner plugin = CrazySpawner.getPlugin();
+		plugin.sendLocaleMessage("ENTITY.SHOW.CUSTOMIZEDPARENTED", target, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+		plugin.sendLocaleMessage("ENTITY.SHOW.PARENT", target);
+		for (final EntityPropertyInterface property : properties)
+			property.show(target);
+		if (spawner instanceof ShowableEntitySpawner)
+			((ShowableEntitySpawner) spawner).show(target);
+		else if (spawner instanceof NamedEntitySpawner)
+			plugin.sendLocaleMessage("ENTITY.SHOW.PARENT.NAMED", target, ((NamedEntitySpawner) spawner).getName());
+		else
+			plugin.sendLocaleMessage("ENTITY.SHOW.PARENT.UNKNOWN", target, spawner.toString());
+	}
 }

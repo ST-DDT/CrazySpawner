@@ -28,7 +28,7 @@ import de.st_ddt.crazyspawner.commands.CommandKill;
 import de.st_ddt.crazyspawner.commands.CommandCustomEntityModify;
 import de.st_ddt.crazyspawner.commands.CommandMountMe;
 import de.st_ddt.crazyspawner.commands.CommandOverwriteEntity;
-import de.st_ddt.crazyspawner.commands.CommandShowEntity;
+import de.st_ddt.crazyspawner.commands.CommandCustomEntityShow;
 import de.st_ddt.crazyspawner.commands.CommandSpawn;
 import de.st_ddt.crazyspawner.commands.CommandSpawnList;
 import de.st_ddt.crazyspawner.commands.CommandSpawnRemove;
@@ -187,7 +187,7 @@ public class CrazySpawner extends CrazyPlugin
 		getCommand("crazytheendautorespawn").setExecutor(new CommandTheEndAutoRespawn(this));
 		getCommand("mountme").setExecutor(new CommandMountMe(this));
 		mainCommand.addSubCommand(new CommandCustomEntityModify(this), "me", "modentity", "modifyentity");
-		mainCommand.addSubCommand(new CommandShowEntity(this), "se", "showentity", "entityinfo");
+		mainCommand.addSubCommand(new CommandCustomEntityShow(this), "se", "showentity", "entityinfo");
 		mainCommand.addSubCommand(new CommandOverwriteEntity(this), "oe", "overwriteentity");
 		mainCommand.addSubCommand(new CommandSpawnList(this), "l", "list");
 		mainCommand.addSubCommand(new CommandSpawnRemove(this), "rem", "remove");
