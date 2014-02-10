@@ -65,6 +65,12 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(type, params);
 	}
 
+	private CustomizedParentedSpawner(final EntityType type, final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
+	{
+		super(spawner);
+		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(type, params);
+	}
+
 	/**
 	 * Creates a CustomEntitySpawner from args.<br>
 	 * This is a helper method for default custom entities.
@@ -192,7 +198,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	@Override
 	public CustomizedParentedSpawner change(final Map<String, ? extends TabbedParamitrisable> params)
 	{
-		return new CustomizedParentedSpawner(getEntityType(), params);
+		return new CustomizedParentedSpawner(getEntityType(), spawner, params);
 	}
 
 	@Override
