@@ -16,6 +16,7 @@ import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
+import de.st_ddt.crazyutil.entities.ChangeableConfigurableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ConfigurableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
@@ -25,7 +26,7 @@ import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 
 @SerializableAs("CrazySpawner_CustomEntitySpawner")
-public class CustomizedParentedSpawner extends BasicParentedSpawner implements ConfigurationSaveable, ApplyableEntitySpawner
+public class CustomizedParentedSpawner extends BasicParentedSpawner implements ChangeableConfigurableEntitySpawner, ConfigurationSaveable, ApplyableEntitySpawner
 {
 
 	protected final List<EntityPropertyInterface> properties;
@@ -147,6 +148,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 			property.apply(entity);
 	}
 
+	@Override
 	public final void getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
 	{
 		for (final EntityPropertyInterface property : properties)
@@ -182,4 +184,12 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		for (final EntityPropertyInterface property : properties)
 			property.dummySave(config, path);
 	}
+
+	@Override
+	public CustomizedParentedSpawner change(final Map<String, ? extends TabbedParamitrisable> params)
+	{
+		return new CustomizedParentedSpawner(getEntityType(), params);
+	}
+
+	
 }

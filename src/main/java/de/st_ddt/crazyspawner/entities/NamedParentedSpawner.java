@@ -10,11 +10,11 @@ import org.bukkit.metadata.MetadataValue;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
 import de.st_ddt.crazyspawner.entities.persistance.PersistantState;
+import de.st_ddt.crazyutil.entities.ChangeableNamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
-import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
-public class NamedParentedSpawner extends BasicParentedSpawner implements NamedEntitySpawner, MetadataValue, PersistantState
+public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, MetadataValue, PersistantState
 {
 
 	public final static String METAHEADER = "CustomEntityMeta";
@@ -156,6 +156,7 @@ public class NamedParentedSpawner extends BasicParentedSpawner implements NamedE
 		manager.watch(entity, PERSISTENCEKEY, this);
 	}
 
+	@Override
 	public NamedParentedSpawner clone(final String newName)
 	{
 		return new NamedParentedSpawner(spawner, newName);
