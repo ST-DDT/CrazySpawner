@@ -30,7 +30,8 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 {
 
 	protected final static int MAXCONTENTCOUNT = 2 * 3 * 9;
-	protected final boolean despawn;
+	protected final Boolean despawnOnPlace;
+	protected final Boolean despawnOnBreak;
 	protected final Material placeMaterial;
 	protected final Byte placeData;
 	protected final Map<Integer, ItemStack> content;
@@ -38,7 +39,8 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	public FallingBlockExtendedProperty()
 	{
 		super();
-		this.despawn = false;
+		this.despawnOnPlace = null;
+		this.despawnOnBreak = null;
 		this.placeMaterial = null;
 		this.placeData = null;
 		this.content = new HashMap<Integer, ItemStack>();
@@ -47,7 +49,18 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	public FallingBlockExtendedProperty(final ConfigurationSection config)
 	{
 		super(config);
-		this.despawn = config.getBoolean("despawnOnImpact", false);
+		if (config.getBoolean("despawnOnPlace", false))
+			this.despawnOnPlace = false;
+		else if (!config.getBoolean("despawnOnPlace", true))
+			this.despawnOnPlace = false;
+		else
+			this.despawnOnPlace = null;
+		if (config.getBoolean("despawnOnBreak", false))
+			this.despawnOnBreak = false;
+		else if (!config.getBoolean("despawnOnBreak", true))
+			this.despawnOnBreak = false;
+		else
+			this.despawnOnBreak = null;
 		final String placeMaterialName = config.getString("placeMaterial", null);
 		if (placeMaterialName == null)
 			this.placeMaterial = null;
@@ -78,8 +91,10 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	public FallingBlockExtendedProperty(final Map<String, ? extends Paramitrisable> params)
 	{
 		super(params);
-		final BooleanParamitrisable despawnParam = (BooleanParamitrisable) params.get("despawnonimpact");
-		this.despawn = despawnParam.getValue();
+		final BooleanParamitrisable despawnOnPlaceParam = (BooleanParamitrisable) params.get("despawnonplace");
+		this.despawnOnPlace = despawnOnPlaceParam.getValue();
+		final BooleanParamitrisable despawnOnBreakParam = (BooleanParamitrisable) params.get("despawnonbreak");
+		this.despawnOnBreak = despawnOnBreakParam.getValue();
 		final MaterialParamitriable placeMaterialParam = (MaterialParamitriable) params.get("placematerial");
 		this.placeMaterial = placeMaterialParam.getValue();
 		final IntegerParamitrisable placeDataParam = (IntegerParamitrisable) params.get("placedata");
@@ -104,17 +119,24 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	@Override
 	public void apply(final Entity entity)
 	{
-		if (!equalsDefault())
+		final FallingBlock block = (FallingBlock) entity;
+		if (despawnOnBreak != null)
+			block.setDropItem(despawnOnBreak);
+		if (requiresMetadata())
 			entity.setMetadata(METAHEADER, this);
 	}
 
 	@Override
 	public void getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
 	{
-		final BooleanParamitrisable despawnParam = new BooleanParamitrisable(despawn);
-		params.put("doi", despawnParam);
-		params.put("donimpact", despawnParam);
-		params.put("despawnonimpact", despawnParam);
+		final BooleanParamitrisable despawnOnPlaceParam = new BooleanParamitrisable(despawnOnPlace);
+		params.put("dop", despawnOnPlaceParam);
+		params.put("donplace", despawnOnPlaceParam);
+		params.put("despawnonplace", despawnOnPlaceParam);
+		final BooleanParamitrisable despawnOnBreakParam = new BooleanParamitrisable(despawnOnBreak);
+		params.put("dob", despawnOnBreakParam);
+		params.put("donbreak", despawnOnBreakParam);
+		params.put("despawnonbreak", despawnOnBreakParam);
 		final MaterialParamitriable placeMaterialParam = new MaterialParamitriable(placeMaterial);
 		params.put("pm", placeMaterialParam);
 		params.put("pmat", placeMaterialParam);
@@ -137,16 +159,24 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	@Override
 	public void save(final ConfigurationSection config, final String path)
 	{
-		config.set(path + "despawnOnImpact", despawn);
-		config.set(path + "placematerial", placeMaterial);
-		config.set(path + "placedata", placeData);
+		if (despawnOnPlace == null)
+			config.set(path + "despawnOnPlace", "default");
+		else
+			config.set(path + "despawnOnPlace", despawnOnPlace);
+		if (despawnOnBreak == null)
+			config.set(path + "despawnOnBreak", "default");
+		else
+			config.set(path + "despawnOnBreak", despawnOnBreak);
+		config.set(path + "placeMaterial", placeMaterial);
+		config.set(path + "placeData", placeData);
 		ObjectSaveLoadHelper.saveInventory(config, path + "content.", content);
 	}
 
 	@Override
 	public void dummySave(final ConfigurationSection config, final String path)
 	{
-		config.set(path + "despawnOnImpact", "boolean (true/false)");
+		config.set(path + "despawnOnPlace", "boolean (true/false/default)");
+		config.set(path + "despawnOnBreak", "boolean (true/false/default)");
 		config.set(path + "placeMaterial", "Material (Blocks only)");
 		config.set(path + "placeData", "byte");
 		config.set(path + "content.0", "Item");
@@ -159,7 +189,7 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	public void show(final CommandSender target)
 	{
 		final CrazySpawner plugin = CrazySpawner.getPlugin();
-		plugin.sendLocaleMessage("ENTITY.PROPERTY.DESPAWNONIMPACT", target, despawn);
+		plugin.sendLocaleMessage("ENTITY.PROPERTY.DESPAWNONIMPACT", target, despawnOnPlace);
 		plugin.sendLocaleMessage("ENTITY.PROPERTY.PLACEMATERIAL", target, placeMaterial == null ? "Default" : placeMaterial.name(), placeData == null ? "Default" : placeData & 0xFF);
 		for (int i = 0; i < MAXCONTENTCOUNT; i++)
 		{
@@ -169,16 +199,21 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 		}
 	}
 
-	@Override
-	public boolean equalsDefault()
+	private boolean requiresMetadata()
 	{
-		return despawn == false && placeMaterial == null && placeData == null && content.isEmpty();
+		return despawnOnPlace != null || placeMaterial != null || placeData != null || !content.isEmpty();
 	}
 
 	@Override
-	public boolean isDespawningOnImpactEnabled()
+	public boolean equalsDefault()
 	{
-		return despawn;
+		return despawnOnBreak == null && !requiresMetadata();
+	}
+
+	@Override
+	public boolean isDespawningOnPlaceEnabled()
+	{
+		return despawnOnPlace;
 	}
 
 	@Override

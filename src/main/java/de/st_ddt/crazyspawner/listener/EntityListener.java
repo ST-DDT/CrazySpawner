@@ -167,7 +167,7 @@ public class EntityListener implements Listener
 
 	@SuppressWarnings("deprecation")
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-	public void FallingBlockImpact(final EntityChangeBlockEvent event)
+	public void FallingBlockPlace(final EntityChangeBlockEvent event)
 	{
 		final Entity entity = event.getEntity();
 		if (!(entity instanceof FallingBlock))
@@ -179,7 +179,7 @@ public class EntityListener implements Listener
 			{
 				final FallingBlockMeta fallingMeta = (FallingBlockMeta) meta;
 				event.setCancelled(true);
-				if (fallingMeta.isDespawningOnImpactEnabled())
+				if (fallingMeta.isDespawningOnPlaceEnabled())
 					break;
 				Material material;
 				if (fallingMeta.getPlacedMaterial() == null)

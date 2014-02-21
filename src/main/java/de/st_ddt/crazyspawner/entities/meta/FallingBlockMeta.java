@@ -9,7 +9,7 @@ public interface FallingBlockMeta extends MetadataValue
 
 	public final static String METAHEADER = "FallingBlockMeta";
 
-	public boolean isDespawningOnImpactEnabled();
+	public boolean isDespawningOnPlaceEnabled();
 
 	public Material getPlacedMaterial();
 
