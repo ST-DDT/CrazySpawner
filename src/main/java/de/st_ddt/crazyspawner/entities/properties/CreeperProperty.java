@@ -67,7 +67,10 @@ public class CreeperProperty extends BasicProperty
 	@Override
 	public void save(final ConfigurationSection config, final String path)
 	{
-		config.set(path + "powered", powered);
+		if (powered == null)
+			config.set(path + "powered", "default");
+		else
+			config.set(path + "powered", powered);
 	}
 
 	@Override
