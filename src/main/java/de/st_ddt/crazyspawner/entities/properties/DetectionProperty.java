@@ -5,7 +5,6 @@ import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
@@ -73,7 +72,7 @@ public class DetectionProperty extends MetadataProperty implements DetectionMeta
 	@Override
 	public void apply(final Entity entity)
 	{
-		final Creature creature = (Creature) entity;
+		final LivingEntity creature = (LivingEntity) entity;
 		if (viewRange != -1 || viewAngle != -1)
 			creature.setMetadata(DetectionMeta.METAHEADER, this);
 	}
