@@ -18,7 +18,7 @@ import net.minecraft.util.com.mojang.authlib.GameProfile;
 
 import org.bukkit.craftbukkit.v1_7_R1.event.CraftEventFactory;
 
-public class NPCPlayer extends EntityPlayer
+final class NPCPlayer extends EntityPlayer
 {
 
 	private final static Field living_g;

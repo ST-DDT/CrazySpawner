@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import net.minecraft.server.v1_7_R1.NetworkManager;
 import net.minecraft.util.io.netty.channel.Channel;
 
-public class NPCNetworkManager extends NetworkManager
+final class NPCNetworkManager extends NetworkManager
 {
 
 	private final static Field channel;

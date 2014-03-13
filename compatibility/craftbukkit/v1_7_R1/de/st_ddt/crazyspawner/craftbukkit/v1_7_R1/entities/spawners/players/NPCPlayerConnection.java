@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
-public class NPCPlayerConnection extends PlayerConnection
+final class NPCPlayerConnection extends PlayerConnection
 {
 
 	public NPCPlayerConnection(final MinecraftServer minecraftServer, final EntityPlayer entityplayer)
@@ -21,10 +21,10 @@ public class NPCPlayerConnection extends PlayerConnection
 	public CraftPlayer getPlayer()
 	{
 		return new CraftPlayer((CraftServer) Bukkit.getServer(), player);
-	};
+	}
 
 	@Override
 	public void sendPacket(final Packet packet)
 	{
-	};
+	}
 }
