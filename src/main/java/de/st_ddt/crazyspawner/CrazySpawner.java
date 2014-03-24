@@ -254,6 +254,7 @@ public class CrazySpawner extends CrazyPlugin
 	@Override
 	public void initialize()
 	{
+		super.initialize();
 		plugin = this;
 		CompatibilityLoader.loadCompatibilityProvider(this);
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
@@ -263,7 +264,6 @@ public class CrazySpawner extends CrazyPlugin
 		EntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerHelper.class.getName();
 		EntityPropertyHelper.class.getName();
-		super.initialize();
 	}
 
 	@Override
