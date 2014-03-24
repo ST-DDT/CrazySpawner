@@ -173,7 +173,8 @@ public class CrazySpawner extends CrazyPlugin
 		});
 	}
 
-	private void registerHooks()
+	@Override
+	protected void registerHooks()
 	{
 		final PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new PlayerListener(this, creatureSelection), this);
@@ -181,8 +182,10 @@ public class CrazySpawner extends CrazyPlugin
 		pm.registerEvents(new EntityPersistenceListener(this, persistanceManager), this);
 	}
 
-	private void registerCommands()
+	@Override
+	protected void registerCommands()
 	{
+		super.registerCommands();
 		getCommand("crazyspawn").setExecutor(new CommandSpawn(this));
 		getCommand("crazykill").setExecutor(new CommandKill(this));
 		getCommand("crazycreaturespawner").setExecutor(new CommandCreatureSpawner(this, creatureSelection));
@@ -249,7 +252,7 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void onLoad()
+	public void initialize()
 	{
 		plugin = this;
 		CompatibilityLoader.loadCompatibilityProvider(this);
@@ -260,15 +263,14 @@ public class CrazySpawner extends CrazyPlugin
 		EntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerHelper.class.getName();
 		EntityPropertyHelper.class.getName();
-		super.onLoad();
+		super.initialize();
 	}
 
 	@Override
 	@Localized({ "CRAZYSPAWNER.SPAWNABLEENTITIES.OPTIONS $SupportedTypes$ $AvailableOptionGroups$ $AvailableOptions$", "CRAZYSPAWNER.SPAWNABLEENTITIES.AVAILABLE $Count$" })
-	public void onEnable()
+	public void enable()
 	{
-		registerHooks();
-		super.onEnable();
+		super.enable();
 		if (isUpdated)
 		{
 			CrazySpawnerExamples.saveExampleFiles(getDataFolder());
@@ -365,9 +367,9 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void loadConfiguration()
+	public void loadConfiguration(final ConfigurationSection config)
 	{
-		final ConfigurationSection config = getConfig();
+		super.loadConfiguration(config);
 		// OverwriteEntities
 		for (final EntityType type : EntityType.values())
 			if (type.getEntityClass() != null && LivingEntity.class.isAssignableFrom(type.getEntityClass()))
@@ -469,9 +471,9 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void saveConfiguration()
+	public void saveConfiguration(final ConfigurationSection config)
 	{
-		final ConfigurationSection config = getConfig();
+		super.saveConfiguration(config);
 		// OverwriteEntities
 		for (final EntityType type : EntityType.values())
 		{
@@ -483,7 +485,6 @@ public class CrazySpawner extends CrazyPlugin
 		}
 		config.set("defaultAlarmRange", defaultAlarmRange);
 		config.set("monsterExplosionDamageEnabled", monsterExplosionDamageEnabled);
-		super.saveConfiguration();
 	}
 
 	public void saveCustomEntities()
