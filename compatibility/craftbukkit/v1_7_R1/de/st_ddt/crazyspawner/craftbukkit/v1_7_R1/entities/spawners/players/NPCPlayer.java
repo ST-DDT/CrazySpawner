@@ -69,11 +69,10 @@ final class NPCPlayer extends EntityPlayer
 	}
 
 	@Override
+	// Copied from net.minecraft.server.v1_7_R1.EntityLiving.
 	public void die(final DamageSource damagesource)
 	{
-		// Do not execute multiple times
-		this.dead = true;
-		// Copied from LivingEntity
+		this.dead = true; // Crazy - Do not execute multiple times
 		final Entity entity = damagesource.getEntity();
 		final EntityLiving entityliving = aX();
 		if ((this.bb >= 0) && (entityliving != null))
@@ -98,6 +97,7 @@ final class NPCPlayer extends EntityPlayer
 	}
 
 	// Required for Gravitation
+	// Copied from net.minecraft.server.v1_7_R1.EntityLiving.h()
 	@Override
 	public void h()
 	{
@@ -121,11 +121,11 @@ final class NPCPlayer extends EntityPlayer
 				{
 					((WorldServer) this.world).getTracker().a(this, new PacketPlayOutEntityEquipment(getId(), j, itemstack1));
 					if (itemstack != null)
-						// this.d = EntityLiving.bc();
+						// this.d => net.minecraft.server.v1_7_R1.EntityLiving.bc();
 						// this.d.a(itemstack.D());
 						bc().a(itemstack.D());
 					if (itemstack1 != null)
-						// this.d = EntityLiving.bc();
+						// this.d => net.minecraft.server.v1_7_R1.EntityLiving.bc();
 						// this.d.a(itemstack.D());
 						bc().b(itemstack1.D());
 					this.g[j] = (itemstack1 == null ? null : itemstack1.cloneItemStack());
