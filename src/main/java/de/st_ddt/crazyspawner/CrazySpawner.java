@@ -35,9 +35,11 @@ import de.st_ddt.crazyspawner.commands.CommandSpawn;
 import de.st_ddt.crazyspawner.commands.CommandSpawnList;
 import de.st_ddt.crazyspawner.commands.CommandSpawnRemove;
 import de.st_ddt.crazyspawner.commands.CommandTheEndAutoRespawn;
-import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
+import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.player.NamedPlayerSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.player.RandomPlayerSpawner;
 import de.st_ddt.crazyspawner.listener.EntityListener;
 import de.st_ddt.crazyspawner.listener.EntityPersistenceListener;
 import de.st_ddt.crazyspawner.listener.PlayerListener;
@@ -49,7 +51,6 @@ import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
-import de.st_ddt.crazyutil.entities.EntityMatcherHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
@@ -258,9 +259,13 @@ public class CrazySpawner extends CrazyPlugin
 		plugin = this;
 		CompatibilityLoader.loadCompatibilityProvider(this);
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
+		if (NamedPlayerSpawner.initialize())
+		{
+			EntitySpawnerHelper.registerEntitySpawner(new NamedPlayerSpawner());
+			NamedEntitySpawnerHelper.registerNamedEntitySpawner(new RandomPlayerSpawner());
+		}
 		// Static code initialization.
 		// TODO does this work?
-		EntityMatcherHelper.class.getName();
 		EntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerHelper.class.getName();
 		EntityPropertyHelper.class.getName();

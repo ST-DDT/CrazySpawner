@@ -1,19 +1,14 @@
 package de.st_ddt.crazyspawner.craftbukkit.v1_7_R1;
 
-import de.st_ddt.crazyspawner.craftbukkit.v1_7_R1.entities.spawners.PlayerSpawner;
-import de.st_ddt.crazyspawner.craftbukkit.v1_7_R1.entities.spawners.RandomPlayerSpawner;
-import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
-import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
+import de.st_ddt.crazyspawner.craftbukkit.v1_7_R1.entities.spawners.players.PlayerSpawnerImpl;
+import de.st_ddt.crazyspawner.entities.spawners.player.PlayerSpawnerInterface;
 
 public class CompatibilityProvider
 {
 
 	static
 	{
-		final PlayerSpawner playerSpawner = new PlayerSpawner("Player");
-		EntitySpawnerHelper.registerEntitySpawner(playerSpawner);
-		NamedEntitySpawnerHelper.registerNamedEntitySpawner(playerSpawner);
-		NamedEntitySpawnerHelper.registerNamedEntitySpawner(new RandomPlayerSpawner());
+		PlayerSpawnerInterface.PLAYERSPAWNERCLASSES.add(PlayerSpawnerImpl.class);
 	}
 
 	private CompatibilityProvider()

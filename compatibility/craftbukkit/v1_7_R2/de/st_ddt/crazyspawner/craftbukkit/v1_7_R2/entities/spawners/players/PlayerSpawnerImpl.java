@@ -14,13 +14,15 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_7_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
+import de.st_ddt.crazyspawner.entities.spawners.player.PlayerSpawnerInterface;
 
-public class NPCHelper
+public class PlayerSpawnerImpl implements PlayerSpawnerInterface
 {
 
 	private final static Field worldServer;
@@ -60,7 +62,8 @@ public class NPCHelper
 		return networkManager;
 	}
 
-	public static Player spawnPlayer(final Location location, final String name)
+	@Override
+	public Player spawnPlayer(final Location location, final String name)
 	{
 		try
 		{
@@ -85,5 +88,17 @@ public class NPCHelper
 			t.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public boolean hasCreated(final Player player)
+	{
+		if (player instanceof CraftPlayer)
+		{
+			final CraftPlayer craftPlayer = (CraftPlayer) player;
+			return craftPlayer.getHandle() instanceof NPCPlayer;
+		}
+		else
+			return false;
 	}
 }

@@ -28,7 +28,7 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import de.st_ddt.crazyspawner.entities.BasicParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.BasicParentedSpawner;
 
 @SuppressWarnings("deprecation")
 public class NamedEntitySpawnerHelper extends EntitySpawnerHelper

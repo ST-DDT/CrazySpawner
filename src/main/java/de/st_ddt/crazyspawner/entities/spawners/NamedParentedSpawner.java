@@ -1,4 +1,4 @@
-package de.st_ddt.crazyspawner.entities;
+package de.st_ddt.crazyspawner.entities.spawners;
 
 import java.util.HashMap;
 import java.util.Map;

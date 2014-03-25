@@ -1,6 +1,6 @@
 package de.st_ddt.crazyutil.entities;
 
-import de.st_ddt.crazyspawner.entities.NamedApplyableSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.NamedApplyableSpawner;
 
 public class ApplyableEntitySpawnerHelper
 {

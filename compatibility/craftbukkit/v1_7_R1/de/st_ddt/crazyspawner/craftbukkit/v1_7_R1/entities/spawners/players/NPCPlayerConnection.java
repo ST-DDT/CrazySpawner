@@ -14,7 +14,7 @@ final class NPCPlayerConnection extends PlayerConnection
 
 	public NPCPlayerConnection(final MinecraftServer minecraftServer, final EntityPlayer entityplayer)
 	{
-		super(minecraftServer, NPCHelper.getNetworkManager(), entityplayer);
+		super(minecraftServer, PlayerSpawnerImpl.getNetworkManager(), entityplayer);
 	}
 
 	@Override

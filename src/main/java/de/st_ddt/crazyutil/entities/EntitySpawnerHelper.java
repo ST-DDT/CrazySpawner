@@ -22,10 +22,10 @@ import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.ImmutableSet;
 
-import de.st_ddt.crazyspawner.entities.CustomizedParentedSpawner;
-import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
+import de.st_ddt.crazyspawner.entities.spawners.CustomizedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.MaterialParamitriable;

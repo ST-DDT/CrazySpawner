@@ -25,7 +25,6 @@ import org.bukkit.metadata.MetadataValue;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.CompatibilityHelper;
-import de.st_ddt.crazyspawner.entities.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.meta.AlarmMeta;
 import de.st_ddt.crazyspawner.entities.meta.CustomDamage;
 import de.st_ddt.crazyspawner.entities.meta.CustomDrops;
@@ -35,6 +34,7 @@ import de.st_ddt.crazyspawner.entities.meta.FallingBlockMeta;
 import de.st_ddt.crazyspawner.entities.meta.NameMeta;
 import de.st_ddt.crazyspawner.entities.meta.PeacefulMeta;
 import de.st_ddt.crazyspawner.entities.properties.InvulnerableProperty;
+import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.tasks.HealthTask;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 
