@@ -10,12 +10,12 @@ import org.bukkit.entity.Player;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
-abstract class BasicPlayerSpawner implements NamedEntitySpawner
+public abstract class BasicPlayerSpawner implements NamedEntitySpawner
 {
 
 	private static PlayerSpawnerInterface playerSpawner;
 
-	static boolean initialize()
+	public static boolean initialize()
 	{
 		for (final Class<? extends PlayerSpawnerInterface> clazz : PlayerSpawnerInterface.PLAYERSPAWNERCLASSES)
 			try
@@ -68,6 +68,11 @@ abstract class BasicPlayerSpawner implements NamedEntitySpawner
 
 	public final Player spawn(final Location location, final String name)
 	{
+		return spawnPlayer(location, name);
+	}
+
+	public static Player spawnPlayer(final Location location, final String name)
+	{
 		if (playerSpawner == null)
 			return location.getWorld().spawn(location, Player.class);
 		else
@@ -82,11 +87,16 @@ abstract class BasicPlayerSpawner implements NamedEntitySpawner
 		else
 		{
 			final Player player = (Player) entity;
-			if (playerSpawner == null)
-				return matches(player) && entity.hasMetadata("NPC");
-			else
-				return matches(player) && entity.hasMetadata("NPC") && playerSpawner.hasCreated(player);
+			return matches(player) && matchesSpawnedPlayer(player);
 		}
+	}
+
+	public static boolean matchesSpawnedPlayer(final Player player)
+	{
+		if (playerSpawner == null)
+			return player.hasMetadata("NPC");
+		else
+			return player.hasMetadata("NPC") && playerSpawner.hasCreated(player);
 	}
 
 	public abstract boolean matches(final Player player);

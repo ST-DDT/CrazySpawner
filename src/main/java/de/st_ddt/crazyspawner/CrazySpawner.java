@@ -38,6 +38,7 @@ import de.st_ddt.crazyspawner.commands.CommandTheEndAutoRespawn;
 import de.st_ddt.crazyspawner.entities.persistance.PersistanceManager;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.player.BasicPlayerSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.NamedPlayerSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.RandomPlayerSpawner;
 import de.st_ddt.crazyspawner.listener.EntityListener;
@@ -259,7 +260,7 @@ public class CrazySpawner extends CrazyPlugin
 		plugin = this;
 		CompatibilityLoader.loadCompatibilityProvider(this);
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
-		if (NamedPlayerSpawner.initialize())
+		if (BasicPlayerSpawner.initialize())
 		{
 			EntitySpawnerHelper.registerEntitySpawner(new NamedPlayerSpawner());
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(new RandomPlayerSpawner());

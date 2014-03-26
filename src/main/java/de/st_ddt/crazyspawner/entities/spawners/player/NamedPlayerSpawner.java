@@ -14,11 +14,6 @@ import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 public final class NamedPlayerSpawner extends BasicPlayerSpawner implements ConfigurableEntitySpawner
 {
 
-	public static boolean initialize()
-	{
-		return BasicPlayerSpawner.initialize();
-	}
-
 	protected final String name;
 
 	public NamedPlayerSpawner()
