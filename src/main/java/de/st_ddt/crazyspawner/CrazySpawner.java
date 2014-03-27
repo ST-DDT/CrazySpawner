@@ -188,11 +188,11 @@ public class CrazySpawner extends CrazyPlugin
 	protected void registerCommands()
 	{
 		super.registerCommands();
-		getCommand("crazyspawn").setExecutor(new CommandSpawn(this));
-		getCommand("crazykill").setExecutor(new CommandKill(this));
-		getCommand("crazycreaturespawner").setExecutor(new CommandCreatureSpawner(this, creatureSelection));
-		getCommand("crazytheendautorespawn").setExecutor(new CommandTheEndAutoRespawn(this));
-		getCommand("mountme").setExecutor(new CommandMountMe(this));
+		registerCommand("crazyspawn",new CommandSpawn(this));
+		registerCommand("crazykill",new CommandKill(this));
+		registerCommand("crazycreaturespawner",new CommandCreatureSpawner(this, creatureSelection));
+		registerCommand("crazytheendautorespawn",new CommandTheEndAutoRespawn(this));
+		registerCommand("mountme",new CommandMountMe(this));
 		mainCommand.addSubCommand(new CommandCustomEntityCreate(this), "ce", "createentity");
 		mainCommand.addSubCommand(new CommandCustomEntityClone(this), "cloneentity");
 		mainCommand.addSubCommand(new CommandCustomEntityModify(this), "me", "modentity", "modifyentity");
