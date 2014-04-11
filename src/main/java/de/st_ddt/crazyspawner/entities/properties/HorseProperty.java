@@ -105,11 +105,11 @@ public class HorseProperty extends BasicProperty
 			Variant variant = null;
 			try
 			{
-				variant = Variant.valueOf(styleName);
+				variant = Variant.valueOf(variantName);
 			}
 			catch (final Exception e)
 			{
-				System.err.println(config.getName() + "'s variant " + styleName + " was corrupted/invalid and has been removed!");
+				System.err.println(config.getName() + "'s variant " + variantName + " was corrupted/invalid and has been removed!");
 			}
 			this.variant = variant;
 		}
