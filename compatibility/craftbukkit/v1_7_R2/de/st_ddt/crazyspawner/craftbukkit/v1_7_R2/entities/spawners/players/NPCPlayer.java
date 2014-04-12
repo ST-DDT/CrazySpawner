@@ -49,7 +49,7 @@ final class NPCPlayer extends EntityPlayer
 		}
 		catch (final Exception e)
 		{
-			System.err.println("[CrazySpawner_1_7_R1] WARNING: Serious Bug detected, please report this!");
+			System.err.println("[CrazySpawner_1_7_R2] WARNING: Serious Bug detected, please report this!");
 			e.printStackTrace();
 			return null;
 		}
