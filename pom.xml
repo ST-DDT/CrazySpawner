@@ -26,7 +26,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
-		<crazycore.version>11.0-SNAPSHOT</crazycore.version>
+		<crazycore.version>11.0.0-SNAPSHOT</crazycore.version>
 	</properties>
 
 	<dependencies>
