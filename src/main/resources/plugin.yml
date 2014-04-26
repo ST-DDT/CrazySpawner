@@ -1,7 +1,7 @@
 name: ${project.name}
 main: de.st_ddt.crazyspawner.CrazySpawner
 author: ST-DDT
-version: ${project.version}
+version: ${project.version}.${timestamp}
 website: ${project.url}
 # requires CrazyCore v${crazycore.version} or later
 depend: [CrazyCore]
