@@ -20,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import de.st_ddt.crazyplugin.CrazyPlugin;
-import de.st_ddt.crazyplugin.data.ParameterData;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.commands.CommandCreatureSpawner;
@@ -50,6 +49,7 @@ import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.CrazyPipe;
 import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
+import de.st_ddt.crazyutil.datas.ParameterData;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
@@ -188,11 +188,11 @@ public class CrazySpawner extends CrazyPlugin
 	protected void registerCommands()
 	{
 		super.registerCommands();
-		registerCommand("crazyspawn",new CommandSpawn(this));
-		registerCommand("crazykill",new CommandKill(this));
-		registerCommand("crazycreaturespawner",new CommandCreatureSpawner(this, creatureSelection));
-		registerCommand("crazytheendautorespawn",new CommandTheEndAutoRespawn(this));
-		registerCommand("mountme",new CommandMountMe(this));
+		registerCommand("crazyspawn", new CommandSpawn(this));
+		registerCommand("crazykill", new CommandKill(this));
+		registerCommand("crazycreaturespawner", new CommandCreatureSpawner(this, creatureSelection));
+		registerCommand("crazytheendautorespawn", new CommandTheEndAutoRespawn(this));
+		registerCommand("mountme", new CommandMountMe(this));
 		mainCommand.addSubCommand(new CommandCustomEntityCreate(this), "ce", "createentity");
 		mainCommand.addSubCommand(new CommandCustomEntityClone(this), "cloneentity");
 		mainCommand.addSubCommand(new CommandCustomEntityModify(this), "me", "modentity", "modifyentity");
