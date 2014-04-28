@@ -20,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.st_ddt.crazyplugin.data.ParameterData;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.meta.AlarmMeta;
 import de.st_ddt.crazyspawner.entities.meta.AlarmMeta.FixedAlarmMeta;
@@ -33,6 +32,7 @@ import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.ObjectSaveLoadHelper;
 import de.st_ddt.crazyutil.VersionHelper;
+import de.st_ddt.crazyutil.datas.ParameterData;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.locales.CrazyLocale;
