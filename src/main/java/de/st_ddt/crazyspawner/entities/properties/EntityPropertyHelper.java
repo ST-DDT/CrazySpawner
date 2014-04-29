@@ -60,6 +60,7 @@ public class EntityPropertyHelper
 		registerEntityProperty(DetectionProperty.class);
 		registerEntityProperty(EquipmentProperties.class);
 		registerEntityProperty(HealthProperty.class);
+		registerEntityProperty(LivingAttributePropertiy.class);
 		registerEntityProperty(LivingDespawnProperty.class);
 		registerEntityProperty(NameProperty.class);
 		registerEntityProperty(PeacefulProperty.class);

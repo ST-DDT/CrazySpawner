@@ -5,9 +5,23 @@ package de.st_ddt.crazyspawner.entities.util;
  */
 public enum Attribute
 {
-	FOLLOW_RANGE(0),
-	MOVEMENT_SPEED(0),
-	KNOCKBACK_RESISTANCE(0);
+	/**
+	 * Follow range for hostile mobs.<br>
+	 * <b>Default:</b> ~40
+	 */
+	FOLLOW_RANGE(0, 128),
+	/**
+	 * Movement speed.<br>
+	 * <b>Default:</b> ~0.2 - 0.4<br>
+	 * <b>Note:</b> Higher values are possible but look really strange.<br>
+	 * Pathfinder won't work properly when using values above 1.
+	 */
+	MOVEMENT_SPEED(0, 3),
+	/**
+	 * Knockback resistance chance.<br>
+	 * Resisted knockback is still knockback but far less.
+	 */
+	KNOCKBACK_RESISTANCE(0, 1);
 
 	private double min;
 	private double max;

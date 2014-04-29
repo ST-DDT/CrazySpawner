@@ -28,7 +28,9 @@ public class AttributeHelper
 				return true;
 			}
 			catch (final Throwable t)
-			{}
+			{
+				t.printStackTrace();
+			}
 		return false;
 	}
 
