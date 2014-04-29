@@ -20,6 +20,12 @@ import org.bukkit.metadata.MetadataValue;
 public class PersistanceManager
 {
 
+	/**
+	 * Registers a {@link Class} to be accepted as {@link PersistantState}.
+	 * 
+	 * @param stateClass
+	 *            The class that should be registered.
+	 */
 	public static void registerPersistableState(final Class<? extends PersistantState> stateClass)
 	{
 		ConfigurationSerialization.registerClass(stateClass);
