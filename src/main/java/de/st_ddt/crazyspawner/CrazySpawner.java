@@ -40,6 +40,7 @@ import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.BasicPlayerSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.NamedPlayerSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.RandomPlayerSpawner;
+import de.st_ddt.crazyspawner.entities.util.AttributeHelper;
 import de.st_ddt.crazyspawner.listener.EntityListener;
 import de.st_ddt.crazyspawner.listener.EntityPersistenceListener;
 import de.st_ddt.crazyspawner.listener.PlayerListener;
@@ -269,6 +270,7 @@ public class CrazySpawner extends CrazyPlugin
 		// TODO does this work?
 		EntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerHelper.class.getName();
+		AttributeHelper.initialize();
 		EntityPropertyHelper.class.getName();
 	}
 
