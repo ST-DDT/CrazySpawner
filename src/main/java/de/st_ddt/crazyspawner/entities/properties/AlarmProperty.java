@@ -131,6 +131,6 @@ public class AlarmProperty extends MetadataProperty implements AlarmMeta, Persis
 	public void attachTo(final Entity entity, final PersistanceManager manager)
 	{
 		apply(entity);
-		manager.watch(entity, METAHEADER, null);
+		manager.watch(entity, METAHEADER, this);
 	}
 }
