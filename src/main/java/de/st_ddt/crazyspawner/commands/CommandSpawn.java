@@ -280,7 +280,7 @@ public class CommandSpawn extends CommandExecutor
 			task.start();
 		else
 			task.start(delay.getValue() / 50);
-		owner.sendLocaleMessage("COMMAND.SPAWNED", sender, spawnerParam.getValue().getName(), amount);
+		owner.sendLocaleMessage("COMMAND.SPAWNED", sender, spawnerParam.getValue().getName(), amount.getValue());
 	}
 
 	@Override
