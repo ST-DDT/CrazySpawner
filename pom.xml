@@ -26,6 +26,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<skipTests>true</skipTests>
 		<crazycore.version>11.0.0-SNAPSHOT</crazycore.version>
 	</properties>
 
@@ -124,6 +125,14 @@
 				<configuration>
 					<finalName>${project.name}</finalName>
 					<outputDirectory>.</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<skipTests>${skipTests}</skipTests>
 				</configuration>
 			</plugin>
 		</plugins>
