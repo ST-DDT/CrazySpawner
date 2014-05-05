@@ -25,6 +25,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffectType;
@@ -121,6 +122,14 @@ final class CrazySpawnerExamples
 		book.set("exampleBookMeta.author", "String");
 		book.set("exampleBookMeta.pages", new String[] { "Page1", "Page2", "..." });
 		saveExampleFile(exampleFolder, "BookMeta", book);
+		// Example - Enc
+		final YamlConfiguration enchantmentStorage = new YamlConfiguration();
+		enchantmentStorage.set("exampleBookMeta.==", "ItemMeta");
+		enchantmentStorage.set("exampleBookMeta.meta-type", "ENCHANTED");
+		enchantmentStorage.set("exampleEnchantmentStorageMeta.stored-enchants.ENCHANTMENT1", "int (1-255)");
+		enchantmentStorage.set("exampleEnchantmentStorageMeta.stored-enchants.ENCHANTMENT2", "int (1-255)");
+		enchantmentStorage.set("exampleEnchantmentStorageMeta.stored-enchants.ENCHANTMENTx", "int (1-255)");
+		saveExampleFile(exampleFolder, "EnchantmentStorageMeta", enchantmentStorage);
 		// Example - FireworkMeta
 		final YamlConfiguration firework = new YamlConfiguration();
 		firework.set("exampleFireworkMeta.==", "ItemMeta");
