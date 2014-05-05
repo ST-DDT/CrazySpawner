@@ -93,14 +93,34 @@ final class CrazySpawnerExamples
 				exampleEnchantments.add(enchantment.getName());
 		enchantments.set("exampleEnchantment", exampleEnchantments);
 		saveExampleFile(exampleFolder, "Enchantment", enchantments);
-		// Example - PotionEffect
-		final YamlConfiguration potionEffects = new YamlConfiguration();
-		final List<String> examplePotionEffects = new ArrayList<String>();
-		for (final PotionEffectType potionEffect : PotionEffectType.values())
-			if (potionEffect != null)
-				examplePotionEffects.add(potionEffect.getName());
-		potionEffects.set("examplePotionEffect", examplePotionEffects);
-		saveExampleFile(exampleFolder, "PotionEffect", potionEffects);
+		// Example - PotionEffectType
+		final YamlConfiguration potionEffectTypes = new YamlConfiguration();
+		for (final PotionEffectType potionEffectType : PotionEffectType.values())
+			if (potionEffectType != null)
+			{
+				@SuppressWarnings("deprecation")
+				final int id = potionEffectType.getId();
+				potionEffectTypes.set("examplePotionEffectType." + potionEffectType.getName(), id);
+			}
+		saveExampleFile(exampleFolder, "PotionEffectType", potionEffectTypes);
+		// Example - ItemMeta
+		final YamlConfiguration meta = new YamlConfiguration();
+		meta.set("exampleItemMeta.==", "ItemMeta");
+		meta.set("exampleItemMeta.meta-type", "UNSPECIFIC");
+		meta.set("exampleItemMeta.display-name", "String");
+		meta.set("exampleItemMeta.lore", new String[] { "Line1", "Line2", "..." });
+		meta.set("exampleItemMeta.enchants.ENCHANTMENT1", "int (1-255)");
+		meta.set("exampleItemMeta.enchants.ENCHANTMENT2", "int (1-255)");
+		meta.set("exampleItemMeta.enchants.ENCHANTMENTx", "int (1-255)");
+		saveExampleFile(exampleFolder, "ItemMeta", meta);
+		// Example - BookMeta
+		final YamlConfiguration book = new YamlConfiguration();
+		book.set("exampleBookMeta.==", "ItemMeta");
+		book.set("exampleBookMeta.meta-type", "BOOK");
+		book.set("exampleBookMeta.title", "String");
+		book.set("exampleBookMeta.author", "String");
+		book.set("exampleBookMeta.pages", new String[] { "Page1", "Page2", "..." });
+		saveExampleFile(exampleFolder, "BookMeta", book);
 		// Example - FireworkMeta
 		final YamlConfiguration firework = new YamlConfiguration();
 		firework.set("exampleFireworkMeta.==", "ItemMeta");
@@ -132,6 +152,28 @@ final class CrazySpawnerExamples
 		firework.set("exampleFireworkMeta.firework-effects", effectsList);
 		firework.set("exampleFireworkMeta.power", "int (0-127)");
 		saveExampleFile(exampleFolder, "FireworkMeta", firework);
+		// Example - MapMeta
+		final YamlConfiguration map = new YamlConfiguration();
+		map.set("exampleMapMeta.==", "ItemMeta");
+		map.set("exampleMapMeta.meta-type", "MAP");
+		map.set("exampleMapMeta.scaling", "boolean (true/false)");
+		saveExampleFile(exampleFolder, "MapMeta", map);
+		// Example - PotionMeta
+		final YamlConfiguration potion = new YamlConfiguration();
+		potion.set("examplePotionMeta.==", "ItemMeta");
+		potion.set("examplePotionMeta.meta-type", "POTION");
+		final List<Map<String, String>> potionList = new ArrayList<>();
+		for (int i = 0; i < 3; i++)
+		{
+			final Map<String, String> potionMap = new LinkedHashMap<>();
+			potionMap.put("==", "PotionEffect");
+			potionMap.put("effect", "PotionEffectTypeId (int)");
+			potionMap.put("duration", "ticks/int (1...)");
+			potionMap.put("amplifier", "int (1...)");
+			potionMap.put("ambient", "boolean (true/false)");
+		}
+		potion.set("examplePotionMeta.custom-effects", potionList);
+		saveExampleFile(exampleFolder, "PotionMeta", potion);
 		// Example - SkullMeta
 		final YamlConfiguration skull = new YamlConfiguration();
 		skull.set("exampleSkullMeta.==", "ItemMeta");
