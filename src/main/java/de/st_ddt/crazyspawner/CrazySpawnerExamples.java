@@ -121,7 +121,7 @@ final class CrazySpawnerExamples
 		book.set("exampleBookMeta.author", "String");
 		book.set("exampleBookMeta.pages", new String[] { "Page1", "Page2", "..." });
 		saveExampleFile(exampleFolder, "BookMeta", book);
-		// Example - Enc
+		// Example - EnchantmentStorageMeta
 		final YamlConfiguration enchantmentStorage = new YamlConfiguration();
 		enchantmentStorage.set("exampleBookMeta.==", "ItemMeta");
 		enchantmentStorage.set("exampleBookMeta.meta-type", "ENCHANTED");
