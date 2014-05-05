@@ -39,7 +39,7 @@ public class CommandKill extends CommandExecutor
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.COMMAND.KILLED.MONSTERS $Amount$", "CRAZYSPAWNER.COMMAND.KILLED.ANIMALS $Amount$", "CRAZYSPAWNER.COMMAND.KILLED.GOLEMS $Amount$", "CRAZYSPAWNER.COMMAND.KILLED.VILLAGER $Amount$", "CRAZYSPAWNER.COMMAND.KILLED.BOSSES $Amount$", "CRAZYSPAWNER.COMMAND.KILLED.TYPE $Amount$ $Type$" })
+	@Localized({ "CRAZYSPAWNER.COMMAND.KILLED.MONSTERS {Amount}", "CRAZYSPAWNER.COMMAND.KILLED.ANIMALS {Amount}", "CRAZYSPAWNER.COMMAND.KILLED.GOLEMS {Amount}", "CRAZYSPAWNER.COMMAND.KILLED.VILLAGER {Amount}", "CRAZYSPAWNER.COMMAND.KILLED.BOSSES {Amount}", "CRAZYSPAWNER.COMMAND.KILLED.TYPE {Amount} {Type}" })
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		final Map<String, TabbedParamitrisable> params = new TreeMap<String, TabbedParamitrisable>();

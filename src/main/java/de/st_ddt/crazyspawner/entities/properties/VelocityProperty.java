@@ -254,7 +254,7 @@ public class VelocityProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.VELOCITY $SpeedMin$ $SpeedMax$ $Yaw$ $YawOff$ $Pitch$ $PitchOff$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.VELOCITY {SpeedMin} {SpeedMax} {Yaw} {YawOff} {Pitch} {PitchOff}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.VELOCITY", target, velocityMin, velocityMax, yaw, yawOff, pitch, pitchOff);

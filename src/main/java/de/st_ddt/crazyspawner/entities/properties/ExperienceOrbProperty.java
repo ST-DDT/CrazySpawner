@@ -82,7 +82,7 @@ public class ExperienceOrbProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.XP $MinXP$ $MaxXP$", "CRAZYSPAWNER.ENTITY.PROPERTY.XP.DEFAULT" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.XP {MinXP} {MaxXP}", "CRAZYSPAWNER.ENTITY.PROPERTY.XP.DEFAULT" })
 	public void show(final CommandSender target)
 	{
 		if (minXP == -1)

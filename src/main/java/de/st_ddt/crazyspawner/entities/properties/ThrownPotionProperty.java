@@ -83,7 +83,7 @@ public class ThrownPotionProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.THROWNPOTION $Potion$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.THROWNPOTION {Potion}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.THROWNPOTION", target, item == null ? "None" : item);

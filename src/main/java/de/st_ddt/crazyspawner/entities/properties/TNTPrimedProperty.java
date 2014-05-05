@@ -74,7 +74,7 @@ public class TNTPrimedProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.TNTPRIMED.FUSETICKS $Ticks$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.TNTPRIMED.FUSETICKS {Ticks}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.TNTPRIMED.FUSETICKS", target, fuseTicks == -1 ? "Default" : fuseTicks);

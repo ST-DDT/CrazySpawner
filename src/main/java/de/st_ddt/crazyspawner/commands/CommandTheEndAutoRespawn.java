@@ -50,7 +50,7 @@ public class CommandTheEndAutoRespawn extends CommandExecutor
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.THEENDAUTORESPAWN.COUNTDOWNMESSAGE $World$ $Time$", "CRAZYSPAWNER.COMMAND.THEENDAUTORESPAWN.DONE $World$" })
+	@Localized({ "CRAZYSPAWNER.THEENDAUTORESPAWN.COUNTDOWNMESSAGE {World} {Time}", "CRAZYSPAWNER.COMMAND.THEENDAUTORESPAWN.DONE {World}" })
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		final Map<String, Paramitrisable> params = new HashMap<String, Paramitrisable>();

@@ -144,7 +144,7 @@ public class MinecartProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.TOPSPEED $TopSpeed$", "CRAZYSPAWNER.ENTITY.PROPERTY.SLOWWHENEMPTY $SlowWhenEmpty$", "CRAZYSPAWNER.ENTITY.PROPERTY.FYLINGVELOCITY $FlyingVelocity$", "CRAZYSPAWNER.ENTITY.PROPERTY.DERAILEDVELOCITY $DerailedVelocity$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.TOPSPEED {TopSpeed}", "CRAZYSPAWNER.ENTITY.PROPERTY.SLOWWHENEMPTY {SlowWhenEmpty}", "CRAZYSPAWNER.ENTITY.PROPERTY.FYLINGVELOCITY {FlyingVelocity}", "CRAZYSPAWNER.ENTITY.PROPERTY.DERAILEDVELOCITY {DerailedVelocity}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.TOPSPEED", target, topSpeed == -1 ? "Default" : topSpeed);

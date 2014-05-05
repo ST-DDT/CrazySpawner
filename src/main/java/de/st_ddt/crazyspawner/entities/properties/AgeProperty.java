@@ -75,7 +75,7 @@ public final class AgeProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.BABY $Baby$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.BABY {Baby}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.BABY", target, baby);

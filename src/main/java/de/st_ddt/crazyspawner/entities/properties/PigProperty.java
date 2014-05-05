@@ -70,7 +70,7 @@ public class PigProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.SADDLE $Saddle$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.SADDLE {Saddle}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.SADDLE", target, saddle);

@@ -73,7 +73,7 @@ public class IronGolemProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PLAYERCREATED $PlayerCreated$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PLAYERCREATED {PlayerCreated}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PLAYERCREATED", target, playerCreated);

@@ -72,7 +72,7 @@ public class PeacefulProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PEACEFUL $Peaceful$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PEACEFUL {Peaceful}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PEACEFUL", target, peaceful);

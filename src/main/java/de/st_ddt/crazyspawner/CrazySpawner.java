@@ -137,7 +137,7 @@ public class CrazySpawner extends CrazyPlugin
 		registerModes();
 	}
 
-	@Localized("CRAZYSPAWNER.MODE.CHANGE $Name$ $Value$")
+	@Localized("CRAZYSPAWNER.MODE.CHANGE {Name} {Value}")
 	private void registerModes()
 	{
 		modeCommand.addMode(new DoubleMode(this, "defaultAlarmRange")
@@ -275,7 +275,7 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.SPAWNABLEENTITIES.OPTIONS $SupportedTypes$ $AvailableOptionGroups$ $AvailableOptions$", "CRAZYSPAWNER.SPAWNABLEENTITIES.AVAILABLE $Count$" })
+	@Localized({ "CRAZYSPAWNER.SPAWNABLEENTITIES.OPTIONS {SupportedTypes} {AvailableOptionGroups} {AvailableOptions}", "CRAZYSPAWNER.SPAWNABLEENTITIES.AVAILABLE {Count}" })
 	public void enable()
 	{
 		super.enable();
@@ -408,7 +408,7 @@ public class CrazySpawner extends CrazyPlugin
 		monsterExplosionDamageEnabled = config.getBoolean("monsterExplosionDamageEnabled", true);
 	}
 
-	@Localized("CRAZYSPAWNER.SPAWNABLEENTITIES.LOADED $Count$")
+	@Localized("CRAZYSPAWNER.SPAWNABLEENTITIES.LOADED {Count}")
 	public void loadCustomEntities()
 	{
 		final File customEntitiesFile = new File(getDataFolder(), "CustomEntities.yml");

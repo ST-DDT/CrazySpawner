@@ -26,7 +26,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.COMMAND.OVERWRITEENTITY $EntityType$ $CustomEntity$")
+	@Localized("CRAZYSPAWNER.COMMAND.OVERWRITEENTITY {EntityType} {CustomEntity}")
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		if (args.length != 2)

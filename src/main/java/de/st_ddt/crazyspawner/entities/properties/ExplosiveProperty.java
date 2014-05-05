@@ -91,7 +91,7 @@ public final class ExplosiveProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.INCENDARY $Incendary$", "CRAZYSPAWNER.ENTITY.PROPERTY.YIELD $Yield$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.INCENDARY {Incendary}", "CRAZYSPAWNER.ENTITY.PROPERTY.YIELD {Yield}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.INCENDARY", target, incendary);

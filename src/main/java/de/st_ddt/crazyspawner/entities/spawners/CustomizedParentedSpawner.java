@@ -136,7 +136,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		return entity;
 	}
 
-	// @Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.NAME $Name$", "CRAZYSPAWNER.ENTITY.PROPERTY.TYPE $EntityType$" })
+	// @Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.NAME {Name}", "CRAZYSPAWNER.ENTITY.PROPERTY.TYPE {EntityType}" })
 	// public void show(final CommandSender target)
 	// {
 	// CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.NAME", target, name);

@@ -111,7 +111,7 @@ public class HangingProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.HANGING.FACINGDIRECTION $Direction$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.HANGING.FACINGDIRECTION {Direction}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.HANGING.FACINGDIRECTION", target, face == null ? "Default" : face.name());

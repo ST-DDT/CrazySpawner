@@ -92,7 +92,7 @@ public final class EndermanProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.CARRIEDMATERIAL $Material$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.CARRIEDMATERIAL {Material}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.CARRIEDMATERIAL", target, material == null ? "None" : material.name());

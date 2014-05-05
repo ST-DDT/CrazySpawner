@@ -31,21 +31,21 @@ public class CommandSpawnRemove extends CommandExecutor
 	{
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.LISTFORMAT $Index$ $Entry$ $ChatHeader$")
+		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.LISTFORMAT {Index} {Entry} {ChatHeader}")
 		public String listFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.LISTFORMAT");
 		}
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.HEADFORMAT $CurrentPage$ $MaxPage$ $ChatHeader$ $DateTime$")
+		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.HEADFORMAT {CurrentPage} {MaxPage} {ChatHeader} {DateTime}")
 		public String headFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.HEADFORMAT");
 		}
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.ENTRYFORMAT $Type$ $World$ $X$ $Y$ $Z$ $Distance$ $IntervalTicks$ $IntervalText$ $Repeat$ $Amount$")
+		@Localized("CRAZYSPAWNER.COMMAND.REMOVE.ENTRYFORMAT {Type} {World} {X} {Y} {Z} {Distance} {IntervalTicks} {IntervalText} {Repeat} {Amount}")
 		public String entryFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.REMOVE.ENTRYFORMAT");

@@ -71,7 +71,7 @@ public class InvulnerableProperty extends MetadataProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.INVULNERABLE $Invulnerable$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.INVULNERABLE {Invulnerable}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.INVULNERABLE", target, invulnerable);

@@ -38,7 +38,7 @@ public class PlayerListener implements Listener
 	}
 
 	@EventHandler(ignoreCancelled = true)
-	@Localized("CRAZYSPAWNER.COMMAND.CREATURESPAWNER.APPLIED $Creature$")
+	@Localized("CRAZYSPAWNER.COMMAND.CREATURESPAWNER.APPLIED {Creature}")
 	public void PlayerInteract(final PlayerInteractEvent event)
 	{
 		if (event.getAction() != Action.RIGHT_CLICK_BLOCK)

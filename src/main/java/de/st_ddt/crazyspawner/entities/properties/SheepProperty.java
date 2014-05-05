@@ -71,7 +71,7 @@ public class SheepProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.SHEARED $Sheared$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.SHEARED {Sheared}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.SHEARED", target, sheared);

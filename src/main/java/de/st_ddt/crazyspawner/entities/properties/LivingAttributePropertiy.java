@@ -133,7 +133,7 @@ public class LivingAttributePropertiy extends BasicProperty implements Persistan
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ATTRIBUTE $Attribute$ $Value$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ATTRIBUTE {Attribute} {Value}")
 	public void show(final CommandSender target)
 	{
 		for (final Attribute attribute : Attribute.values())

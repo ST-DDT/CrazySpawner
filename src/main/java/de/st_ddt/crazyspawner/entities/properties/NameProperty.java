@@ -106,7 +106,7 @@ public final class NameProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.CUSTOMNAME $CustomName$", "CRAZYSPAWNER.ENTITY.PROPERTY.SHOWNAMEABOVEHEAD $ShowNameAboveHead$", "CRAZYSPAWNER.ENTITY.PROPERTY.SHOWHEALTH $ShowHealth$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.CUSTOMNAME {CustomName}", "CRAZYSPAWNER.ENTITY.PROPERTY.SHOWNAMEABOVEHEAD {ShowNameAboveHead}", "CRAZYSPAWNER.ENTITY.PROPERTY.SHOWHEALTH {ShowHealth}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.CUSTOMNAME", target, customName == null ? "None" : customName);

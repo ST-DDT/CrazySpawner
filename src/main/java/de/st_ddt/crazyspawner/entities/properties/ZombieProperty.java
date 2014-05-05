@@ -82,7 +82,7 @@ public final class ZombieProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.BABY $Baby$", "CRAZYSPAWNER.ENTITY.PROPERTY.VILLAGER $Villager$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.BABY {Baby}", "CRAZYSPAWNER.ENTITY.PROPERTY.VILLAGER {Villager}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.BABY", target, baby);

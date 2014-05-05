@@ -92,7 +92,7 @@ public class DespawnProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNAFTER $DespawnAfter$", "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNAFTER.DISABLED" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNAFTER {DespawnAfter}", "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNAFTER.DISABLED" })
 	public void show(final CommandSender target)
 	{
 		if (despawnAfter > 0)

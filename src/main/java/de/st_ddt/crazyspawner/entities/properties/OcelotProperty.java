@@ -103,7 +103,7 @@ public final class OcelotProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.CATTYPE $CatType$", "CRAZYSPAWNER.ENTITY.PROPERTY.SITTING $Sitting$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.CATTYPE {CatType}", "CRAZYSPAWNER.ENTITY.PROPERTY.SITTING {Sitting}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.CATTYPE", target, type == null ? "Default" : type.name());

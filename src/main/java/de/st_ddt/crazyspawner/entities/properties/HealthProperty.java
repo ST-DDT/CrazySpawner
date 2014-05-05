@@ -100,7 +100,7 @@ public class HealthProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.HEALTH.DEFAULT", "CRAZYSPAWNER.ENTITY.PROPERTY.HEALTH $MinHealth$ $MaxHealth$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.HEALTH.DEFAULT", "CRAZYSPAWNER.ENTITY.PROPERTY.HEALTH {MinHealth} {MaxHealth}" })
 	public void show(final CommandSender target)
 	{
 		if (minHealth == -1)

@@ -118,7 +118,7 @@ public class ItemFrameProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.ITEMFRAME.ITEM $Item$", "CRAZYSPAWNER.ENTITY.PROPERTY.ITEMFRAME.ITEMROTATION $Rotation$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.ITEMFRAME.ITEM {Item}", "CRAZYSPAWNER.ENTITY.PROPERTY.ITEMFRAME.ITEMROTATION {Rotation}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.ITEMFRAME.ITEM", target, item == null ? "None" : item);

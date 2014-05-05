@@ -127,7 +127,7 @@ public final class PotionProterty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.POTION $PotionEffectType$ $Level$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.POTION {PotionEffectType} {Level}")
 	public void show(final CommandSender target)
 	{
 		for (final Entry<PotionEffectType, Integer> entry : potionEffects.entrySet())

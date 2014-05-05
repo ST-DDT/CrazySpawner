@@ -101,7 +101,7 @@ public final class DamageProperty extends MetadataProperty implements CustomDama
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.DAMAGE $minDamage$ $maxDamage$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.DAMAGE {minDamage} {maxDamage}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.DAMAGE", target, minDamage, maxDamage);

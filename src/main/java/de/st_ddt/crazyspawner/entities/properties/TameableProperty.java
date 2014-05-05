@@ -91,7 +91,7 @@ public class TameableProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.TAMED $Tamed$", "CRAZYSPAWNER.ENTITY.PROPERTY.TAMER $Tamer$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.TAMED {Tamed}", "CRAZYSPAWNER.ENTITY.PROPERTY.TAMER {Tamer}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.TAMED", target, tamed);

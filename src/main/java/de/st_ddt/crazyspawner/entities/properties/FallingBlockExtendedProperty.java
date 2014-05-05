@@ -185,7 +185,7 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNONIMPACT $Despawn$", "CRAZYSPAWNER.ENTITY.PROPERTY.PLACEMATERIAL $Material$ $Data$", "CRAZYSPAWNER.ENTITY.PROPERTY.CONTENT $Index$ $Item$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DESPAWNONIMPACT {Despawn}", "CRAZYSPAWNER.ENTITY.PROPERTY.PLACEMATERIAL {Material} {Data}", "CRAZYSPAWNER.ENTITY.PROPERTY.CONTENT {Index} {Item}" })
 	public void show(final CommandSender target)
 	{
 		final CrazySpawner plugin = CrazySpawner.getPlugin();

@@ -137,7 +137,7 @@ public class DetectionProperty extends MetadataProperty implements DetectionMeta
 	}
 
 	@Override
-	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DETECTION.VIEWRANGE $ViewRange$", "CRAZYSPAWNER.ENTITY.PROPERTY.DETECTION.VIEWANGLE $ViewAngleRadians$ $ViewAngleDegree$" })
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.DETECTION.VIEWRANGE {ViewRange}", "CRAZYSPAWNER.ENTITY.PROPERTY.DETECTION.VIEWANGLE {ViewAngleRadians} {ViewAngleDegree}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.DETECTION.VIEWRANGE", target, viewRange == -1 ? "Default" : viewRange);

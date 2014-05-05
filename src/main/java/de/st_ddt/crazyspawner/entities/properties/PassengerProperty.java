@@ -75,7 +75,7 @@ public final class PassengerProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PASSENGER $Passenger$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PASSENGER {Passenger}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PASSENGER", target, passenger == null ? "None" : passenger.getName());

@@ -99,7 +99,7 @@ public class PaintingProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PAINTING.ART $Art$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PAINTING.ART {Art}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PAINTING.ART", target, art == null ? "Default" : art.name());

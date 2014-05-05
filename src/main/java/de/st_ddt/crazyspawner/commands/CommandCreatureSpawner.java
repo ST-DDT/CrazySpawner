@@ -33,7 +33,7 @@ public class CommandCreatureSpawner extends CommandExecutor
 
 	@Override
 	@Permission({ "crazyspawner.creaturespawner.*", "crazyspawner.creaturespawner.<ENTITYTYPE>" })
-	@Localized("CRAZYSPAWNER.COMMAND.CREATURESPAWNER.SELECTED $Creature$")
+	@Localized("CRAZYSPAWNER.COMMAND.CREATURESPAWNER.SELECTED {Creature}")
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		if (!(sender instanceof Player))

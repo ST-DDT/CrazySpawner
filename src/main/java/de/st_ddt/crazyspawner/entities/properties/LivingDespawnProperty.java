@@ -87,7 +87,7 @@ public class LivingDespawnProperty extends DespawnProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ALLOWDESPAWN $AllowDespawning$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ALLOWDESPAWN {AllowDespawning}")
 	public void show(final CommandSender target)
 	{
 		super.show(target);

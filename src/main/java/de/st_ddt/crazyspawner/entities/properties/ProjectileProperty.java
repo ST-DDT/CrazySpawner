@@ -81,7 +81,7 @@ public class ProjectileProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PROJECTILE.BOUNCE $AllowDespawning$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PROJECTILE.BOUNCE {AllowDespawning}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PROJECTILE.BOUNCE", target, bounce == null ? "Default" : bounce);

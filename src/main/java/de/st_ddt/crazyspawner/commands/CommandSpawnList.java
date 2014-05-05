@@ -30,21 +30,21 @@ public class CommandSpawnList extends CommandExecutor
 	{
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.LIST.LISTFORMAT $Index$ $Entry$ $ChatHeader$")
+		@Localized("CRAZYSPAWNER.COMMAND.LIST.LISTFORMAT {Index} {Entry} {ChatHeader}")
 		public String listFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.LISTFORMAT");
 		}
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.LIST.HEADFORMAT $CurrentPage$ $MaxPage$ $ChatHeader$ $DateTime$")
+		@Localized("CRAZYSPAWNER.COMMAND.LIST.HEADFORMAT {CurrentPage} {MaxPage} {ChatHeader} {DateTime}")
 		public String headFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.HEADFORMAT");
 		}
 
 		@Override
-		@Localized("CRAZYSPAWNER.COMMAND.LIST.ENTRYFORMAT $Type$ $World$ $X$ $Y$ $Z$ $Distance$ $IntervalTicks$ $IntervalText$ $Repeat$ $Amount$")
+		@Localized("CRAZYSPAWNER.COMMAND.LIST.ENTRYFORMAT {Type} {World} {X} {Y} {Z} {Distance} {IntervalTicks} {IntervalText} {Repeat} {Amount}")
 		public String entryFormat(final CommandSender target)
 		{
 			return owner.getLocale().getLocaleMessage(target, "COMMAND.LIST.ENTRYFORMAT");

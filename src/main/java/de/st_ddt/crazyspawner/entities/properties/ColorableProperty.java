@@ -92,7 +92,7 @@ public final class ColorableProperty extends BasicProperty
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.COLOR $Color$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.COLOR {Color}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.COLOR", target, color == null ? "Default" : color.name());

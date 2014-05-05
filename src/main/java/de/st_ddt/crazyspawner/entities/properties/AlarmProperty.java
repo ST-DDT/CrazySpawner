@@ -102,7 +102,7 @@ public class AlarmProperty extends MetadataProperty implements AlarmMeta, Persis
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ALARMRANGE $AlarmRange$")
+	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.ALARMRANGE {AlarmRange}")
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.ALARMRANGE", target, alarmRange == -1 ? "Default" : alarmRange);

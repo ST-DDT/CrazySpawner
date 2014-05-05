@@ -39,7 +39,7 @@ public class CommandSpawn extends CommandExecutor
 
 	@Override
 	@Permission({ "crazyspawner.spawn.*", "crazyspawner.spawn.<ENTITYTYPE>.*", "crazyspawner.spawn.<CUSTOMENTITYNAME>" })
-	@Localized("CRAZYSPAWNER.COMMAND.SPAWNED $Type$ $Amount$")
+	@Localized("CRAZYSPAWNER.COMMAND.SPAWNED {Type} {Amount}")
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		final Map<String, TabbedParamitrisable> params = new TreeMap<String, TabbedParamitrisable>();
