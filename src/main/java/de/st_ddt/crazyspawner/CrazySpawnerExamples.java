@@ -132,6 +132,12 @@ final class CrazySpawnerExamples
 		firework.set("exampleFireworkMeta.firework-effects", effectsList);
 		firework.set("exampleFireworkMeta.power", "int (0-127)");
 		saveExampleFile(exampleFolder, "FireworkMeta", firework);
+		// Example - SkullMeta
+		final YamlConfiguration skull = new YamlConfiguration();
+		skull.set("exampleSkullMeta.==", "ItemMeta");
+		skull.set("exampleSkullMeta.meta-type", "SKULL");
+		skull.set("exampleSkullMeta.skull-owner", "String (0-16)");
+		saveExampleFile(exampleFolder, "SkullMeta", skull);
 		// Example - Enums
 		saveExampleEnum(exampleFolder, Art.values(), "Art");
 		saveExampleEnum(exampleFolder, BlockFace.values(), "BlockFace");
