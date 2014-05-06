@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.ImmutableSet;
 
+import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
 import de.st_ddt.crazyspawner.entities.spawners.CustomizedParentedSpawner;
@@ -29,8 +30,10 @@ import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.MaterialParamitriable;
+import de.st_ddt.crazyutil.paramitrisable.NumberParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
+import de.st_ddt.crazyutil.source.Localized;
 
 public class EntitySpawnerHelper extends EntityMatcherHelper
 {
@@ -442,7 +445,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 	}
 
-	public final static class FallingBlockSpawner extends BasicSpawner implements ConfigurableEntitySpawner
+	public final static class FallingBlockSpawner extends BasicSpawner implements ConfigurableEntitySpawner, ShowableEntitySpawner
 	{
 
 		protected final Material material;
@@ -477,7 +480,9 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		{
 			super(EntityType.FALLING_BLOCK);
 			this.material = ((MaterialParamitriable) params.get("material")).getValue();
-			this.data = ((IntegerParamitrisable) params.get("data")).getValue().byteValue();
+			if (material == null)
+				throw new IllegalArgumentException("Material cannot be null!");
+			this.data = ((NumberParamitrisable<?>) params.get("data")).getValue().byteValue();
 		}
 
 		@Override
@@ -531,9 +536,18 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			config.set(path + "material", material.name());
 			config.set(path + "data", data);
 		}
+
+		@Override
+		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {EntityType}", "CRAZYSPAWNER.ENTITY.FALLINGBLOCK.MATERIAL {Material} {Data}" })
+		public void show(final CommandSender target)
+		{
+			final CrazySpawner plugin = CrazySpawner.getPlugin();
+			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+			plugin.sendLocaleMessage("ENTITY.SHOW.FALLINGBLOCK.MATERIAL", target, material.name(), data);
+		}
 	}
 
-	public final static class LightningSpawner extends BasicSpawner implements ConfigurableEntitySpawner
+	public final static class LightningSpawner extends BasicSpawner implements ConfigurableEntitySpawner, ShowableEntitySpawner
 	{
 
 		protected final boolean effect;
@@ -566,6 +580,12 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		public final String getName()
 		{
 			return "LIGHTNINGSTRIKE";
+		}
+
+		@Override
+		public EntitySpawnerType getSpawnerType()
+		{
+			return EntitySpawnerType.SPECIAL;
 		}
 
 		@Override
@@ -604,6 +624,15 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			config.set(path + "spawnerType", EntitySpawnerType.SPECIAL.name());
 			config.set(path + "spawner", getName());
 			config.set(path + "effect", effect);
+		}
+
+		@Override
+		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {EntityType}", "CRAZYSPAWNER.ENTITY.LIGHTNING.EFFECT {Effect}" })
+		public void show(final CommandSender target)
+		{
+			final CrazySpawner plugin = CrazySpawner.getPlugin();
+			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+			plugin.sendLocaleMessage("ENTITY.SHOW.LIGHTNING.EFFECT", target, effect);
 		}
 	}
 
