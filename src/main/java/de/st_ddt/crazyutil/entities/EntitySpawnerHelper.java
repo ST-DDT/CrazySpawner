@@ -538,11 +538,11 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 
 		@Override
-		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {EntityType}", "CRAZYSPAWNER.ENTITY.FALLINGBLOCK.MATERIAL {Material} {Data}" })
+		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {Name} {EntityType}", "CRAZYSPAWNER.ENTITY.FALLINGBLOCK.MATERIAL {Material} {Data}" })
 		public void show(final CommandSender target)
 		{
 			final CrazySpawner plugin = CrazySpawner.getPlugin();
-			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, getName(), EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
 			plugin.sendLocaleMessage("ENTITY.SHOW.FALLINGBLOCK.MATERIAL", target, material.name(), data);
 		}
 	}
@@ -627,11 +627,11 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		}
 
 		@Override
-		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {EntityType}", "CRAZYSPAWNER.ENTITY.LIGHTNING.EFFECT {Effect}" })
+		@Localized({ "CRAZYSPAWNER.ENTITY.SHOW.SPECIAL {Name} {EntityType}", "CRAZYSPAWNER.ENTITY.LIGHTNING.EFFECT {Effect}" })
 		public void show(final CommandSender target)
 		{
 			final CrazySpawner plugin = CrazySpawner.getPlugin();
-			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
+			plugin.sendLocaleMessage("ENTITY.SHOW.SPECIAL", target, getName(), EntitySpawnerHelper.getNiceEntityTypeName(getEntityType()));
 			plugin.sendLocaleMessage("ENTITY.SHOW.LIGHTNING.EFFECT", target, effect);
 		}
 	}
