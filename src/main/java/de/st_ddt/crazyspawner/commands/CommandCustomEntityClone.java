@@ -44,6 +44,7 @@ public class CommandCustomEntityClone extends CommandExecutor
 		final NamedParentedSpawner namedSpawner = parentSpawner.clone(spawnerName);
 		owner.sendLocaleMessage("COMMAND.CUSTOMENTITY.CLONED", sender, namedSpawner.getName(), parentSpawner instanceof NamedEntitySpawner ? ((NamedEntitySpawner) parentSpawner).getName() : clonedName);
 		owner.addCustomEntity(namedSpawner);
+		owner.saveCustomEntities();
 	}
 
 	@Override

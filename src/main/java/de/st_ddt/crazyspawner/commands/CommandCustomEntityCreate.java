@@ -40,6 +40,7 @@ public class CommandCustomEntityCreate extends CommandExecutor
 		final NamedParentedSpawner namedSpawner = new NamedParentedSpawner(spawner, spawnerName);
 		owner.sendLocaleMessage("COMMAND.CUSTOMENTITY.CREATED", sender, namedSpawner.getName(), parentSpawner instanceof NamedEntitySpawner ? ((NamedEntitySpawner) parentSpawner).getName() : parentName);
 		owner.addCustomEntity(namedSpawner);
+		owner.saveCustomEntities();
 	}
 
 	@Override

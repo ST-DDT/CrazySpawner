@@ -284,7 +284,7 @@ public class CrazySpawner extends CrazyPlugin
 		if (isUpdated)
 		{
 			CrazySpawnerExamples.saveExampleFiles(getDataFolder());
-			CrazySpawnerExamples.saveExampleEntities(customEntities, previousVersion);
+			CrazySpawnerExamples.saveExampleEntities(this, previousVersion);
 		}
 		final File namesFile = new File(getDataFolder(), "Names.txt");
 		if (!namesFile.exists())
@@ -472,11 +472,19 @@ public class CrazySpawner extends CrazyPlugin
 		}
 	}
 
+	/**
+	 * Adds a named entity spawner to the spawners managed by this plugin.<br>
+	 * Existing spawners with the same name will be overwriten.<br>
+	 * Crazy Note: This method will not save the newly added entity/entity config.<br>
+	 * This has to be triggered manually by calling {@link #saveCustomEntities()}.
+	 * 
+	 * @param customEntity
+	 *            the custom entity that should be added.
+	 */
 	public void addCustomEntity(final NamedParentedSpawner customEntity)
 	{
 		customEntities.put(customEntity.getName(), customEntity);
 		NamedEntitySpawnerHelper.registerNamedEntitySpawner(customEntity);
-		saveCustomEntities();
 	}
 
 	public Map<String, NamedParentedSpawner> getCustomEntities()
