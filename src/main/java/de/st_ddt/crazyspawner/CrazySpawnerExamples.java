@@ -226,22 +226,28 @@ final class CrazySpawnerExamples
 	public static void saveExampleEntities(final Map<String, NamedParentedSpawner> customEntities, final String previousVersion)
 	{
 		final ConsoleCommandSender console = Bukkit.getConsoleSender();
+		// DefaultCreatures
+		// - Spider_Skeleton
 		if (VersionComparator.compareVersions(previousVersion, "3.7") == -1)
 		{
-			// DefaultCreatures
-			// - Spider_Skeleton
 			final NamedParentedSpawner spiderSkeleton = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.SPIDER, console, "passenger:SKELETON"), "SPIDER_SKELETON");
 			customEntities.put(spiderSkeleton.getName(), spiderSkeleton);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderSkeleton);
-			// - Zombie_Skeleton
+		}
+		// - Zombie_Skeleton
+		{
 			final NamedParentedSpawner spiderZombie = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.SPIDER, console, "passenger:ZOMBIE"), "Spider_Zombie");
 			customEntities.put(spiderZombie.getName(), spiderZombie);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderZombie);
-			// - Diamond_Zombie
+		}
+		// - Diamond_Zombie
+		{
 			final NamedParentedSpawner diamondZombie = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.ZOMBIE, console, "boots:DIAMOND_BOOTS", "bootsdropchance:0.01", "leggings:DIAMOND_LEGGINGS", "leggingsdropchance:0.01", "chestplate:DIAMOND_CHESTPLATE", "chestplatedropchance:0.01", "helmet:DIAMOND_HELMET", "helmetdropchance:0.01", "iteminhand:DIAMOND_SWORD", "iteminhanddropchance:0.01"), "Diamond_Zombie");
 			customEntities.put(diamondZombie.getName(), diamondZombie);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(diamondZombie);
-			// - Giant
+		}
+		// - Giant
+		{
 			final NamedParentedSpawner giant = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.GIANT), "Some_Giant");
 			customEntities.put(giant.getName(), giant);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(giant);
@@ -249,14 +255,16 @@ final class CrazySpawnerExamples
 			final NamedParentedSpawner healthyGiant = new NamedParentedSpawner(new CustomizedParentedSpawner(giant, console, "maxhealth:200"), "Healthy_Giant");
 			customEntities.put(healthyGiant.getName(), healthyGiant);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(healthyGiant);
-			// - Spider_Diamond_Zombie
+		}
+		// - Spider_Diamond_Zombie
+		{
 			final NamedParentedSpawner spiderDiamondZombie = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.SPIDER, console, "passenger:Diamond_Zombie"), "Spider_Diamond_Zombie");
 			customEntities.put(spiderDiamondZombie.getName(), spiderDiamondZombie);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(spiderDiamondZombie);
 		}
+		// - Speedy_Baby_Zombie
 		if (VersionComparator.compareVersions(previousVersion, "3.11") == -1)
 		{
-			// - Speedy_Baby_Zombie
 			final ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
 			final LeatherArmorMeta meta = (LeatherArmorMeta) boots.getItemMeta();
@@ -269,9 +277,9 @@ final class CrazySpawnerExamples
 			customEntities.put(namedSpeedyZombie.getName(), namedSpeedyZombie);
 			NamedEntitySpawnerHelper.registerNamedEntitySpawner(namedSpeedyZombie);
 		}
+		// - Healthy_Diamond_Zombie
 		if (VersionComparator.compareVersions(previousVersion, "3.15") == -1)
 		{
-			// - Healthy_Diamond_Zombie
 			final ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
 			final ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
 			final ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE);
