@@ -21,12 +21,12 @@ public final class CustomEntitiesReloadable implements Reloadable
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.COMMAND.SPAWNABLEENTITIES.RELOADED")
+	@Localized("CRAZYSPAWNER.SPAWNABLEENTITIES.RELOADED")
 	public void reload(final CommandSender sender)
 	{
 		plugin.loadCustomEntities();
 		plugin.saveCustomEntities();
-		plugin.sendLocaleMessage("COMMAND.SPAWNABLEENTITIES.RELOADED", sender);
+		plugin.sendLocaleMessage("SPAWNABLEENTITIES.RELOADED", sender);
 	}
 
 	@Override
@@ -37,11 +37,11 @@ public final class CustomEntitiesReloadable implements Reloadable
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.COMMAND.SPAWNABLEENTITIES.SAVED")
+	@Localized("CRAZYSPAWNER.SPAWNABLEENTITIES.SAVED")
 	public void save(final CommandSender sender)
 	{
 		plugin.saveCustomEntities();
-		plugin.sendLocaleMessage("COMMAND.SPAWNABLEENTITIES.SAVED", sender);
+		plugin.sendLocaleMessage("SPAWNABLEENTITIES.SAVED", sender);
 	}
 
 	@Override
