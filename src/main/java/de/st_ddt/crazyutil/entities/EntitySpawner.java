@@ -21,12 +21,6 @@ public interface EntitySpawner extends EntityMatcher
 	public EntityType getEntityType();
 
 	/**
-	 * @return The highest entity Class shared with all possible spawned entities.<br>
-	 *         If this Spawns only one {@link EntityType} this method returns {@link EntityType#getEntityClass()}.
-	 */
-	public Class<? extends Entity> getEntityClass();
-
-	/**
 	 * @return An immutable set containing all Classes that are supported by all possible spawned entities.
 	 */
 	public Set<Class<?>> getEntityClasses();

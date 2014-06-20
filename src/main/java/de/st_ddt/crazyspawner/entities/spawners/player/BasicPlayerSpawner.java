@@ -48,12 +48,6 @@ public abstract class BasicPlayerSpawner implements NamedEntitySpawner
 	}
 
 	@Override
-	public final Class<Player> getEntityClass()
-	{
-		return Player.class;
-	}
-
-	@Override
 	public final Set<Class<?>> getEntityClasses()
 	{
 		return null; // TODO: Check this

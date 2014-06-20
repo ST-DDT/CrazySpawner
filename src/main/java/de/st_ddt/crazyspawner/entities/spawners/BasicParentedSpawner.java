@@ -51,12 +51,6 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 	}
 
 	@Override
-	public final Class<? extends Entity> getEntityClass()
-	{
-		return spawner.getEntityClass();
-	}
-
-	@Override
 	public final Set<Class<?>> getEntityClasses()
 	{
 		return spawner.getEntityClasses();

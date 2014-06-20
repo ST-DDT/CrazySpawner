@@ -347,7 +347,6 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			return type;
 		}
 
-		@Override
 		public final Class<? extends Entity> getEntityClass()
 		{
 			return type.getEntityClass();
