@@ -31,6 +31,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import de.st_ddt.crazyspawner.entities.spawners.BasicParentedSpawner;
+import de.st_ddt.crazyutil.RandomUtil;
 
 @SuppressWarnings("deprecation")
 public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
@@ -124,7 +125,6 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		{
 
 			private final Random RANDOM = new Random();
-			private final int typeSize = FireworkEffect.Type.values().length;
 
 			@Override
 			public String getName()
@@ -161,7 +161,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 
 			public FireworkEffect.Type getRandomType()
 			{
-				return FireworkEffect.Type.values()[RANDOM.nextInt(typeSize)];
+				return RandomUtil.randomElement(FireworkEffect.Type.values());
 			}
 
 			public Color getRandomColor()
