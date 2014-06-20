@@ -16,7 +16,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 
 import de.st_ddt.crazyutil.VersionHelper;
+import de.st_ddt.crazyutil.entities.ConfigurableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
+import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.StringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
@@ -263,10 +265,14 @@ public class EntityPropertyHelper
 	 */
 	public static StringParamitrisable getCommandParams(final EntitySpawner spawner, final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
 	{
+		final StringParamitrisable res;
 		if (spawner.getEntityType() == null)
-			return getCommandParams(spawner.getEntityClasses(), params, sender);
+			res = getCommandParams(spawner.getEntityClasses(), params, sender);
 		else
-			return getCommandParams(spawner.getEntityType(), params, sender);
+			res = getCommandParams(spawner.getEntityType(), params, sender);
+		if (spawner.getSpawnerType() == EntitySpawnerType.SPECIAL && spawner instanceof ConfigurableEntitySpawner)
+			((ConfigurableEntitySpawner) spawner).getCommandParams(params, sender);
+		return res;
 	}
 
 	public static StringParamitrisable getCommandParams(final EntityType type, final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
@@ -313,14 +319,14 @@ public class EntityPropertyHelper
 	protected static void reportPropertyException(final Exception exception, final Class<? extends EntityPropertyInterface> propertyClass)
 	{
 		System.err.println("[CrazySpawner] WARNING: Serious Bug detected, please report this!");
-		System.err.println("Property: " + propertyClass.getSimpleName());
+		System.err.println("Property: " + propertyClass.getName());
 		exception.printStackTrace();
 	}
 
 	protected static void reportTypedPropertyException(final Exception exception, final EntityType type, final Class<? extends EntityPropertyInterface> propertyClass)
 	{
 		System.err.println("[CrazySpawner] WARNING: Serious Bug detected, please report this!");
-		System.err.println("EntityType: " + type.name() + ", Property: " + propertyClass.getSimpleName());
+		System.err.println("EntityType: " + type.name() + ", Property: " + propertyClass.getName());
 		exception.printStackTrace();
 	}
 

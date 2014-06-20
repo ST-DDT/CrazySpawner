@@ -1,5 +1,6 @@
 package de.st_ddt.crazyspawner.entities.spawners;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Location;
@@ -10,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.ParentedEntitySpawner;
+import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 
 public abstract class BasicParentedSpawner extends BasicSpawner implements ParentedEntitySpawner
 {
@@ -42,6 +44,12 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 			this.spawner = EntitySpawnerHelper.loadParent(parentConfig);
 		if (spawner == null)
 			throw new IllegalArgumentException("Spawner cannot be Null!");
+	}
+
+	protected BasicParentedSpawner(final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
+	{
+		super();
+		this.spawner = EntitySpawnerHelper.getSpecialSpawner(spawner, params);
 	}
 
 	@Override

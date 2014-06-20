@@ -302,7 +302,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 	private static EntitySpawner getSpecialSpawner(final ConfigurationSection config)
 	{
 		final EntitySpawner spawner = getRawSpawner(config);
-		if (spawner instanceof ConfigurableEntitySpawner)
+		if (spawner.getSpawnerType() == EntitySpawnerType.SPECIAL && spawner instanceof ConfigurableEntitySpawner)
 		{
 			final Class<? extends EntitySpawner> spawnerClass = spawner.getClass();
 			try
@@ -312,14 +312,39 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			}
 			catch (final Exception e)
 			{
-				System.err.println("[CrazySpawner] WARNING: Serious Bug detected, please report this!");
-				System.err.println("EntitySpawnerClass: " + spawnerClass.getName());
-				e.printStackTrace();
+				reportSpawnerException(e, spawnerClass);
 				return null;
 			}
 		}
 		else
 			return spawner;
+	}
+
+	public static EntitySpawner getSpecialSpawner(final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
+	{
+		if (spawner.getSpawnerType() == EntitySpawnerType.SPECIAL && spawner instanceof ConfigurableEntitySpawner)
+		{
+			final Class<? extends EntitySpawner> spawnerClass = spawner.getClass();
+			try
+			{
+				final Constructor<? extends EntitySpawner> spawnerConstructor = spawnerClass.getConstructor(ConfigurationSection.class);
+				return spawnerConstructor.newInstance(params);
+			}
+			catch (final Exception e)
+			{
+				reportSpawnerException(e, spawnerClass);
+				return null;
+			}
+		}
+		else
+			return spawner;
+	}
+
+	protected static void reportSpawnerException(final Exception exception, final Class<? extends EntitySpawner> spawnerClass)
+	{
+		System.err.println("[CrazySpawner] WARNING: Serious Bug detected, please report this!");
+		System.err.println("SpawnerClass: " + spawnerClass.getName());
+		exception.printStackTrace();
 	}
 
 	protected EntitySpawnerHelper()

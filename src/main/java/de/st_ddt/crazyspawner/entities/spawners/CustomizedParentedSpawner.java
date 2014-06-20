@@ -60,7 +60,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 
 	public CustomizedParentedSpawner(final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
 	{
-		super(spawner);
+		super(spawner, params);
 		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(spawner, params);
 	}
 
