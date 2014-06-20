@@ -13,7 +13,6 @@ import java.util.TreeSet;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -52,6 +51,7 @@ import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.CrazyPipe;
 import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
+import de.st_ddt.crazyutil.config.CrazyYamlConfiguration;
 import de.st_ddt.crazyutil.datas.ParameterData;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
@@ -77,11 +77,13 @@ import de.st_ddt.crazyutil.source.PermissionVariable;
 public class CrazySpawner extends CrazyPlugin
 {
 
+	private final static String CUSTOMENTITIESFILENAME = "CustomEntities.yml";
+	private final static String SPAWNTASKSFILENAME = "Tasks.yml";
 	private static CrazySpawner plugin;
 	protected final Map<String, NamedParentedSpawner> customEntities = new LinkedHashMap<String, NamedParentedSpawner>();
-	protected final YamlConfiguration customEntitiesConfig = new YamlConfiguration();
+	protected final CrazyYamlConfiguration customEntitiesConfig = new CrazyYamlConfiguration();
 	protected final Set<TimerSpawnTask> timerTasks = new TreeSet<TimerSpawnTask>();
-	protected final YamlConfiguration tasksConfig = new YamlConfiguration();
+	protected final CrazyYamlConfiguration tasksConfig = new CrazyYamlConfiguration();
 	protected final ApplyableEntitySpawner[] overwriteEntities = new ApplyableEntitySpawner[EntityType.values().length];
 	protected final Map<Player, EntityType> creatureSelection = new HashMap<Player, EntityType>();
 	protected PersistanceManager persistanceManager;
@@ -347,7 +349,7 @@ public class CrazySpawner extends CrazyPlugin
 	@Localized("CRAZYSPAWNER.SPAWNABLEENTITIES.LOADED {Count}")
 	public void loadCustomEntities()
 	{
-		final File customEntitiesFile = new File(getDataFolder(), "CustomEntities.yml");
+		final File customEntitiesFile = new File(getDataFolder(), CUSTOMENTITIESFILENAME);
 		if (customEntitiesFile.exists())
 			try
 			{
@@ -355,7 +357,7 @@ public class CrazySpawner extends CrazyPlugin
 			}
 			catch (final Exception e)
 			{
-				System.err.println("[CrazySpawner] Could not load CustomEntities.yml.");
+				System.err.println("[CrazySpawner] Could not load " + CUSTOMENTITIESFILENAME + ".");
 				System.err.println(e.getMessage());
 			}
 		customEntities.clear();
@@ -376,7 +378,7 @@ public class CrazySpawner extends CrazyPlugin
 
 	public void loadSpawnTasks()
 	{
-		final File tasksFile = new File(getDataFolder(), "Tasks.yml");
+		final File tasksFile = new File(getDataFolder(), SPAWNTASKSFILENAME);
 		if (tasksFile.exists())
 			try
 			{
@@ -384,7 +386,7 @@ public class CrazySpawner extends CrazyPlugin
 			}
 			catch (final Exception e)
 			{
-				System.err.println("[CrazySpawner] Could not load CustomEntities.yml.");
+				System.err.println("[CrazySpawner] Could not load " + SPAWNTASKSFILENAME + ".");
 				System.err.println(e.getMessage());
 			}
 		for (final TimerSpawnTask task : timerTasks)
@@ -440,11 +442,11 @@ public class CrazySpawner extends CrazyPlugin
 		try
 		{
 			getDataFolder().mkdirs();
-			customEntitiesConfig.save(new File(getDataFolder(), "CustomEntities.yml"));
+			customEntitiesConfig.save(new File(getDataFolder(), CUSTOMENTITIESFILENAME));
 		}
 		catch (final Exception e)
 		{
-			System.err.println("[CrazySpawner] Could not save CustomEntities.yml.");
+			System.err.println("[CrazySpawner] Could not save " + CUSTOMENTITIESFILENAME + ".");
 			System.err.println(e.getMessage());
 		}
 	}
@@ -463,11 +465,11 @@ public class CrazySpawner extends CrazyPlugin
 		try
 		{
 			getDataFolder().mkdirs();
-			tasksConfig.save(new File(getDataFolder(), "Tasks.yml"));
+			tasksConfig.save(new File(getDataFolder(), SPAWNTASKSFILENAME));
 		}
 		catch (final Exception e)
 		{
-			System.err.println("[CrazySpawner] Could not save Tasks.yml.");
+			System.err.println("[CrazySpawner] Could not save " + SPAWNTASKSFILENAME + ".");
 			System.err.println(e.getMessage());
 		}
 	}
