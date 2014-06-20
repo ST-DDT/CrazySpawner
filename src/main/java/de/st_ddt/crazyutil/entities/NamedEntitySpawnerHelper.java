@@ -210,6 +210,8 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 				return pigzombie;
 			}
 		}, "ANGRY_PIGMEN", "ANGRYPIG_ZOMBIE", "ANGRYPIGMEN");
+		// Player
+		// registerNamedEntitySpawner(new RandomPlayerSpawner()); via CrazySpawner.initialize()
 		// Sheep
 		for (final DyeColor color : DyeColor.values())
 			registerNamedEntitySpawner(new SheepSpawner(color));

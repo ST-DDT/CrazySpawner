@@ -120,6 +120,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 				return entity;
 			}
 		});
+		// registerEntitySpawner(new NamedPlayerSpawner()); via CrazySpawner.initialize()
 		registerEntitySpawner(new ClassSpawner(EntityType.SPLASH_POTION));
 		// Nice EntityNamed
 		for (final EntityType type : EntityType.values())
