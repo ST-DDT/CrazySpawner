@@ -2,6 +2,8 @@ package de.st_ddt.crazyutil.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -303,6 +305,21 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			return null;
 		else
 			return NAMEDENTITYSPAWNERS.get(name.toUpperCase());
+	}
+
+	public static List<NamedEntitySpawner> getNamedEntitySpawners(final EntityType type)
+	{
+		final List<NamedEntitySpawner> res = new LinkedList<NamedEntitySpawner>(NAMEDENTITYSPAWNERS.values());
+		if (type == null)
+			return res;
+		else
+		{
+			final Iterator<NamedEntitySpawner> it = res.iterator();
+			while (it.hasNext())
+				if (it.next().getEntityType() != type)
+					it.remove();
+			return res;
+		}
 	}
 
 	public static List<NamedEntitySpawner> getNamedEntitySpawnerList(final Collection<String> names)
