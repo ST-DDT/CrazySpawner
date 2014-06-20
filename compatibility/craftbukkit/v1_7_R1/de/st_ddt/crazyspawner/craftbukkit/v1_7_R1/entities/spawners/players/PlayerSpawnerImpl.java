@@ -61,6 +61,12 @@ public class PlayerSpawnerImpl implements PlayerSpawnerInterface
 	}
 
 	@Override
+	public Class<CraftPlayer> getPlayerClass()
+	{
+		return CraftPlayer.class;
+	}
+
+	@Override
 	public Player spawnPlayer(final Location location, final String name)
 	{
 		try

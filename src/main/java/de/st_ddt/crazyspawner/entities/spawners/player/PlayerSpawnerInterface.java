@@ -11,6 +11,8 @@ public interface PlayerSpawnerInterface
 
 	public List<Class<? extends PlayerSpawnerInterface>> PLAYERSPAWNERCLASSES = new ArrayList<>();
 
+	public Class<? extends Player> getPlayerClass();
+
 	public Player spawnPlayer(Location location, String name);
 
 	public boolean hasCreated(Player player);

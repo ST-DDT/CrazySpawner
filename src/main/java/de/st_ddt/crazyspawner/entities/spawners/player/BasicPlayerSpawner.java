@@ -8,6 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import com.google.common.collect.ImmutableSet;
 
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.spawners.BasicSpawner;
@@ -17,6 +18,7 @@ public abstract class BasicPlayerSpawner extends BasicSpawner implements NamedEn
 {
 
 	private static PlayerSpawnerInterface playerSpawner;
+	private static Set<Class<?>> playerClasses;
 
 	public static boolean initialize()
 	{
@@ -24,6 +26,7 @@ public abstract class BasicPlayerSpawner extends BasicSpawner implements NamedEn
 			try
 			{
 				playerSpawner = clazz.newInstance();
+				playerClasses = ImmutableSet.copyOf(playerSpawner.getPlayerClass().getClasses());
 				return true;
 			}
 			catch (final Throwable t)
@@ -45,7 +48,7 @@ public abstract class BasicPlayerSpawner extends BasicSpawner implements NamedEn
 	@Override
 	public final Set<Class<?>> getEntityClasses()
 	{
-		return null; // TODO: Check this
+		return playerClasses;
 	}
 
 	@Override
