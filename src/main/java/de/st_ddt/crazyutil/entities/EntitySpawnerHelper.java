@@ -327,7 +327,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			final Class<? extends EntitySpawner> spawnerClass = spawner.getClass();
 			try
 			{
-				final Constructor<? extends EntitySpawner> spawnerConstructor = spawnerClass.getConstructor(ConfigurationSection.class);
+				final Constructor<? extends EntitySpawner> spawnerConstructor = spawnerClass.getConstructor(Map.class);
 				return spawnerConstructor.newInstance(params);
 			}
 			catch (final Exception e)
