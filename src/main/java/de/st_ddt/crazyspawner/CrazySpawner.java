@@ -269,7 +269,7 @@ public class CrazySpawner extends CrazyPlugin
 		if (BasicPlayerSpawner.initialize())
 		{
 			EntitySpawnerHelper.registerEntitySpawner(new NamedPlayerSpawner());
-			NamedEntitySpawnerHelper.registerNamedEntitySpawner(new RandomPlayerSpawner());
+			NamedEntitySpawnerHelper.registerNamedEntitySpawner(new RandomPlayerSpawner(), "RANDOM_PLAYER");
 		}
 		// Static code initialization.
 		// TODO does this work?
