@@ -17,9 +17,7 @@ import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.metadata.FixedMetadataValue;
 
-import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.spawners.player.PlayerSpawnerInterface;
 
 public class PlayerSpawnerImpl implements PlayerSpawnerInterface
@@ -80,7 +78,6 @@ public class PlayerSpawnerImpl implements PlayerSpawnerInterface
 			final Player player = entity.getBukkitEntity();
 			entity.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 			mcWorld.addEntity(entity, SpawnReason.CUSTOM);
-			player.setMetadata("NPC", new FixedMetadataValue(CrazySpawner.getPlugin(), "CrazySpawner"));
 			return player;
 		}
 		catch (final Throwable t)

@@ -6,7 +6,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
+import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
@@ -76,7 +78,12 @@ public abstract class BasicPlayerSpawner implements NamedEntitySpawner
 		if (playerSpawner == null)
 			return location.getWorld().spawn(location, Player.class);
 		else
-			return playerSpawner.spawnPlayer(location, name);
+		{
+			final Player player = playerSpawner.spawnPlayer(location, name);
+			if (player != null)
+				player.setMetadata("NPC", new FixedMetadataValue(CrazySpawner.getPlugin(), "CrazySpawner"));
+			return player;
+		}
 	}
 
 	@Override
