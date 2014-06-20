@@ -95,10 +95,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	{
 		super(spawner);
 		final Map<String, Paramitrisable> params = new HashMap<String, Paramitrisable>();
-		if (getEntityType() == null)
-			EntityPropertyHelper.getCommandParams(getEntityClasses(), params, sender);
-		else
-			EntityPropertyHelper.getCommandParams(getEntityType(), params, sender);
+		EntityPropertyHelper.getCommandParams(spawner, params, sender);
 		for (final String arg : args)
 		{
 			final String[] split = arg.split(":", 2);
