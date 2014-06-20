@@ -23,7 +23,10 @@ public class ApplyableEntitySpawnerHelper
 		{
 			final EntitySpawner parent = ((ParentedEntitySpawner) spawner).getParentSpawner();
 			if (parent instanceof ApplyableEntitySpawner)
-				return new NamedApplyableSpawner((ApplyableEntitySpawner) parent);
+				if (spawner instanceof NamedEntitySpawner)
+					return new NamedApplyableSpawner((ApplyableEntitySpawner) parent, ((NamedEntitySpawner) spawner).getName());
+				else
+					return (ApplyableEntitySpawner) parent;
 			else
 				return null;
 		}

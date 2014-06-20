@@ -5,12 +5,12 @@ import org.bukkit.entity.Entity;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 
-public class NamedApplyableSpawner extends BasicParentedSpawner implements ApplyableEntitySpawner
+public class NamedApplyableSpawner extends NamedParentedSpawner implements ApplyableEntitySpawner
 {
 
-	public NamedApplyableSpawner(final ApplyableEntitySpawner spawner)
+	public NamedApplyableSpawner(final ApplyableEntitySpawner spawner, final String name)
 	{
-		super(spawner);
+		super(spawner, name);
 	}
 
 	@Override
