@@ -54,7 +54,7 @@ public class CommandCustomEntityModify extends CommandExecutor
 		final Map<String, TabbedParamitrisable> paramsRead = new HashMap<>(params);
 		ChatHelperExtended.readParameters(ChatHelperExtended.shiftArray(args, 1), params);
 		final NamedParentedSpawner entitySpawner = new NamedParentedSpawner(changeableSpawner.change(paramsRead), namedSpawner.getName());
-		owner.sendLocaleMessage("COMMAND.CUSTOMENTITY.MODIFY", sender, EntitySpawnerHelper.getNiceEntityTypeName(type), namedSpawner.getName());
+		owner.sendLocaleMessage("COMMAND.CUSTOMENTITY.MODIFY", sender, namedSpawner.getName(), EntitySpawnerHelper.getNiceEntityTypeName(type));
 		owner.addCustomEntity(entitySpawner);
 		owner.saveCustomEntities();
 	}
