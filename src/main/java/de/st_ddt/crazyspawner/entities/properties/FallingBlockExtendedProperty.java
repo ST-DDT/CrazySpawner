@@ -111,7 +111,7 @@ public class FallingBlockExtendedProperty extends MetadataProperty implements Fa
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return FallingBlock.class.isAssignableFrom(clazz);
 	}

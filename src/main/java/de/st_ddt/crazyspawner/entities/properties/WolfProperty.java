@@ -66,7 +66,7 @@ public final class WolfProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Wolf.class.isAssignableFrom(clazz);
 	}

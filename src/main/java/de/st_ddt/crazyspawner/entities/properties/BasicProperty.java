@@ -32,7 +32,7 @@ public abstract class BasicProperty implements EntityPropertyInterface
 	}
 
 	@Override
-	public abstract boolean isApplicable(Class<? extends Entity> clazz);
+	public abstract boolean isApplicable(Class<?> clazz);
 
 	@Override
 	public abstract void apply(Entity entity);

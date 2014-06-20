@@ -24,7 +24,6 @@ import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.ShowableEntitySpawner;
-import de.st_ddt.crazyutil.paramitrisable.NamedEntitySpawnerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
@@ -44,7 +43,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	public CustomizedParentedSpawner(final EntitySpawner spawner)
 	{
 		super(spawner);
-		this.properties = EntityPropertyHelper.getDefaultEntityProperties(getEntityType());
+		this.properties = EntityPropertyHelper.getDefaultEntityProperties(spawner);
 	}
 
 	public CustomizedParentedSpawner(final EntitySpawner spawner, final List<EntityPropertyInterface> properties)
@@ -59,16 +58,10 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 		this.properties = EntityPropertyHelper.getEntityPropertiesFromConfig(getEntityType(), config);
 	}
 
-	public CustomizedParentedSpawner(final EntityType type, final Map<String, ? extends Paramitrisable> params)
-	{
-		super(((NamedEntitySpawnerParamitrisable) params.get("template")).getValue());
-		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(type, params);
-	}
-
-	private CustomizedParentedSpawner(final EntityType type, final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
+	public CustomizedParentedSpawner(final EntitySpawner spawner, final Map<String, ? extends Paramitrisable> params)
 	{
 		super(spawner);
-		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(type, params);
+		this.properties = EntityPropertyHelper.getEntityPropertiesFromParams(spawner, params);
 	}
 
 	/**
@@ -102,7 +95,10 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	{
 		super(spawner);
 		final Map<String, Paramitrisable> params = new HashMap<String, Paramitrisable>();
-		EntityPropertyHelper.getCommandParams(getEntityType(), params, sender);
+		if (getEntityType() == null)
+			EntityPropertyHelper.getCommandParams(getEntityClasses(), params, sender);
+		else
+			EntityPropertyHelper.getCommandParams(getEntityType(), params, sender);
 		for (final String arg : args)
 		{
 			final String[] split = arg.split(":", 2);
@@ -190,7 +186,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	@Override
 	public CustomizedParentedSpawner change(final Map<String, ? extends TabbedParamitrisable> params)
 	{
-		return new CustomizedParentedSpawner(getEntityType(), spawner, params);
+		return new CustomizedParentedSpawner(spawner, params);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class CreeperProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Creeper.class.isAssignableFrom(clazz);
 	}

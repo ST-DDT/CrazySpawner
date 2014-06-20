@@ -62,7 +62,7 @@ public class PaintingProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Painting.class.isAssignableFrom(clazz);
 	}

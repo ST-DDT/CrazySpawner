@@ -64,7 +64,7 @@ public class DetectionProperty extends MetadataProperty implements DetectionMeta
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return LivingEntity.class.isAssignableFrom(clazz);
 	}

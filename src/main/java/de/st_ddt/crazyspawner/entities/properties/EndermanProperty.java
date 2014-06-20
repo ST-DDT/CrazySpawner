@@ -55,7 +55,7 @@ public final class EndermanProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Enderman.class.isAssignableFrom(clazz);
 	}

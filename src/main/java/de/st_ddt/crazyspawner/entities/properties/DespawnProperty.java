@@ -49,7 +49,7 @@ public class DespawnProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return !LivingEntity.class.isAssignableFrom(clazz);
 	}

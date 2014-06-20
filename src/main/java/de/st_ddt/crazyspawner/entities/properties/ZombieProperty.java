@@ -43,7 +43,7 @@ public final class ZombieProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Zombie.class.isAssignableFrom(clazz);
 	}

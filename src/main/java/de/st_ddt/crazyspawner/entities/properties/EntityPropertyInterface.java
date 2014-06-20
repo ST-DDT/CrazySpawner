@@ -1,5 +1,7 @@
 package de.st_ddt.crazyspawner.entities.properties;
 
+import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,19 +18,23 @@ public interface EntityPropertyInterface extends ConfigurationSaveable
 
 	/**
 	 * All registered entity properties.<br>
-	 * New {@link EntityPropertyInterface} should be added using {@link EntityPropertyHelper#registerEntityProperty(Class)}
+	 * New {@link EntityPropertyInterface}s should be added using {@link EntityPropertyHelper#registerEntityProperty(Class)}
 	 */
-	@SuppressWarnings("unchecked")
-	public final static Set<Class<? extends EntityPropertyInterface>>[] ENTITYPROPERTIES = new Set[EntityType.values().length];
+	public final static Set<Class<? extends EntityPropertyInterface>> ENTITYPROPERTIES = new HashSet<Class<? extends EntityPropertyInterface>>();
+	/**
+	 * All registered entity properties mapped by {@link EntityType}.<br>
+	 * New {@link EntityPropertyInterface}s should be added using {@link EntityPropertyHelper#registerEntityProperty(Class)}
+	 */
+	public final static Map<EntityType, Set<Class<? extends EntityPropertyInterface>>> ENTITYPROPERTYMAP = new EnumMap<>(EntityType.class);
 
 	/**
-	 * Checks whether this {@link EntityPropertyInterface} is applicable for the given {@link Entity}'s {@link Class}.
+	 * Checks whether this {@link EntityPropertyInterface} is applicable for the given {@link Class}.
 	 * 
 	 * @param clazz
-	 *            The {@link Entity}'s {@link Class} that should be checked.
-	 * @return True, if this {@link EntityPropertyInterface} is applicable to the given {@link Entity}'s {@link Class}
+	 *            The {@link Class} that should be checked.
+	 * @return True, if this {@link EntityPropertyInterface} is applicable to the given {@link Class}
 	 */
-	public boolean isApplicable(Class<? extends Entity> clazz);
+	public boolean isApplicable(Class<?> clazz);
 
 	/**
 	 * Apply this {@link EntityPropertyInterface} to the given {@link Entity};

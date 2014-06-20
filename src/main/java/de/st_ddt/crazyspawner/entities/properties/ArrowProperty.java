@@ -49,7 +49,7 @@ public class ArrowProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Arrow.class.isAssignableFrom(clazz);
 	}

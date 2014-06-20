@@ -55,7 +55,7 @@ public final class SkeletonProperty extends BasicProperty
 	}
 
 	@Override
-	public boolean isApplicable(final Class<? extends Entity> clazz)
+	public boolean isApplicable(final Class<?> clazz)
 	{
 		return Skeleton.class.isAssignableFrom(clazz);
 	}
