@@ -26,6 +26,7 @@ import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
 import de.st_ddt.crazyspawner.entities.spawners.CustomizedParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.MultiParentedSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
@@ -240,6 +241,8 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 				return new CustomizedParentedSpawner(config);
 			case NAMED:
 				return NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("name", null));
+			case MULTI:
+				return new MultiParentedSpawner(config);
 			default:
 				return null;
 		}
@@ -265,6 +268,7 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			case SPECIAL:
 				config.set(path + "entityType", spawner.getEntityType().name());
 			case CONFIGURABLE:
+			case MULTI:
 				if (spawner instanceof ConfigurationSaveable)
 				{
 					((ConfigurationSaveable) spawner).save(config, path);

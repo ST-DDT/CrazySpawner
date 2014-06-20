@@ -6,4 +6,5 @@ public enum EntitySpawnerType
 	SPECIAL,
 	CONFIGURABLE,
 	NAMED,
+	MULTI,
 }
