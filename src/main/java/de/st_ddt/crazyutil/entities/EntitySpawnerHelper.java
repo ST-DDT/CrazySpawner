@@ -27,6 +27,7 @@ import de.st_ddt.crazyspawner.entities.properties.EntityPropertyHelper;
 import de.st_ddt.crazyspawner.entities.properties.EntityPropertyInterface;
 import de.st_ddt.crazyspawner.entities.spawners.CustomizedParentedSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
+import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.paramitrisable.BooleanParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.MaterialParamitriable;
@@ -252,15 +253,6 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 			case RAW:
 				config.set(path + "entityType", spawner.getEntityType().name());
 				return;
-			case SPECIAL:
-				if (spawner instanceof ConfigurableEntitySpawner)
-				{
-					config.set(path + "entityType", spawner.getEntityType().name());
-					((ConfigurableEntitySpawner) spawner).save(config, path);
-					return;
-				}
-				else
-					break;
 			case NAMED:
 				if (spawner instanceof NamedEntitySpawner)
 				{
@@ -269,10 +261,12 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 				}
 				else
 					break;
+			case SPECIAL:
+				config.set(path + "entityType", spawner.getEntityType().name());
 			case CONFIGURABLE:
-				if (spawner instanceof ConfigurableEntitySpawner)
+				if (spawner instanceof ConfigurationSaveable)
 				{
-					((ConfigurableEntitySpawner) spawner).save(config, path);
+					((ConfigurationSaveable) spawner).save(config, path);
 					return;
 				}
 				else
