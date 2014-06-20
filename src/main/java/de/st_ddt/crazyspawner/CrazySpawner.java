@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.WeakHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -85,7 +86,7 @@ public class CrazySpawner extends CrazyPlugin
 	protected final Set<TimerSpawnTask> timerTasks = new TreeSet<TimerSpawnTask>();
 	protected final CrazyYamlConfiguration tasksConfig = new CrazyYamlConfiguration();
 	protected final ApplyableEntitySpawner[] overwriteEntities = new ApplyableEntitySpawner[EntityType.values().length];
-	protected final Map<Player, EntityType> creatureSelection = new HashMap<Player, EntityType>();
+	protected final Map<Player, EntityType> creatureSelection = new WeakHashMap<Player, EntityType>();
 	protected PersistanceManager persistanceManager;
 	protected double defaultAlarmRange;
 	protected boolean monsterExplosionDamageEnabled;
