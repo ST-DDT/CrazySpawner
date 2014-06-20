@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.st_ddt.crazyutil.NamesHelper;
+import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 
 public final class RandomPlayerSpawner extends BasicPlayerSpawner
 {
@@ -17,6 +18,12 @@ public final class RandomPlayerSpawner extends BasicPlayerSpawner
 	public String getName()
 	{
 		return "RANDOMPLAYER";
+	}
+
+	@Override
+	public final EntitySpawnerType getSpawnerType()
+	{
+		return EntitySpawnerType.NAMED;
 	}
 
 	@Override

@@ -8,11 +8,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
+
 import de.st_ddt.crazyspawner.CrazySpawner;
-import de.st_ddt.crazyutil.entities.EntitySpawnerType;
+import de.st_ddt.crazyspawner.entities.spawners.BasicSpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
-public abstract class BasicPlayerSpawner implements NamedEntitySpawner
+public abstract class BasicPlayerSpawner extends BasicSpawner implements NamedEntitySpawner
 {
 
 	private static PlayerSpawnerInterface playerSpawner;
@@ -36,12 +37,6 @@ public abstract class BasicPlayerSpawner implements NamedEntitySpawner
 	}
 
 	@Override
-	public String getName()
-	{
-		return "PLAYER";
-	}
-
-	@Override
 	public final EntityType getEntityType()
 	{
 		return EntityType.PLAYER;
@@ -51,12 +46,6 @@ public abstract class BasicPlayerSpawner implements NamedEntitySpawner
 	public final Set<Class<?>> getEntityClasses()
 	{
 		return null; // TODO: Check this
-	}
-
-	@Override
-	public final EntitySpawnerType getSpawnerType()
-	{
-		return EntitySpawnerType.SPECIAL;
 	}
 
 	@Override

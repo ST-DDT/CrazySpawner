@@ -7,39 +7,42 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.entities.ConfigurableEntitySpawner;
+import de.st_ddt.crazyutil.entities.EntitySpawnerType;
+import de.st_ddt.crazyutil.paramitrisable.ColoredStringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
+import de.st_ddt.crazyutil.paramitrisable.StringParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
 
 public final class NamedPlayerSpawner extends BasicPlayerSpawner implements ConfigurableEntitySpawner
 {
 
-	protected final String name;
+	protected final String playerName;
 
 	public NamedPlayerSpawner()
 	{
 		super();
-		this.name = "Player";
+		this.playerName = "Player";
 	}
 
 	public NamedPlayerSpawner(final String name)
 	{
 		super();
-		this.name = name;
+		this.playerName = name;
 	}
 
 	public NamedPlayerSpawner(final ConfigurationSection config)
 	{
 		super();
-		this.name = null;
-		// TODO Auto-generated method stub
+		this.playerName = ChatHelper.colorise(config.getString("playerName", "Player"));
 	}
 
 	public NamedPlayerSpawner(final Map<String, ? extends Paramitrisable> params)
 	{
 		super();
-		this.name = null;
-		// TODO Auto-generated method stub
+		final StringParamitrisable playerNameParam = (StringParamitrisable) params.get("playername");
+		this.playerName = playerNameParam.getValue();
 	}
 
 	@Override
@@ -49,26 +52,36 @@ public final class NamedPlayerSpawner extends BasicPlayerSpawner implements Conf
 	}
 
 	@Override
+	public final EntitySpawnerType getSpawnerType()
+	{
+		return EntitySpawnerType.SPECIAL;
+	}
+
+	@Override
 	public Player spawn(final Location location)
 	{
-		return spawn(location, name);
+		return spawn(location, playerName);
 	}
 
 	@Override
 	public boolean matches(final Player player)
 	{
-		return player.getName().equals(name);
+		return player.getName().equals(playerName);
 	}
 
 	@Override
 	public void getCommandParams(final Map<String, ? super TabbedParamitrisable> params, final CommandSender sender)
 	{
-		// TODO Auto-generated method stub
+		final StringParamitrisable playerNameParam = new ColoredStringParamitrisable(playerName);
+		params.put("pname", playerNameParam);
+		params.put("plrname", playerNameParam);
+		params.put("playername", playerNameParam);
 	}
 
 	@Override
 	public void save(final ConfigurationSection config, final String path)
 	{
-		// TODO Auto-generated method stub
+		super.save(config, path);
+		config.set(path + "playerName", ChatHelper.decolorise(playerName));
 	}
 }
