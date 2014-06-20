@@ -13,6 +13,8 @@ import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.Permission;
@@ -39,7 +41,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 			spawner = null;
 		else
 		{
-			spawner = ApplyableEntitySpawnerHelper.wrapSpawner(owner.getCustomEntities().get(args[1].toUpperCase()));
+			spawner = ApplyableEntitySpawnerHelper.wrapSpawner(NamedEntitySpawnerHelper.getNamedEntitySpawner(args[1]));
 			if (spawner == null || spawner.getEntityType() != type)
 				throw new CrazyCommandNoSuchException("CustomEntity", args[1], tab(sender, args));
 		}
@@ -61,11 +63,15 @@ public class CommandOverwriteEntity extends CommandExecutor
 		}
 		else if (args.length == 2)
 		{
+			final EntityType type = EntityType.valueOf(args[0].toUpperCase());
+			if (type == null)
+				return null;
 			final String arg = args[1].toUpperCase();
 			final List<String> res = new ArrayList<String>();
-			for (final String spawner : owner.getCustomEntities().keySet())
-				if (spawner.startsWith(arg))
-					res.add(spawner);
+			for (final NamedEntitySpawner spawner : NamedEntitySpawnerHelper.getNamedEntitySpawners(type))
+				if (ApplyableEntitySpawnerHelper.isApplicable(spawner))
+					if (spawner.getName().startsWith(arg))
+						res.add(spawner.getName());
 			if ("DEFAULT".startsWith(arg))
 				res.add("DEFAULT");
 			return res;
