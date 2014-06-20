@@ -41,7 +41,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 		{
 			spawner = ApplyableEntitySpawnerHelper.wrapSpawner(owner.getCustomEntities().get(args[1].toUpperCase()));
 			if (spawner == null || spawner.getEntityType() != type)
-				throw new CrazyCommandNoSuchException("CustomEntity", args[0], tab(sender, args));
+				throw new CrazyCommandNoSuchException("CustomEntity", args[1], tab(sender, args));
 		}
 		owner.getOverwriteEntities()[type.ordinal()] = spawner;
 		owner.sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, type.name(), args[1].toUpperCase());
