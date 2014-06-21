@@ -486,7 +486,7 @@ public class CrazySpawner extends CrazyPlugin
 	@Localized("CRAZYSPAWNER.COMMAND.OVERWRITEENTITY.NOTAPPLYABLE {EntityType} {CustomEntity}")
 	public boolean setOverwriteEntity(final CommandSender sender, final EntityType type, final NamedEntitySpawner spawner, final boolean silentDefault)
 	{
-		if (spawner instanceof NamedApplyableEntitySpawner)
+		if (spawner == null || spawner instanceof NamedApplyableEntitySpawner)
 			return setOverwriteEntity(sender, type, (NamedApplyableEntitySpawner) spawner, silentDefault);
 		else
 		{
