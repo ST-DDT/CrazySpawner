@@ -20,7 +20,6 @@ import de.st_ddt.crazyutil.source.Localized;
 public class VelocityProperty extends BasicProperty
 {
 
-	
 	protected final double velocityMin;
 	protected final double velocityMax;
 	/**
@@ -275,6 +274,4 @@ public class VelocityProperty extends BasicProperty
 		else
 			return center - RANDOM.nextDouble() * off;
 	}
-
-	
 }
