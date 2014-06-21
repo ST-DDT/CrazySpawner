@@ -31,7 +31,6 @@ import de.st_ddt.crazyutil.ChatConverter;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ConfigurationSaveable;
 import de.st_ddt.crazyutil.ObjectSaveLoadHelper;
-import de.st_ddt.crazyutil.VersionHelper;
 import de.st_ddt.crazyutil.datas.ParameterData;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
@@ -40,8 +39,6 @@ import de.st_ddt.crazyutil.locales.CrazyLocale;
 public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparable<TimerSpawnTask>, ParameterData
 {
 
-	protected final static boolean v146OrLater = VersionHelper.hasRequiredVersion("1.4.6");
-	protected final static boolean v15OrLater = VersionHelper.hasRequiredVersion("1.5");
 	protected final static Random RANDOM = new Random();
 	protected final List<BukkitTask> tasks = new LinkedList<BukkitTask>();
 	protected final CrazySpawner plugin;
@@ -151,8 +148,8 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 			this.alarm = null;
 		else
 			this.alarm = new FixedAlarmMeta(alarmRange);
-		this.health = v146OrLater ? health : -1;
-		this.showHealth = v15OrLater ? showHealth : false;
+		this.health = health;
+		this.showHealth = showHealth;
 		if (this.showHealth)
 			this.healthTask = new HealthTask(plugin);
 		else
@@ -230,8 +227,8 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 			this.alarm = null;
 		else
 			this.alarm = new FixedAlarmMeta(alarmRange);
-		this.health = v146OrLater ? config.getInt("health", -1) : -1;
-		this.showHealth = v15OrLater ? config.getBoolean("showHealth", false) : false;
+		this.health = config.getInt("health", -1);
+		this.showHealth = config.getBoolean("showHealth", false);
 		if (this.showHealth)
 			this.healthTask = new HealthTask(plugin);
 		else
@@ -344,18 +341,13 @@ public class TimerSpawnTask implements Runnable, ConfigurationSaveable, Comparab
 	{
 		if (entity == null)
 			return;
-		if (v146OrLater)
+		if (entity instanceof LivingEntity)
 		{
-			if (entity instanceof LivingEntity)
-			{
-				postSpawnProcessing((Damageable) entity);
-				postSpawnProcessing((LivingEntity) entity);
-			}
-			else if (entity instanceof Damageable)
-				postSpawnProcessing((Damageable) entity);
-		}
-		else if (entity instanceof LivingEntity)
+			postSpawnProcessing((Damageable) entity);
 			postSpawnProcessing((LivingEntity) entity);
+		}
+		else if (entity instanceof Damageable)
+			postSpawnProcessing((Damageable) entity);
 		if (alarm != null)
 			entity.setMetadata(AlarmMeta.METAHEADER, alarm);
 		if (fire > -1)
