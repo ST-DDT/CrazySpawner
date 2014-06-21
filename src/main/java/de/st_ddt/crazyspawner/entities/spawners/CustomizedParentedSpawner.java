@@ -139,6 +139,7 @@ public class CustomizedParentedSpawner extends BasicParentedSpawner implements C
 	@Override
 	public final void apply(final Entity entity)
 	{
+		super.apply(entity);
 		for (final EntityPropertyInterface property : properties)
 			property.apply(entity);
 	}
