@@ -18,17 +18,20 @@ public final class PassengerProperty extends BasicProperty
 {
 
 	protected final NamedEntitySpawner passenger;
+	protected final NamedEntitySpawner vehicle;
 
 	public PassengerProperty()
 	{
 		super();
 		this.passenger = null;
+		this.vehicle = null;
 	}
 
 	public PassengerProperty(final ConfigurationSection config)
 	{
 		super(config);
 		this.passenger = NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("passenger", null));
+		this.vehicle = NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("vehicle", null));
 	}
 
 	public PassengerProperty(final Map<String, ? extends Paramitrisable> params)
@@ -36,6 +39,8 @@ public final class PassengerProperty extends BasicProperty
 		super(params);
 		final NamedEntitySpawnerParamitrisable passengerParam = (NamedEntitySpawnerParamitrisable) params.get("passenger");
 		this.passenger = passengerParam.getValue();
+		final NamedEntitySpawnerParamitrisable vehicleParam = (NamedEntitySpawnerParamitrisable) params.get("vehicle");
+		this.vehicle = vehicleParam.getValue();
 	}
 
 	@Override
@@ -49,6 +54,12 @@ public final class PassengerProperty extends BasicProperty
 	{
 		if (passenger != null)
 			entity.setPassenger(passenger.spawn(entity.getLocation()));
+		if (vehicle != null)
+		{
+			final Entity mount = vehicle.spawn(entity.getLocation());
+			if (mount != null)
+				mount.setPassenger(entity);
+		}
 	}
 
 	@Override
@@ -57,6 +68,9 @@ public final class PassengerProperty extends BasicProperty
 		final NamedEntitySpawnerParamitrisable passengerParam = new NamedEntitySpawnerParamitrisable(passenger);
 		params.put("p", passengerParam);
 		params.put("passenger", passengerParam);
+		final NamedEntitySpawnerParamitrisable vehicleParam = new NamedEntitySpawnerParamitrisable(vehicle);
+		params.put("veh", vehicleParam);
+		params.put("vehicle", vehicleParam);
 	}
 
 	@Override
@@ -66,24 +80,30 @@ public final class PassengerProperty extends BasicProperty
 			config.set(path + "passenger", null);
 		else
 			config.set(path + "passenger", passenger.getName());
+		if (vehicle == null)
+			config.set(path + "vehicle", null);
+		else
+			config.set(path + "vehicle", vehicle.getName());
 	}
 
 	@Override
 	public void dummySave(final ConfigurationSection config, final String path)
 	{
 		config.set(path + "passenger", "NamedEntitySpawner");
+		config.set(path + "vehicle", "NamedEntitySpawner");
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.ENTITY.PROPERTY.PASSENGER {Passenger}")
+	@Localized({ "CRAZYSPAWNER.ENTITY.PROPERTY.PASSENGER {Passenger}", "CRAZYSPAWNER.ENTITY.PROPERTY.VEHICLE {Vehicle}" })
 	public void show(final CommandSender target)
 	{
 		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.PASSENGER", target, passenger == null ? "None" : passenger.getName());
+		CrazySpawner.getPlugin().sendLocaleMessage("ENTITY.PROPERTY.VEHICLE", target, vehicle == null ? "None" : vehicle.getName());
 	}
 
 	@Override
 	public boolean equalsDefault()
 	{
-		return passenger == null;
+		return passenger == null && vehicle == null;
 	}
 }

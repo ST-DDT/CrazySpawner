@@ -250,11 +250,16 @@ final class CrazySpawnerExamples
 			final NamedParentedSpawner healthyGiant = new NamedParentedSpawner(new CustomizedParentedSpawner(giant, console, "maxhealth:200"), "Healthy_Giant");
 			plugin.addCustomEntity(healthyGiant);
 		}
-		// - Spider_Diamond_Zombie
-		final NamedParentedSpawner spiderDiamondZombie;
+		// - Spider_Diamond_Zombie (Zombie as Passenger)
 		{
-			spiderDiamondZombie = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.SPIDER, console, "passenger:Diamond_Zombie"), "Spider_Diamond_Zombie");
+			final NamedParentedSpawner spiderDiamondZombie = new NamedParentedSpawner(new CustomizedParentedSpawner(EntityType.SPIDER, console, "passenger:Diamond_Zombie"), "Spider_Diamond_Zombie");
 			plugin.addCustomEntity(spiderDiamondZombie);
+		}
+		// - Spider_Diamond_Zombie2 (Spider as Vehicle)
+		final NamedParentedSpawner spiderDiamondZombie2;
+		{
+			spiderDiamondZombie2 = new NamedParentedSpawner(new CustomizedParentedSpawner(diamondZombie, console, "vehicle:SPIDER"), "Spider_Diamond_Zombie2");
+			plugin.addCustomEntity(spiderDiamondZombie2);
 		}
 		// - Speedy_Baby_Zombie
 		final CustomizedParentedSpawner speedyZombie;
@@ -308,7 +313,7 @@ final class CrazySpawnerExamples
 		}
 		// - Random_Special_Zombie
 		{
-			final MultiParentedSpawner randomSpecialZombie = new MultiParentedSpawner(diamondZombie, spiderDiamondZombie, speedyZombie, namedHealthyDiamondZombie);
+			final MultiParentedSpawner randomSpecialZombie = new MultiParentedSpawner(diamondZombie, spiderDiamondZombie2, speedyZombie, namedHealthyDiamondZombie);
 			final NamedParentedSpawner namedRandomSpecialZombie = new NamedParentedSpawner(randomSpecialZombie, "Random_Special_Zombie");
 			plugin.addCustomEntity(namedRandomSpecialZombie);
 		}
