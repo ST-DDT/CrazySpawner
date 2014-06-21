@@ -43,6 +43,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 				throw new CrazyCommandNoSuchException("CustomEntity", args[1], tab(sender, args));
 		}
 		owner.setOverwriteEntity(sender, type, spawner, false);
+		owner.saveConfiguration();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 			final List<String> res = new ArrayList<String>();
 			for (final NamedEntitySpawner spawner : NamedEntitySpawnerHelper.getNamedEntitySpawners(type))
 				if (spawner instanceof NamedApplyableEntitySpawner)
-					if (spawner.getName().startsWith(arg))
+					if (spawner.getName().toUpperCase().startsWith(arg))
 						res.add(spawner.getName());
 			if ("DEFAULT".startsWith(arg))
 				res.add("DEFAULT");
