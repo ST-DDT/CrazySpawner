@@ -15,11 +15,12 @@ import de.st_ddt.crazyutil.entities.ChangeableNamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
+import de.st_ddt.crazyutil.entities.NamedApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.ShowableEntitySpawner;
 import de.st_ddt.crazyutil.source.Localized;
 
-public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, ShowableEntitySpawner, MetadataValue, PersistantState
+public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, NamedApplyableEntitySpawner, ShowableEntitySpawner, MetadataValue, PersistantState
 {
 
 	public final static String METAHEADER = "CustomEntityMeta";

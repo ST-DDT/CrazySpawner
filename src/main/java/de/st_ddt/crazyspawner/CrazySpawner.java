@@ -54,9 +54,8 @@ import de.st_ddt.crazyutil.NamesHelper;
 import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
 import de.st_ddt.crazyutil.config.CrazyYamlConfiguration;
 import de.st_ddt.crazyutil.datas.ParameterData;
-import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
-import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
+import de.st_ddt.crazyutil.entities.NamedApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.metrics.Metrics;
@@ -85,7 +84,7 @@ public class CrazySpawner extends CrazyPlugin
 	protected final CrazyYamlConfiguration customEntitiesConfig = new CrazyYamlConfiguration();
 	protected final Set<TimerSpawnTask> timerTasks = new TreeSet<TimerSpawnTask>();
 	protected final CrazyYamlConfiguration tasksConfig = new CrazyYamlConfiguration();
-	protected final ApplyableEntitySpawner[] overwriteEntities = new ApplyableEntitySpawner[EntityType.values().length];
+	protected final NamedApplyableEntitySpawner[] overwriteEntities = new NamedApplyableEntitySpawner[EntityType.values().length];
 	protected final Map<Player, EntityType> creatureSelection = new WeakHashMap<Player, EntityType>();
 	protected PersistanceManager persistanceManager;
 	protected double defaultAlarmRange;
@@ -322,24 +321,7 @@ public class CrazySpawner extends CrazyPlugin
 			if (type.getEntityClass() != null && LivingEntity.class.isAssignableFrom(type.getEntityClass()))
 			{
 				final NamedEntitySpawner spawner = NamedEntitySpawnerHelper.getNamedEntitySpawner(config.getString("overwriteEntities." + type.name(), null));
-				if (spawner == null)
-					overwriteEntities[type.ordinal()] = null;
-				else if (spawner.getEntityType() == type)
-				{
-					final ApplyableEntitySpawner applyableSpawner = ApplyableEntitySpawnerHelper.wrapSpawner(spawner);
-					if (applyableSpawner == null)
-					{
-						System.err.println("Could not use " + spawner.getName() + " to overwrite default " + type.name() + " entities (Spawner is not applicable to existing entities)!");
-						overwriteEntities[type.ordinal()] = null;
-					}
-					else
-						overwriteEntities[type.ordinal()] = applyableSpawner;
-				}
-				else
-				{
-					System.err.println("Could not use " + spawner.getName() + " to overwrite default " + type.name() + " entities (Wrong EntityType)!");
-					overwriteEntities[type.ordinal()] = null;
-				}
+				setOverwriteEntity(Bukkit.getConsoleSender(), type, spawner, true);
 			}
 			else
 				overwriteEntities[type.ordinal()] = null;
@@ -424,11 +406,11 @@ public class CrazySpawner extends CrazyPlugin
 		// OverwriteEntities
 		for (final EntityType type : EntityType.values())
 		{
-			final ApplyableEntitySpawner spawner = overwriteEntities[type.ordinal()];
-			if (spawner == null || !(spawner instanceof NamedEntitySpawner))
+			final NamedApplyableEntitySpawner spawner = overwriteEntities[type.ordinal()];
+			if (spawner == null)
 				config.set("overwriteEntities." + type.name(), null);
 			else
-				config.set("overwriteEntities." + type.name(), ((NamedEntitySpawner) spawner).getName());
+				config.set("overwriteEntities." + type.name(), spawner.getName());
 		}
 		config.set("defaultAlarmRange", defaultAlarmRange);
 		config.set("monsterExplosionDamageEnabled", monsterExplosionDamageEnabled);
@@ -501,6 +483,37 @@ public class CrazySpawner extends CrazyPlugin
 		saveCustomEntities();
 	}
 
+	@Localized("CRAZYSPAWNER.COMMAND.OVERWRITEENTITY.NOTAPPLYABLE {EntityType} {CustomEntity}")
+	public boolean setOverwriteEntity(final CommandSender sender, final EntityType type, final NamedEntitySpawner spawner, final boolean silentDefault)
+	{
+		if (spawner instanceof NamedApplyableEntitySpawner)
+			return setOverwriteEntity(sender, type, (NamedApplyableEntitySpawner) spawner, silentDefault);
+		else
+		{
+			sendLocaleMessage("COMMAND.OVERWRITEENTITY.NOTAPPLYABLE", sender, EntitySpawnerHelper.getNiceEntityTypeName(type), spawner.getName());
+			return false;
+		}
+	}
+
+	@Localized({ "CRAZYSPAWNER.COMMAND.OVERWRITEENTITY {EntityType} {CustomEntity}", "CRAZYSPAWNER.COMMAND.OVERWRITEENTITY.WRONGTYPE {RequiredType} {GivenType} {CustomEntity}", "CRAZYSPAWNER.COMMAND.OVERWRITEENTITY.DEFAULT {EntityType}" })
+	public boolean setOverwriteEntity(final CommandSender sender, final EntityType type, final NamedApplyableEntitySpawner spawner, final boolean silentDefault)
+	{
+		if (spawner != null && spawner.getEntityType() != type)
+		{
+			sendLocaleMessage("COMMAND.OVERWRITEENTITY.WRONGTYPE", sender, EntitySpawnerHelper.getNiceEntityTypeName(type), EntitySpawnerHelper.getNiceEntityTypeName(spawner.getEntityType()), spawner.getName());
+			return false;
+		}
+		overwriteEntities[type.ordinal()] = spawner;
+		if (spawner == null)
+		{
+			if (!silentDefault)
+				sendLocaleMessage("COMMAND.OVERWRITEENTITY.DEFAULT", sender, EntitySpawnerHelper.getNiceEntityTypeName(type));
+		}
+		else
+			sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, EntitySpawnerHelper.getNiceEntityTypeName(type), spawner.getName());
+		return true;
+	}
+
 	public void addSpawnTask(final TimerSpawnTask task)
 	{
 		timerTasks.add(task);
@@ -518,7 +531,7 @@ public class CrazySpawner extends CrazyPlugin
 		saveSpawnTasks();
 	}
 
-	public final ApplyableEntitySpawner[] getOverwriteEntities()
+	public final NamedApplyableEntitySpawner[] getOverwriteEntities()
 	{
 		return overwriteEntities;
 	}

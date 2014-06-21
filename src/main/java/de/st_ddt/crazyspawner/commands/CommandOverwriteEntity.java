@@ -10,13 +10,11 @@ import de.st_ddt.crazyplugin.exceptions.CrazyCommandNoSuchException;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
-import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
-import de.st_ddt.crazyutil.entities.ApplyableEntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
+import de.st_ddt.crazyutil.entities.NamedApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawnerHelper;
 import de.st_ddt.crazyutil.paramitrisable.EnumParamitrisable;
-import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.Permission;
 
 public class CommandOverwriteEntity extends CommandExecutor
@@ -28,7 +26,6 @@ public class CommandOverwriteEntity extends CommandExecutor
 	}
 
 	@Override
-	@Localized("CRAZYSPAWNER.COMMAND.OVERWRITEENTITY {EntityType} {CustomEntity}")
 	public void command(final CommandSender sender, final String[] args) throws CrazyException
 	{
 		if (args.length != 2)
@@ -36,17 +33,16 @@ public class CommandOverwriteEntity extends CommandExecutor
 		final EntityType type = EntityType.valueOf(args[0].toUpperCase());
 		if (type == null)
 			throw new CrazyCommandNoSuchException("EntityType", args[0], tab(sender, args));
-		final ApplyableEntitySpawner spawner;
+		final NamedEntitySpawner spawner;
 		if (args[1].equalsIgnoreCase("DEFAULT"))
 			spawner = null;
 		else
 		{
-			spawner = ApplyableEntitySpawnerHelper.wrapSpawner(NamedEntitySpawnerHelper.getNamedEntitySpawner(args[1]));
-			if (spawner == null || spawner.getEntityType() != type)
+			spawner = NamedEntitySpawnerHelper.getNamedEntitySpawner(args[1]);
+			if (spawner == null)
 				throw new CrazyCommandNoSuchException("CustomEntity", args[1], tab(sender, args));
 		}
-		owner.getOverwriteEntities()[type.ordinal()] = spawner;
-		owner.sendLocaleMessage("COMMAND.OVERWRITEENTITY", sender, type.name(), args[1].toUpperCase());
+		owner.setOverwriteEntity(sender, type, spawner, false);
 	}
 
 	@Override
@@ -69,7 +65,7 @@ public class CommandOverwriteEntity extends CommandExecutor
 			final String arg = args[1].toUpperCase();
 			final List<String> res = new ArrayList<String>();
 			for (final NamedEntitySpawner spawner : NamedEntitySpawnerHelper.getNamedEntitySpawners(type))
-				if (ApplyableEntitySpawnerHelper.isApplicable(spawner))
+				if (spawner instanceof NamedApplyableEntitySpawner)
 					if (spawner.getName().startsWith(arg))
 						res.add(spawner.getName());
 			if ("DEFAULT".startsWith(arg))

@@ -12,11 +12,12 @@ import org.bukkit.entity.EntityType;
 
 import de.st_ddt.crazyutil.ClassUtil;
 import de.st_ddt.crazyutil.RandomUtil;
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 
-public class MultiParentedSpawner extends BasicSpawner
+public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntitySpawner
 {
 
 	private final List<EntitySpawner> spawners = new ArrayList<EntitySpawner>();
@@ -98,9 +99,22 @@ public class MultiParentedSpawner extends BasicSpawner
 	}
 
 	@Override
+	public void apply(final Entity entity)
+	{
+		final EntitySpawner spawner = randomSpawner();
+		if (spawner instanceof ApplyableEntitySpawner)
+			((ApplyableEntitySpawner) spawner).apply(entity);
+	}
+
+	@Override
 	public Entity spawn(final Location location)
 	{
-		return RandomUtil.randomElement(spawners).spawn(location);
+		return randomSpawner().spawn(location);
+	}
+
+	protected EntitySpawner randomSpawner()
+	{
+		return RandomUtil.randomElement(spawners);
 	}
 
 	@Override

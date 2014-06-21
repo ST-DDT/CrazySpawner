@@ -8,6 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.ParentedEntitySpawner;
@@ -62,6 +63,13 @@ public abstract class BasicParentedSpawner extends BasicSpawner implements Paren
 	public final Set<Class<?>> getEntityClasses()
 	{
 		return spawner.getEntityClasses();
+	}
+
+	@Override
+	public void apply(final Entity entity)
+	{
+		if (spawner instanceof ApplyableEntitySpawner)
+			((ApplyableEntitySpawner) spawner).apply(entity);
 	}
 
 	@Override

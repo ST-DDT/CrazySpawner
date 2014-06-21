@@ -60,11 +60,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Zombie spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Zombie zombie = (Zombie) super.spawn(location);
+				final Zombie zombie = (Zombie) entity;
 				zombie.setBaby(true);
-				return zombie;
 			}
 		});
 		registerNamedEntitySpawner(new DefaultSpawner(EntityType.ZOMBIE)
@@ -77,12 +76,11 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Zombie spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Zombie zombie = (Zombie) super.spawn(location);
+				final Zombie zombie = (Zombie) entity;
 				zombie.setVillager(true);
 				zombie.setBaby(true);
-				return zombie;
 			}
 		});
 		// Creeper
@@ -96,11 +94,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Creeper spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Creeper creeper = (Creeper) super.spawn(location);
+				final Creeper creeper = (Creeper) entity;
 				creeper.setPowered(false);
-				return creeper;
 			}
 		}, "UNCHARGEDCREEPER");
 		registerNamedEntitySpawner(new DefaultSpawner(EntityType.CREEPER)
@@ -113,11 +110,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Creeper spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Creeper creeper = (Creeper) super.spawn(location);
+				final Creeper creeper = (Creeper) entity;
 				creeper.setPowered(true);
-				return creeper;
 			}
 		}, "CHARGEDCREEPER");
 		// Firework
@@ -133,16 +129,15 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Firework spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Firework firework = (Firework) super.spawn(location);
+				final Firework firework = (Firework) entity;
 				final FireworkMeta meta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
 				meta.setPower(RANDOM.nextInt(4) + 1);
 				do
 					meta.addEffect(getRandomEffect());
 				while (RANDOM.nextBoolean());
 				firework.setFireworkMeta(meta);
-				return firework;
 			}
 
 			public FireworkEffect getRandomEffect()
@@ -185,11 +180,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Ocelot spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Ocelot ocelot = (Ocelot) super.spawn(location);
+				final Ocelot ocelot = (Ocelot) entity;
 				ocelot.setTamed(true);
-				return ocelot;
 			}
 		});
 		// Pig Zombie
@@ -203,11 +197,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public PigZombie spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final PigZombie pigzombie = (PigZombie) super.spawn(location);
+				final PigZombie pigzombie = (PigZombie) entity;
 				pigzombie.setAngry(true);
-				return pigzombie;
 			}
 		}, "ANGRY_PIGMEN", "ANGRYPIG_ZOMBIE", "ANGRYPIGMEN");
 		// Player
@@ -218,10 +211,6 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		registerNamedEntitySpawner(new DefaultSpawner(EntityType.SHEEP)
 		{
 
-			private final Random random = new Random();
-			private final DyeColor[] colors = DyeColor.values();
-			private final int max = colors.length;
-
 			@Override
 			public String getName()
 			{
@@ -229,11 +218,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Sheep spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Sheep sheep = (Sheep) super.spawn(location);
-				sheep.setColor(colors[random.nextInt(max)]);
-				return sheep;
+				final Sheep sheep = (Sheep) entity;
+				sheep.setColor(RandomUtil.randomElement(DyeColor.values()));
 			}
 		}, "RANDOM_SHEEP");
 		// Skeleton
@@ -262,11 +250,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Wolf spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Wolf wolf = (Wolf) super.spawn(location);
+				final Wolf wolf = (Wolf) entity;
 				wolf.setAngry(true);
-				return wolf;
 			}
 		}, "ANGRYWOLF");
 		// Zombie
@@ -280,11 +267,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			}
 
 			@Override
-			public Zombie spawn(final Location location)
+			public void apply(final Entity entity)
 			{
-				final Zombie zombie = (Zombie) super.spawn(location);
+				final Zombie zombie = (Zombie) entity;
 				zombie.setVillager(true);
-				return zombie;
 			}
 		});
 	}
@@ -338,7 +324,7 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 	{
 	}
 
-	private static abstract class DefaultSpawner extends BasicParentedSpawner implements NamedEntitySpawner
+	private static abstract class DefaultSpawner extends BasicParentedSpawner implements NamedApplyableEntitySpawner
 	{
 
 		public DefaultSpawner(final EntityType type)
@@ -355,6 +341,14 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		public final EntitySpawnerType getSpawnerType()
 		{
 			return EntitySpawnerType.NAMED;
+		}
+
+		@Override
+		public final Entity spawn(final Location location)
+		{
+			final Entity entity = super.spawn(location);
+			apply(entity);
+			return entity;
 		}
 	}
 
@@ -373,11 +367,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Ageable spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Ageable ageable = (Ageable) super.spawn(location);
+			final Ageable ageable = (Ageable) entity;
 			ageable.setBaby();
-			return ageable;
 		}
 
 		@Override
@@ -411,11 +404,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Horse spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Horse horse = (Horse) super.spawn(location);
+			final Horse horse = (Horse) entity;
 			horse.setColor(color);
-			return horse;
 		}
 
 		@Override
@@ -455,11 +447,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Horse spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Horse horse = (Horse) super.spawn(location);
+			final Horse horse = (Horse) entity;
 			horse.setVariant(variant);
-			return horse;
 		}
 
 		@Override
@@ -500,11 +491,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Sheep spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Sheep sheep = (Sheep) super.spawn(location);
+			final Sheep sheep = (Sheep) entity;
 			sheep.setColor(color);
-			return sheep;
 		}
 
 		@Override
@@ -545,11 +535,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Skeleton spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Skeleton skeleton = (Skeleton) super.spawn(location);
+			final Skeleton skeleton = (Skeleton) entity;
 			skeleton.setSkeletonType(variant);
-			return skeleton;
 		}
 
 		@Override
@@ -602,11 +591,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Slime spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Slime slime = (Slime) super.spawn(location);
+			final Slime slime = (Slime) entity;
 			slime.setSize(size);
-			return slime;
 		}
 
 		@Override
@@ -647,11 +635,10 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 		}
 
 		@Override
-		public Villager spawn(final Location location)
+		public void apply(final Entity entity)
 		{
-			final Villager villager = (Villager) super.spawn(location);
+			final Villager villager = (Villager) entity;
 			villager.setProfession(variant);
-			return villager;
 		}
 
 		@Override
