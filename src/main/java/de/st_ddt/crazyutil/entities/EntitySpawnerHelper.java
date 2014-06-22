@@ -408,6 +408,71 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		{
 			return getClass().getSimpleName() + "{type: " + type.name() + "}";
 		}
+
+		@Override
+		public final boolean asBoolean()
+		{
+			return false;
+		}
+
+		@Override
+		public final byte asByte()
+		{
+			return 0;
+		}
+
+		@Override
+		public final double asDouble()
+		{
+			return 0;
+		}
+
+		@Override
+		public final float asFloat()
+		{
+			return 0;
+		}
+
+		@Override
+		public final int asInt()
+		{
+			return 0;
+		}
+
+		@Override
+		public final long asLong()
+		{
+			return 0;
+		}
+
+		@Override
+		public final short asShort()
+		{
+			return 0;
+		}
+
+		@Override
+		public final String asString()
+		{
+			return getName();
+		}
+
+		@Override
+		public final CrazySpawner getOwningPlugin()
+		{
+			return CrazySpawner.getPlugin();
+		}
+
+		@Override
+		public final void invalidate()
+		{
+		}
+
+		@Override
+		public final EntitySpawner value()
+		{
+			return this;
+		}
 	}
 
 	private static class DefaultSpawner extends BasicSpawner
@@ -421,7 +486,10 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		@Override
 		public Entity spawn(final Location location)
 		{
-			return location.getWorld().spawnEntity(location, type);
+			final Entity entity = location.getWorld().spawnEntity(location, type);
+			if (entity != null)
+				entity.setMetadata(METAHEADER, this);
+			return entity;
 		}
 	}
 
@@ -458,7 +526,10 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		{
 			try
 			{
-				return location.getWorld().spawn(location, getEntityClass());
+				final Entity entity = location.getWorld().spawn(location, getEntityClass());
+				if (entity != null)
+					entity.setMetadata(METAHEADER, this);
+				return entity;
 			}
 			catch (final Exception e)
 			{
@@ -519,7 +590,10 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		{
 			try
 			{
-				return location.getWorld().spawnFallingBlock(location, material, data);
+				final FallingBlock entity = location.getWorld().spawnFallingBlock(location, material, data);
+				if (entity != null)
+					entity.setMetadata(METAHEADER, this);
+				return entity;
 			}
 			catch (final Exception e)
 			{
@@ -614,10 +688,14 @@ public class EntitySpawnerHelper extends EntityMatcherHelper
 		@Override
 		public final LightningStrike spawn(final Location location)
 		{
+			final LightningStrike entity;
 			if (effect)
-				return location.getWorld().strikeLightningEffect(location);
+				entity = location.getWorld().strikeLightningEffect(location);
 			else
-				return location.getWorld().strikeLightning(location);
+				entity = location.getWorld().strikeLightning(location);
+			if (entity != null)
+				entity.setMetadata(METAHEADER, this);
+			return entity;
 		}
 
 		@Override

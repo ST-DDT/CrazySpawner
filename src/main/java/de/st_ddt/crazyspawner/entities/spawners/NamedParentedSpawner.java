@@ -23,7 +23,6 @@ import de.st_ddt.crazyutil.source.Localized;
 public class NamedParentedSpawner extends BasicParentedSpawner implements ChangeableNamedEntitySpawner, NamedApplyableEntitySpawner, ShowableEntitySpawner, MetadataValue, PersistantState
 {
 
-	public final static String METAHEADER = "CustomEntityMeta";
 	public final static String PERSISTENCEKEY = "SPAWNER";
 	protected final String name;
 
@@ -47,6 +46,13 @@ public class NamedParentedSpawner extends BasicParentedSpawner implements Change
 	public String getName()
 	{
 		return name;
+	}
+
+	@Override
+	public void apply(final Entity entity)
+	{
+		super.apply(entity);
+		attachTo(entity, CrazySpawner.getPlugin().getPersistanceManager());
 	}
 
 	@Override

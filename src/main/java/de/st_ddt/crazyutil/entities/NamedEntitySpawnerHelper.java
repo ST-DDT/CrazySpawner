@@ -30,6 +30,7 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.spawners.BasicParentedSpawner;
 import de.st_ddt.crazyutil.RandomUtil;
 
@@ -349,6 +350,71 @@ public class NamedEntitySpawnerHelper extends EntitySpawnerHelper
 			final Entity entity = super.spawn(location);
 			apply(entity);
 			return entity;
+		}
+
+		@Override
+		public final boolean asBoolean()
+		{
+			return false;
+		}
+
+		@Override
+		public final byte asByte()
+		{
+			return 0;
+		}
+
+		@Override
+		public final double asDouble()
+		{
+			return 0;
+		}
+
+		@Override
+		public final float asFloat()
+		{
+			return 0;
+		}
+
+		@Override
+		public final int asInt()
+		{
+			return 0;
+		}
+
+		@Override
+		public final long asLong()
+		{
+			return 0;
+		}
+
+		@Override
+		public final short asShort()
+		{
+			return 0;
+		}
+
+		@Override
+		public final String asString()
+		{
+			return getName();
+		}
+
+		@Override
+		public final CrazySpawner getOwningPlugin()
+		{
+			return CrazySpawner.getPlugin();
+		}
+
+		@Override
+		public final void invalidate()
+		{
+		}
+
+		@Override
+		public final EntitySpawner value()
+		{
+			return this;
 		}
 	}
 

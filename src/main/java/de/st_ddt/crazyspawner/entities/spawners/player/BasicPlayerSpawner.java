@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -93,4 +94,69 @@ public abstract class BasicPlayerSpawner extends BasicSpawner implements NamedEn
 	}
 
 	public abstract boolean matches(final Player player);
+
+	@Override
+	public final boolean asBoolean()
+	{
+		return false;
+	}
+
+	@Override
+	public final byte asByte()
+	{
+		return 0;
+	}
+
+	@Override
+	public final double asDouble()
+	{
+		return 0;
+	}
+
+	@Override
+	public final float asFloat()
+	{
+		return 0;
+	}
+
+	@Override
+	public final int asInt()
+	{
+		return 0;
+	}
+
+	@Override
+	public final long asLong()
+	{
+		return 0;
+	}
+
+	@Override
+	public final short asShort()
+	{
+		return 0;
+	}
+
+	@Override
+	public final String asString()
+	{
+		return getName();
+	}
+
+	@Override
+	public final Plugin getOwningPlugin()
+	{
+		return CrazySpawner.getPlugin();
+	}
+
+	@Override
+	public final void invalidate()
+	{
+	}
+
+	@Override
+	public final BasicPlayerSpawner value()
+	{
+		return this;
+	}
 }

@@ -34,9 +34,9 @@ import de.st_ddt.crazyspawner.entities.meta.FallingBlockMeta;
 import de.st_ddt.crazyspawner.entities.meta.NameMeta;
 import de.st_ddt.crazyspawner.entities.meta.PeacefulMeta;
 import de.st_ddt.crazyspawner.entities.properties.InvulnerableProperty;
-import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.tasks.HealthTask;
 import de.st_ddt.crazyutil.entities.ApplyableEntitySpawner;
+import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
 
 public class EntityListener implements Listener
 {
@@ -69,7 +69,7 @@ public class EntityListener implements Listener
 				{
 					if (!living.isValid())
 						return;
-					else if (living.hasMetadata(NamedParentedSpawner.METAHEADER))
+					else if (living.hasMetadata(NamedEntitySpawner.METAHEADER))
 						return;
 					else
 						spawner.apply(living);
