@@ -32,7 +32,7 @@ import org.bukkit.potion.PotionEffectType;
 import de.st_ddt.crazyspawner.entities.properties.EquipmentProperties;
 import de.st_ddt.crazyspawner.entities.properties.PotionProterty;
 import de.st_ddt.crazyspawner.entities.spawners.CustomizedParentedSpawner;
-import de.st_ddt.crazyspawner.entities.spawners.MultiParentedSpawner;
+import de.st_ddt.crazyspawner.entities.spawners.RandomParentedSpawner;
 import de.st_ddt.crazyspawner.entities.spawners.NamedParentedSpawner;
 import de.st_ddt.crazyspawner.tasks.options.Thunder;
 import de.st_ddt.crazyutil.ChatHelper;
@@ -313,7 +313,7 @@ final class CrazySpawnerExamples
 		}
 		// - Random_Special_Zombie
 		{
-			final MultiParentedSpawner randomSpecialZombie = new MultiParentedSpawner(diamondZombie, spiderDiamondZombie2, speedyZombie, namedHealthyDiamondZombie);
+			final RandomParentedSpawner randomSpecialZombie = new RandomParentedSpawner(diamondZombie, spiderDiamondZombie2, speedyZombie, namedHealthyDiamondZombie);
 			final NamedParentedSpawner namedRandomSpecialZombie = new NamedParentedSpawner(randomSpecialZombie, "Random_Special_Zombie");
 			plugin.addCustomEntity(namedRandomSpecialZombie);
 		}

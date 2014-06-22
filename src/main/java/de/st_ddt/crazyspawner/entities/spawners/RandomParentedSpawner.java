@@ -17,7 +17,7 @@ import de.st_ddt.crazyutil.entities.EntitySpawner;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.EntitySpawnerType;
 
-public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntitySpawner
+public class RandomParentedSpawner extends BasicSpawner implements ApplyableEntitySpawner
 {
 
 	private final List<EntitySpawner> spawners = new ArrayList<EntitySpawner>();
@@ -46,7 +46,7 @@ public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntit
 		return type;
 	}
 
-	public MultiParentedSpawner(final EntitySpawner... spawners)
+	public RandomParentedSpawner(final EntitySpawner... spawners)
 	{
 		super();
 		for (final EntitySpawner spawner : spawners)
@@ -57,7 +57,7 @@ public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntit
 		this.entityClasses = getSharedClasses(this.spawners);
 	}
 
-	public MultiParentedSpawner(final Collection<? extends EntitySpawner> spawners)
+	public RandomParentedSpawner(final Collection<? extends EntitySpawner> spawners)
 	{
 		super();
 		this.spawners.addAll(spawners);
@@ -67,7 +67,7 @@ public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntit
 		this.entityClasses = getSharedClasses(spawners);
 	}
 
-	public MultiParentedSpawner(final ConfigurationSection config)
+	public RandomParentedSpawner(final ConfigurationSection config)
 	{
 		super();
 		final ConfigurationSection parentsSection = config.getConfigurationSection("parents");
@@ -95,7 +95,7 @@ public class MultiParentedSpawner extends BasicSpawner implements ApplyableEntit
 	@Override
 	public final EntitySpawnerType getSpawnerType()
 	{
-		return EntitySpawnerType.MULTI;
+		return EntitySpawnerType.RANDOM;
 	}
 
 	@Override
