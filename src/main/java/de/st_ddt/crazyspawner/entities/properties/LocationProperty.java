@@ -55,7 +55,7 @@ public class LocationProperty extends BasicProperty
 	@Override
 	public boolean isApplicable(final Class<?> clazz)
 	{
-		return true;
+		return Entity.class.isAssignableFrom(clazz);
 	}
 
 	@Override
