@@ -65,6 +65,7 @@ import de.st_ddt.crazyutil.modes.BooleanFalseMode;
 import de.st_ddt.crazyutil.modes.DoubleMode;
 import de.st_ddt.crazyutil.paramitrisable.LocationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
+import de.st_ddt.crazyutil.particles.ParticleHelper;
 import de.st_ddt.crazyutil.reloadable.Reloadable;
 import de.st_ddt.crazyutil.resources.ResourceHelper;
 import de.st_ddt.crazyutil.source.Localized;
@@ -275,6 +276,7 @@ public class CrazySpawner extends CrazyPlugin
 		EntitySpawnerHelper.class.getName();
 		NamedEntitySpawnerHelper.class.getName();
 		AttributeHelper.initialize();
+		ParticleHelper.initialize();
 		EntityPropertyHelper.class.getName();
 	}
 
