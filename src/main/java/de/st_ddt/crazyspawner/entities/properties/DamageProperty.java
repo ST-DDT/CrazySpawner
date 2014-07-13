@@ -1,5 +1,6 @@
 package de.st_ddt.crazyspawner.entities.properties;
 
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.command.CommandSender;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 
+import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
 import de.st_ddt.crazyspawner.entities.meta.CustomDamage;
 import de.st_ddt.crazyutil.paramitrisable.DoubleParamitrisable;
@@ -66,6 +68,23 @@ public final class DamageProperty extends MetadataProperty implements CustomDama
 		params.put("mindamage", minDamageParam);
 		final DoubleParamitrisable maxDamageParam = new DoubleParamitrisable(maxDamage);
 		params.put("maxdamage", maxDamageParam);
+		final TabbedParamitrisable damageParam = new TabbedParamitrisable()
+		{
+
+			@Override
+			public void setParameter(final String parameter) throws CrazyException
+			{
+				minDamageParam.setParameter(parameter);
+				maxDamageParam.setParameter(parameter);
+			}
+
+			@Override
+			public List<String> tab(final String parameter)
+			{
+				return maxDamageParam.tab(parameter);
+			}
+		};
+		params.put("damage", damageParam);
 	}
 
 	@Override
