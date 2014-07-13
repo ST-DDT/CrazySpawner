@@ -5,12 +5,12 @@
 
 	<parent>
 		<groupId>de.st_ddt.crazy</groupId>
-		<artifactId>CrazySpawner_Compatibility_CraftBukkit</artifactId>
+		<artifactId>CrazySpawner_CraftBukkit</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../</relativePath>
 	</parent>
 
-	<artifactId>CrazySpawner_1.7_R4</artifactId>
+	<artifactId>CrazySpawner_CraftBukkit_v1_7_R4</artifactId>
 	<version>5.0.0</version>
 	<packaging>jar</packaging>
 

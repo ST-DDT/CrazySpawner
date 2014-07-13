@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>de.st_ddt.crazy</groupId>
-	<artifactId>CrazySpawner_Compatibility_CraftBukkit</artifactId>
+	<artifactId>CrazySpawner_CraftBukkit</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
