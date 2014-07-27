@@ -22,7 +22,7 @@ public class PersistanceManager
 
 	/**
 	 * Registers a {@link Class} to be accepted as {@link PersistantState}.
-	 * 
+	 *
 	 * @param stateClass
 	 *            The class that should be registered.
 	 */
@@ -111,7 +111,6 @@ public class PersistanceManager
 		for (final String key : dataSection.getKeys(false))
 		{
 			final Object obj = dataSection.get(key);
-			System.out.println("Restoring: " + key + " - " + obj);
 			if (obj instanceof PersistantState)
 				persistables.add((PersistantState) obj);
 			else
@@ -147,16 +146,12 @@ public class PersistanceManager
 				for (final MetadataValue metadata : metadatas)
 					if (metadata instanceof PersistantState)
 					{
-						System.out.println("Persisting: " + entry.getKey() + " - " + metadata.toString());
 						data.set("data." + entry.getKey(), metadata);
 						return;
 					}
 			}
 			else
-			{
-				System.out.println("Persisting: " + entry.getKey() + " - " + entry.getValue().toString());
 				data.set("data." + entry.getKey(), entry.getValue());
-			}
 		try
 		{
 			data.save(getEntityDataFile(entity));
