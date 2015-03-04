@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -104,7 +105,7 @@ public class EntityListener implements Listener
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-	public void CreatureDamagedbyEntity(final EntityDamageByEntityEvent event)
+	public void CreatureDamagedByEntity(final EntityDamageByEntityEvent event)
 	{
 		final Entity entity = event.getEntity();
 		entity.removeMetadata(DetectionMeta.METAHEADER, plugin);
@@ -118,7 +119,8 @@ public class EntityListener implements Listener
 				break;
 			}
 		final Location location = entity.getLocation();
-		for (final LivingEntity nearby : entity.getWorld().getEntitiesByClass(LivingEntity.class))
+		final World world = location.getWorld();
+		for (final LivingEntity nearby : world.getEntitiesByClass(LivingEntity.class))
 			if (location.distance(nearby.getLocation()) < alarmRange)
 				nearby.removeMetadata(DetectionMeta.METAHEADER, plugin);
 	}
