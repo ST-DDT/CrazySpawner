@@ -2,6 +2,7 @@ package de.st_ddt.crazyutil.tests;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,10 @@ import org.bukkit.UnsafeValues;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -25,6 +30,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.generator.ChunkGenerator.ChunkData;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -75,12 +81,6 @@ public class DummyServer implements Server
 	public String getBukkitVersion()
 	{
 		return "1.7-R1";
-	}
-
-	@Override
-	public Player[] getOnlinePlayers()
-	{
-		return null;
 	}
 
 	@Override
@@ -591,6 +591,48 @@ public class DummyServer implements Server
 	@Override
 	public UnsafeValues getUnsafe()
 	{
+		return null;
+	}
+
+	@Override
+	public Player[] _INVALID_getOnlinePlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BossBar createBossBar(String arg0, BarColor arg1, BarStyle arg2, BarFlag... arg3) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChunkData createChunkData(World arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Inventory createInventory(InventoryHolder arg0, InventoryType arg1, String arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OfflinePlayer getOfflinePlayer(UUID arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<? extends Player> getOnlinePlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Player getPlayer(UUID arg0) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

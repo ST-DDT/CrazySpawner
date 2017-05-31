@@ -27,7 +27,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 		<skipTests>true</skipTests>
-		<crazycore.version>11.0.0-SNAPSHOT</crazycore.version>
+		<crazycore.version>10.7.9</crazycore.version>
 	</properties>
 
 	<dependencies>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.2-R0.3</version>
+			<version>1.10.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- Crazy -->
 		<dependency>
@@ -62,7 +62,7 @@
 		<!-- Bukkit -->
 		<repository>
 			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
+			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
 

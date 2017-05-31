@@ -6,8 +6,11 @@ import de.st_ddt.crazyspawner.CrazySpawner;
 public abstract class CommandExecutor extends CrazyPluginCommandExecutor<CrazySpawner>
 {
 
+	protected final CrazySpawner owner;
+	
 	public CommandExecutor(final CrazySpawner plugin)
 	{
 		super(plugin);
+		this.owner = plugin;
 	}
 }

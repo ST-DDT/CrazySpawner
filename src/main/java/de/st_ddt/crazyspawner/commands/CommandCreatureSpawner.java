@@ -70,12 +70,4 @@ public class CommandCreatureSpawner extends CommandExecutor
 		return sender.hasPermission("crazyspawner.creaturespawner");
 	}
 
-	@Override
-	public boolean isExecutable(final CommandSender sender)
-	{
-		if (sender instanceof Player)
-			return super.isExecutable(sender);
-		else
-			return false;
-	}
 }

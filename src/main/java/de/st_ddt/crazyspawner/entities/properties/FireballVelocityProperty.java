@@ -7,8 +7,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.util.Vector;
 
+import de.st_ddt.crazyutil.VectorUtil;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
-import de.st_ddt.crazyutil.paramitrisable.VectorParamitrisable;
 
 public class FireballVelocityProperty extends VelocityProperty
 {
@@ -46,6 +46,6 @@ public class FireballVelocityProperty extends VelocityProperty
 		final double velocity = getRandom(velocityMin, velocityMax);
 		final double yaw = getOff(this.yaw, yawOff);
 		final double pitch = getOff(this.pitch, pitchOff);
-		fireball.setDirection(VectorParamitrisable.getVectorDeg(velocity, yaw, pitch));
+		fireball.setDirection(VectorUtil.getVectorDeg(velocity, yaw, pitch));
 	}
 }

@@ -1,7 +1,10 @@
 package de.st_ddt.crazyspawner;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +15,9 @@ import java.util.TreeSet;
 import java.util.WeakHashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -20,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import de.st_ddt.crazyplugin.CrazyPlugin;
+import de.st_ddt.crazyplugin.data.ParameterData;
 import de.st_ddt.crazyplugin.exceptions.CrazyCommandUsageException;
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.commands.CommandCreatureSpawner;
@@ -44,16 +50,12 @@ import de.st_ddt.crazyspawner.entities.util.AttributeHelper;
 import de.st_ddt.crazyspawner.listener.EntityListener;
 import de.st_ddt.crazyspawner.listener.EntityPersistenceListener;
 import de.st_ddt.crazyspawner.listener.PlayerListener;
-import de.st_ddt.crazyspawner.reloadables.CustomEntitiesReloadable;
-import de.st_ddt.crazyspawner.reloadables.SpawnTaskReloadable;
 import de.st_ddt.crazyspawner.tasks.TimerSpawnTask;
 import de.st_ddt.crazyutil.ChatHelper;
 import de.st_ddt.crazyutil.ChatHelperExtended;
 import de.st_ddt.crazyutil.CrazyPipe;
 import de.st_ddt.crazyutil.NamesHelper;
-import de.st_ddt.crazyutil.compatibility.CompatibilityLoader;
 import de.st_ddt.crazyutil.config.CrazyYamlConfiguration;
-import de.st_ddt.crazyutil.datas.ParameterData;
 import de.st_ddt.crazyutil.entities.EntitySpawnerHelper;
 import de.st_ddt.crazyutil.entities.NamedApplyableEntitySpawner;
 import de.st_ddt.crazyutil.entities.NamedEntitySpawner;
@@ -66,8 +68,6 @@ import de.st_ddt.crazyutil.modes.DoubleMode;
 import de.st_ddt.crazyutil.paramitrisable.LocationParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.particles.ParticleHelper;
-import de.st_ddt.crazyutil.reloadable.Reloadable;
-import de.st_ddt.crazyutil.resources.ResourceHelper;
 import de.st_ddt.crazyutil.source.Localized;
 import de.st_ddt.crazyutil.source.LocalizedVariable;
 import de.st_ddt.crazyutil.source.Permission;
@@ -128,6 +128,7 @@ public class CrazySpawner extends CrazyPlugin
 					throw new CrazyCommandUsageException("<World> <X> <Y> <Z>");
 				location.getValue().getWorld().strikeLightning(location.getValue());
 			}
+
 		}, "thunder", "strike");
 	}
 
@@ -181,7 +182,6 @@ public class CrazySpawner extends CrazyPlugin
 		});
 	}
 
-	@Override
 	protected void registerHooks()
 	{
 		final PluginManager pm = Bukkit.getPluginManager();
@@ -190,10 +190,8 @@ public class CrazySpawner extends CrazyPlugin
 		pm.registerEvents(new EntityPersistenceListener(this, persistanceManager), this);
 	}
 
-	@Override
 	protected void registerCommands()
 	{
-		super.registerCommands();
 		registerCommand("crazyspawn", new CommandSpawn(this));
 		registerCommand("crazykill", new CommandKill(this));
 		registerCommand("crazycreaturespawner", new CommandCreatureSpawner(this, creatureSelection));
@@ -207,6 +205,13 @@ public class CrazySpawner extends CrazyPlugin
 		mainCommand.addSubCommand(new CommandSpawnList(this), "l", "list");
 		mainCommand.addSubCommand(new CommandSpawnRemove(this), "rem", "remove");
 	}
+	
+	public final void registerCommand(final String commandName, final CommandExecutor commandExecutor)
+	{
+		final PluginCommand command = getCommand(commandName);
+		if (command != null)
+			command.setExecutor(commandExecutor);
+}
 
 	private void registerMetrics()
 	{
@@ -260,11 +265,11 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void initialize()
+	public void onLoad()
 	{
-		super.initialize();
+		super.onLoad();
 		plugin = this;
-		CompatibilityLoader.loadCompatibilityProvider(this);
+//		CompatibilityHelper.loadCompatibilityProvider(this);
 		persistanceManager = new PersistanceManager(new File(getDataFolder(), "StoredEntities"));
 		if (BasicPlayerSpawner.initialize())
 		{
@@ -282,26 +287,37 @@ public class CrazySpawner extends CrazyPlugin
 
 	@Override
 	@Localized({ "CRAZYSPAWNER.SPAWNABLEENTITIES.OPTIONS {SupportedTypes} {AvailableOptionGroups} {AvailableOptions}", "CRAZYSPAWNER.SPAWNABLEENTITIES.AVAILABLE {Count}" })
-	public void enable()
+	public void onEnable()
 	{
-		super.enable();
+		super.onEnable();
 		if (isUpdated)
 		{
 			CrazySpawnerExamples.saveExampleFiles(getDataFolder());
 			CrazySpawnerExamples.saveExampleEntities(this, previousVersion);
 		}
 		final File namesFile = new File(getDataFolder(), "Names.txt");
-		if (!namesFile.exists())
-			ResourceHelper.saveResource(plugin, "/Names.txt", namesFile);
+		if (!namesFile.exists()) {
+			try (InputStream in = getResource("/resource/Names.txt");
+					OutputStream out = new FileOutputStream(new File(getDataFolder(), "Names.txt"))) {
+				byte[] buffer = new byte[1024];
+				int read = 0;
+				while ((read = in.read(buffer)) != -1) {
+					out.write(buffer, 0, read);
+				}
+			} catch (IOException e) {
+				System.err.println("Failed to save names file");
+			}
+		}
 		NamesHelper.loadNames(namesFile);
-		final Reloadable customEntityReloadable = new CustomEntitiesReloadable(this);
-		for (final String alias : new String[] { "e", "ce", "entities", "customentities" })
-			reloadables.put(alias, customEntityReloadable);
-		final Reloadable spawnTasksReloadable = new SpawnTaskReloadable(this);
-		for (final String alias : new String[] { "t", "st", "spawntasks" })
-			reloadables.put(alias, spawnTasksReloadable);
+//		final Reloadable customEntityReloadable = new CustomEntitiesReloadable(this);
+//		for (final String alias : new String[] { "e", "ce", "entities", "customentities" })
+//			reloadables.put(alias, customEntityReloadable);
+//		final Reloadable spawnTasksReloadable = new SpawnTaskReloadable(this);
+//		for (final String alias : new String[] { "t", "st", "spawntasks" })
+//			reloadables.put(alias, spawnTasksReloadable);
 		sendLocaleMessage("SPAWNABLEENTITIES.OPTIONS", Bukkit.getConsoleSender(), EntitySpawnerHelper.getTotalSpawnableEntityTypeCount(), EntityPropertyHelper.getTotalPropertiesCount(), EntityPropertyHelper.getTotalCommandParamsCount());
 		sendLocaleMessage("SPAWNABLEENTITIES.AVAILABLE", Bukkit.getConsoleSender(), NamedEntitySpawner.NAMEDENTITYSPAWNERS.size());
+		registerHooks();
 		registerCommands();
 		registerMetrics();
 	}
@@ -315,9 +331,9 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void loadConfiguration(final ConfigurationSection config)
+	public void loadConfiguration()
 	{
-		super.loadConfiguration(config);
+		ConfigurationSection config = getConfig();
 		// OverwriteEntities
 		for (final EntityType type : EntityType.values())
 			if (type.getEntityClass() != null && LivingEntity.class.isAssignableFrom(type.getEntityClass()))
@@ -402,9 +418,9 @@ public class CrazySpawner extends CrazyPlugin
 	}
 
 	@Override
-	public void saveConfiguration(final ConfigurationSection config)
+	public void saveConfiguration()
 	{
-		super.saveConfiguration(config);
+		ConfigurationSection config = getConfig();
 		// OverwriteEntities
 		for (final EntityType type : EntityType.values())
 		{
@@ -416,6 +432,7 @@ public class CrazySpawner extends CrazyPlugin
 		}
 		config.set("defaultAlarmRange", defaultAlarmRange);
 		config.set("monsterExplosionDamageEnabled", monsterExplosionDamageEnabled);
+		super.saveConfiguration();
 	}
 
 	public void saveCustomEntities()

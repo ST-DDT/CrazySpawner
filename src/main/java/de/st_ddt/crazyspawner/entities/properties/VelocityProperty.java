@@ -10,11 +10,11 @@ import org.bukkit.util.Vector;
 
 import de.st_ddt.crazyplugin.exceptions.CrazyException;
 import de.st_ddt.crazyspawner.CrazySpawner;
+import de.st_ddt.crazyutil.VectorUtil;
 import de.st_ddt.crazyutil.paramitrisable.DoubleParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.IntegerParamitrisable;
 import de.st_ddt.crazyutil.paramitrisable.Paramitrisable;
 import de.st_ddt.crazyutil.paramitrisable.TabbedParamitrisable;
-import de.st_ddt.crazyutil.paramitrisable.VectorParamitrisable;
 import de.st_ddt.crazyutil.source.Localized;
 
 public class VelocityProperty extends BasicProperty
@@ -53,7 +53,7 @@ public class VelocityProperty extends BasicProperty
 	public VelocityProperty(final Vector vector)
 	{
 		super();
-		final double[] velocity = VectorParamitrisable.fromVectorDeg(vector);
+		final double[] velocity = VectorUtil.fromVectorDeg(vector);
 		this.velocityMin = velocity[0];
 		this.velocityMax = velocity[0];
 		this.yaw = (int) velocity[1];
@@ -79,7 +79,7 @@ public class VelocityProperty extends BasicProperty
 			final double x = config.getDouble("velocity.X", 0);
 			final double y = config.getDouble("velocity.Y", 0);
 			final double z = config.getDouble("velocity.Z", 0);
-			final double[] velocity = VectorParamitrisable.fromXYZDeg(x, y, z);
+			final double[] velocity = VectorUtil.fromXYZDeg(x, y, z);
 			this.velocityMin = velocity[0];
 			this.velocityMax = velocity[0];
 			this.yaw = (int) velocity[1];
@@ -121,7 +121,7 @@ public class VelocityProperty extends BasicProperty
 		final double velocity = getRandom(velocityMin, velocityMax);
 		final double yaw = getOff(this.yaw, yawOff);
 		final double pitch = getOff(this.pitch, pitchOff);
-		entity.setVelocity(VectorParamitrisable.getVectorDeg(velocity, yaw, pitch));
+		entity.setVelocity(VectorUtil.getVectorDeg(velocity, yaw, pitch));
 	}
 
 	@Override
@@ -168,9 +168,9 @@ public class VelocityProperty extends BasicProperty
 			{
 				super.setParameter(parameter);
 				final double vx = getValue();
-				final Vector vector = VectorParamitrisable.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
+				final Vector vector = VectorUtil.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
 				vector.setX(vx);
-				final double[] res = VectorParamitrisable.fromVectorDeg(vector);
+				final double[] res = VectorUtil.fromVectorDeg(vector);
 				velocityMinParam.setValue(res[0]);
 				velocityMaxParam.setValue(res[0]);
 				yawParam.setValue((int) res[1]);
@@ -191,9 +191,9 @@ public class VelocityProperty extends BasicProperty
 			{
 				super.setParameter(parameter);
 				final double vy = getValue();
-				final Vector vector = VectorParamitrisable.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
+				final Vector vector = VectorUtil.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
 				vector.setY(vy);
-				final double[] res = VectorParamitrisable.fromVectorDeg(vector);
+				final double[] res = VectorUtil.fromVectorDeg(vector);
 				velocityMinParam.setValue(res[0]);
 				velocityMaxParam.setValue(res[0]);
 				yawParam.setValue((int) res[1]);
@@ -214,9 +214,9 @@ public class VelocityProperty extends BasicProperty
 			{
 				super.setParameter(parameter);
 				final double vz = getValue();
-				final Vector vector = VectorParamitrisable.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
+				final Vector vector = VectorUtil.getVectorDeg((velocityMin + velocityMax) / 2, yaw, pitch);
 				vector.setZ(vz);
-				final double[] res = VectorParamitrisable.fromVectorDeg(vector);
+				final double[] res = VectorUtil.fromVectorDeg(vector);
 				velocityMinParam.setValue(res[0]);
 				velocityMaxParam.setValue(res[0]);
 				yawParam.setValue((int) res[1]);
