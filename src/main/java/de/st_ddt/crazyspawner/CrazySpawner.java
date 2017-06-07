@@ -297,7 +297,7 @@ public class CrazySpawner extends CrazyPlugin
 		}
 		final File namesFile = new File(getDataFolder(), "Names.txt");
 		if (!namesFile.exists()) {
-			try (InputStream in = getResource("/resource/Names.txt");
+			try (InputStream in = getClass().getResourceAsStream("/resource/Names.txt");
 					OutputStream out = new FileOutputStream(new File(getDataFolder(), "Names.txt"))) {
 				byte[] buffer = new byte[1024];
 				int read = 0;
